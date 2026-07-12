@@ -13,6 +13,14 @@ import { z } from "zod";
  * .env.example.
  */
 
+const STRIPE_VARS = [
+  "STRIPE_SECRET_KEY",
+  "STRIPE_WEBHOOK_SECRET",
+  "STRIPE_PRICE_PRO_MONTHLY",
+  "STRIPE_PRICE_ULTRA_MONTHLY",
+  "STRIPE_PRICE_TOPUP_100",
+] as const;
+
 const schema = z
   .object({
     NODE_ENV: z
@@ -43,12 +51,17 @@ const schema = z
     EMAIL_FROM: z.string().default("AI SaaS Starter <onboarding@resend.dev>"),
 
     // ── Stripe ────────────────────────────────────────────────────────────
+    // Optional in development so a fresh clone boots without a Stripe
+    // account (features.billing turns off). Required in production —
+    // enforced in superRefine below.
     STRIPE_SECRET_KEY: z
       .string()
-      .startsWith("sk_", "expected a Stripe secret key (sk_...)"),
+      .startsWith("sk_", "expected a Stripe secret key (sk_...)")
+      .optional(),
     STRIPE_WEBHOOK_SECRET: z
       .string()
-      .startsWith("whsec_", "expected a webhook signing secret (whsec_...)"),
+      .startsWith("whsec_", "expected a webhook signing secret (whsec_...)")
+      .optional(),
     NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z
       .string()
       .startsWith("pk_", "expected a Stripe publishable key (pk_...)")
@@ -87,6 +100,17 @@ const schema = z
         });
       }
     }
+    if (env.NODE_ENV === "production") {
+      for (const key of STRIPE_VARS) {
+        if (!env[key]) {
+          ctx.addIssue({
+            code: "custom",
+            path: [key],
+            message: "required in production (optional in development)",
+          });
+        }
+      }
+    }
   });
 
 function priceId() {
@@ -95,7 +119,8 @@ function priceId() {
     .startsWith(
       "price_",
       "expected a Stripe Price ID (price_...), not a Product ID (prod_...)",
-    );
+    )
+    .optional();
 }
 
 function stringBool() {
@@ -134,6 +159,12 @@ export const env: Env = parseEnv(process.env);
 /** Exported for tests. App code uses the `features` singleton below. */
 export function deriveFeatures(e: Env) {
   return {
+    /**
+     * Checkout, customer portal, and the Stripe webhook are wired. Off (only
+     * possible outside production): billing UI renders a setup card and
+     * checkout/portal actions throw a clear "Stripe is not configured" error.
+     */
+    billing: STRIPE_VARS.every((key) => Boolean(e[key])),
     /** Show the "Continue with Google" button. */
     googleOAuth: Boolean(e.GOOGLE_CLIENT_ID),
     /** Show the "Continue with GitHub" button. */

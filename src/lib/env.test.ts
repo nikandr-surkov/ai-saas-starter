@@ -51,6 +51,35 @@ describe("parseEnv", () => {
     ).toThrowError(/whsec_/);
   });
 
+  it("allows missing Stripe config outside production", () => {
+    const withoutStripe: Record<string, string> = { ...validEnv };
+    for (const key of Object.keys(withoutStripe)) {
+      if (key.startsWith("STRIPE_")) delete withoutStripe[key];
+    }
+    const env = parseEnv(withoutStripe);
+    expect(env.STRIPE_SECRET_KEY).toBeUndefined();
+    expect(deriveFeatures(env).billing).toBe(false);
+  });
+
+  it("requires every Stripe var in production", () => {
+    const withoutStripe: Record<string, string> = {
+      ...validEnv,
+      NODE_ENV: "production",
+    };
+    delete withoutStripe.STRIPE_SECRET_KEY;
+    delete withoutStripe.STRIPE_PRICE_TOPUP_100;
+    const attempt = () => parseEnv(withoutStripe);
+    expect(attempt).toThrowError(/STRIPE_SECRET_KEY/);
+    expect(attempt).toThrowError(/STRIPE_PRICE_TOPUP_100/);
+    expect(attempt).toThrowError(/required in production/);
+  });
+
+  it("accepts a fully configured production env", () => {
+    expect(parseEnv({ ...validEnv, NODE_ENV: "production" }).NODE_ENV).toBe(
+      "production",
+    );
+  });
+
   it("treats empty strings as unset", () => {
     const env = parseEnv({
       ...validEnv,
@@ -96,14 +125,21 @@ describe("parseEnv", () => {
 });
 
 describe("deriveFeatures", () => {
-  it("turns everything off for a minimal env", () => {
+  it("turns optional features off for a minimal env", () => {
     expect(deriveFeatures(parseEnv(validEnv))).toEqual({
+      billing: true, // validEnv configures all five Stripe vars
       googleOAuth: false,
       githubOAuth: false,
       email: false,
       redisRateLimit: false,
       blobStorage: false,
     });
+  });
+
+  it("turns billing on only when all five Stripe vars are set", () => {
+    const partial: Record<string, string> = { ...validEnv };
+    delete partial.STRIPE_WEBHOOK_SECRET;
+    expect(deriveFeatures(parseEnv(partial)).billing).toBe(false);
   });
 
   it("flips flags when the backing vars are present", () => {

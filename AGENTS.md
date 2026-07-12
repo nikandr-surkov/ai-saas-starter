@@ -16,21 +16,24 @@ instincts conflict with this file, this file wins.
 
 ## Commands
 
-| Command                | What it does                                                  |
-| ---------------------- | ------------------------------------------------------------- |
-| `pnpm dev`             | Dev server (Turbopack) at http://localhost:3000               |
-| `pnpm build`           | Production build                                              |
-| `pnpm typecheck`       | `tsc --noEmit`                                                |
-| `pnpm lint`            | ESLint                                                        |
-| `pnpm format`          | Prettier, write mode                                          |
-| `pnpm test`            | Vitest. Ledger tests need Postgres: `docker compose up -d`    |
-| `pnpm test:e2e`        | Playwright. Set `AI_MOCK=true` so generation is free          |
-| `pnpm db:generate`     | drizzle-kit: `src/db/schema.ts` → SQL migration in `drizzle/` |
-| `pnpm db:migrate`      | Apply pending migrations                                      |
-| `pnpm db:studio`       | Drizzle Studio (browse the DB)                                |
-| `pnpm stripe:listen`   | Stripe CLI → forwards webhooks to localhost:3000              |
-| `pnpm email:dev`       | React Email preview server                                    |
-| `docker compose up -d` | Local Postgres 17                                             |
+| Command                | What it does                                               |
+| ---------------------- | ---------------------------------------------------------- |
+| `pnpm dev`             | Dev server (Turbopack) at http://localhost:3000            |
+| `pnpm build`           | Production build                                           |
+| `pnpm typecheck`       | `tsc --noEmit`                                             |
+| `pnpm lint`            | ESLint                                                     |
+| `pnpm format`          | Prettier, write mode                                       |
+| `pnpm test`            | Vitest. Ledger tests need Postgres: `docker compose up -d` |
+| `pnpm test:e2e`        | Playwright. Set `AI_MOCK=true` so generation is free (M7)  |
+| `pnpm db:generate`     | drizzle-kit: `src/db/schema.ts` → SQL migration (M2)       |
+| `pnpm db:migrate`      | Apply pending migrations (M2)                              |
+| `pnpm db:studio`       | Drizzle Studio, browse the DB (M2)                         |
+| `pnpm stripe:listen`   | Stripe CLI → forwards webhooks to localhost:3000           |
+| `pnpm email:dev`       | React Email preview server (M6)                            |
+| `docker compose up -d` | Local Postgres 17                                          |
+
+Scripts marked (M2)/(M6)/(M7) land in that milestone — they are not in
+`package.json` yet. Remove each marker when its script arrives.
 
 ## Definition of done
 
@@ -106,7 +109,9 @@ no TODO comments left behind.
 - Missing optional env degrades, not crashes: no Google/GitHub keys → button
   hidden; no `RESEND_API_KEY` → emails no-op with a console warning; no
   Upstash → in-memory rate limiting; no Blob token → images go to
-  `./.generated/` (dev only).
+  `./.generated/` (dev only); no Stripe keys in development →
+  `features.billing` off, billing page shows a setup card, checkout throws.
+  In production the Stripe vars are required — boot fails without them.
 - Tailwind v4 is CSS-first: tokens live in `@theme` in `globals.css`.
   There is no `tailwind.config.ts`. Design tokens are in DESIGN.md.
 
