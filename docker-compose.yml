@@ -1,0 +1,24 @@
+# Local development database. Start with: docker compose up -d
+# Connection string (matches .env.example):
+#   postgres://postgres:postgres@localhost:5432/ai_saas_starter
+services:
+  db:
+    image: postgres:17
+    container_name: ai-saas-starter-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ai_saas_starter
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ai_saas_starter"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:
