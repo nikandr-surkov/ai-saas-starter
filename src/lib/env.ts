@@ -179,3 +179,8 @@ export function deriveFeatures(e: Env) {
 }
 
 export const features = deriveFeatures(env);
+
+/** Which Stripe vars are unset — drives the billing setup card in dev. */
+export function missingBillingEnv(e: Env = env): string[] {
+  return STRIPE_VARS.filter((key) => !e[key]);
+}

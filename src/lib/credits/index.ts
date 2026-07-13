@@ -1,5 +1,6 @@
 import { eq, sql } from "drizzle-orm";
 
+import { WELCOME_CREDITS } from "@/config/plans";
 import { db } from "@/db";
 import { creditTransactions, users } from "@/db/schema";
 
@@ -10,9 +11,6 @@ import { creditTransactions, users } from "@/db/schema";
 // M2 ships grants (needed for the welcome grant at signup). M4 adds
 // spendCredits/refundCredits/getBalance/getHistory test-first, including the
 // double-spend race suite.
-
-/** Credits granted to every new account, through the ledger like all else. */
-const WELCOME_CREDITS = 10;
 
 type GrantCreditsInput = {
   userId: string;

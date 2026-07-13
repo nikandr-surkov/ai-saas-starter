@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { deriveFeatures, parseEnv } from "./env";
+import { deriveFeatures, missingBillingEnv, parseEnv } from "./env";
 
 const validEnv = {
   DATABASE_URL: "postgres://postgres:postgres@localhost:5432/ai_saas_starter",
@@ -121,6 +121,22 @@ describe("parseEnv", () => {
     expect(() =>
       parseEnv({ ...validEnv, AI_IMAGE_MODEL: "gpt-image-1" }),
     ).toThrowError(/provider\/model/);
+  });
+});
+
+describe("missingBillingEnv", () => {
+  it("is empty when Stripe is fully configured", () => {
+    expect(missingBillingEnv(parseEnv(validEnv))).toEqual([]);
+  });
+
+  it("names exactly the unset vars", () => {
+    const partial: Record<string, string> = { ...validEnv };
+    delete partial.STRIPE_WEBHOOK_SECRET;
+    delete partial.STRIPE_PRICE_TOPUP_100;
+    expect(missingBillingEnv(parseEnv(partial))).toEqual([
+      "STRIPE_WEBHOOK_SECRET",
+      "STRIPE_PRICE_TOPUP_100",
+    ]);
   });
 });
 

@@ -105,6 +105,29 @@ export const verifications = pgTable(
   (t) => [index("verifications_identifier_idx").on(t.identifier)],
 );
 
+// ── Subscription state ───────────────────────────────────────────────────────
+// One row per user, upserted ONLY by syncStripeDataToDb in
+// src/lib/billing/sync.ts, which fetches fresh state from Stripe. Webhook
+// payloads are triggers, never sources of truth.
+
+export const subscriptions = pgTable("subscriptions", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => users.id, { onDelete: "cascade" }),
+  stripeCustomerId: text("stripe_customer_id").notNull().unique(),
+  stripeSubscriptionId: text("stripe_subscription_id").unique(),
+  // A Stripe subscription status ("active", "past_due", ...) or "none" when
+  // the customer has no subscription. Text, not an enum — Stripe's status
+  // set evolves and stale enums would reject valid syncs.
+  status: text("status").notNull().default("none"),
+  priceId: text("price_id"),
+  currentPeriodEnd: timestamp("current_period_end", { withTimezone: true }),
+  cancelAtPeriodEnd: boolean("cancel_at_period_end").notNull().default(false),
+  paymentMethodBrand: text("payment_method_brand"),
+  paymentMethodLast4: text("payment_method_last4"),
+  ...timestamps,
+});
+
 // ── Credits ledger ───────────────────────────────────────────────────────────
 // Append-only. Rows are never updated or deleted; corrections are new
 // compensating rows. Only src/lib/credits/ touches this table.

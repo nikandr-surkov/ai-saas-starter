@@ -4,6 +4,10 @@ import { magicLink } from "better-auth/plugins";
 
 import { db } from "@/db";
 import * as schema from "@/db/schema";
+import {
+  cancelSubscriptionsForUser,
+  ensureStripeCustomer,
+} from "@/lib/billing/customer";
 import { grantWelcomeCredits } from "@/lib/credits";
 import { sendEmail } from "@/lib/email";
 import { env, features } from "@/lib/env";
@@ -67,9 +71,12 @@ export const auth = betterAuth({
           text: `This permanently deletes your account and data:\n\n${url}\n\nIf you didn't request this, ignore this email.`,
         });
       },
-      beforeDelete: async () => {
-        // M3: cancel the user's Stripe subscription here, before the DB
-        // rows cascade away.
+      beforeDelete: async (user) => {
+        // Cancel Stripe subscriptions before the DB rows cascade away —
+        // afterwards there is no record left to find the customer by.
+        if (features.billing) {
+          await cancelSubscriptionsForUser(user.id);
+        }
       },
     },
   },
@@ -103,10 +110,22 @@ export const auth = betterAuth({
     user: {
       create: {
         after: async (user) => {
-          // Every new account gets 10 welcome credits through the ledger —
-          // idempotent on welcome_{userId}. M3 adds Stripe customer
-          // creation here (features.billing).
+          // Every new account gets its welcome credits through the ledger —
+          // idempotent on welcome_{userId}.
           await grantWelcomeCredits(user.id);
+          // Stripe customers are created at signup, never lazily at
+          // checkout. Failure is non-fatal: signup must not depend on
+          // Stripe uptime; ensureStripeCustomer heals at checkout.
+          if (features.billing) {
+            try {
+              await ensureStripeCustomer(user);
+            } catch (error) {
+              console.error(
+                "[billing] Stripe customer creation at signup failed:",
+                error instanceof Error ? error.message : error,
+              );
+            }
+          }
         },
       },
     },
