@@ -1,6 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { requireSession } from "@/lib/auth/session";
 
-export default function GeneratePage() {
+export default async function GeneratePage() {
+  await requireSession();
   return (
     <div className="space-y-6">
       <div>
