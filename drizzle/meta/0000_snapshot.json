@@ -1,5 +1,5 @@
 {
-  "id": "9ee03643-40f4-4e2f-bd05-41afd177b9e4",
+  "id": "4b458d02-181a-4b3a-9e31-16c9f9d55e2e",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -507,7 +507,12 @@
         }
       },
       "policies": {},
-      "checkConstraints": {},
+      "checkConstraints": {
+        "users_credit_balance_nonnegative": {
+          "name": "users_credit_balance_nonnegative",
+          "value": "\"users\".\"credit_balance\" >= 0"
+        }
+      },
       "isRLSEnabled": false
     },
     "public.verifications": {

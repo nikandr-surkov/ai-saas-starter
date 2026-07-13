@@ -62,7 +62,8 @@ CREATE TABLE "users" (
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "users_email_unique" UNIQUE("email"),
-	CONSTRAINT "users_stripe_customer_id_unique" UNIQUE("stripe_customer_id")
+	CONSTRAINT "users_stripe_customer_id_unique" UNIQUE("stripe_customer_id"),
+	CONSTRAINT "users_credit_balance_nonnegative" CHECK ("users"."credit_balance" >= 0)
 );
 --> statement-breakpoint
 CREATE TABLE "verifications" (

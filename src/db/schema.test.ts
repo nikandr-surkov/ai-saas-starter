@@ -51,6 +51,14 @@ describe("users", () => {
     expect(users.creditBalance.hasDefault).toBe(true);
   });
 
+  it("refuses negative balances via CHECK — backstop under the spend guard", () => {
+    expect(
+      getTableConfig(users).checks.some(
+        (check) => check.name === "users_credit_balance_nonnegative",
+      ),
+    ).toBe(true);
+  });
+
   it("keeps stripeCustomerId unique", () => {
     expect(users.stripeCustomerId.isUnique).toBe(true);
   });

@@ -30,18 +30,27 @@ const timestamps = {
 // users additionally carries the app's Stripe pointer and the cached credit
 // balance (the cache is maintained ONLY by src/lib/credits/).
 
-export const users = pgTable("users", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
-  emailVerified: boolean("email_verified").notNull().default(false),
-  image: text("image"),
-  // Set at signup once billing is wired (M3). Written outside Better Auth.
-  stripeCustomerId: text("stripe_customer_id").unique(),
-  // Cache of SUM(credit_transactions.amount) — see src/lib/credits/.
-  creditBalance: integer("credit_balance").notNull().default(0),
-  ...timestamps,
-});
+export const users = pgTable(
+  "users",
+  {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    email: text("email").notNull().unique(),
+    emailVerified: boolean("email_verified").notNull().default(false),
+    image: text("image"),
+    // Set at signup once billing is wired (M3). Written outside Better Auth.
+    stripeCustomerId: text("stripe_customer_id").unique(),
+    // Cache of SUM(credit_transactions.amount) — see src/lib/credits/.
+    creditBalance: integer("credit_balance").notNull().default(0),
+    ...timestamps,
+  },
+  (t) => [
+    // Defense-in-depth under the conditional-UPDATE spend guard: even if a
+    // future code path bypasses src/lib/credits/, the database refuses a
+    // negative balance.
+    check("users_credit_balance_nonnegative", sql`${t.creditBalance} >= 0`),
+  ],
+);
 
 export const sessions = pgTable(
   "sessions",
