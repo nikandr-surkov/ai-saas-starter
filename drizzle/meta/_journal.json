@@ -15,6 +15,13 @@
       "when": 1783930220536,
       "tag": "0001_cool_edwin_jarvis",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783937540354,
+      "tag": "0002_condemned_toxin",
+      "breakpoints": true
     }
   ]
 }

@@ -1,0 +1,2 @@
+DROP INDEX "credit_transactions_user_id_idx";--> statement-breakpoint
+CREATE INDEX "credit_transactions_user_id_created_at_idx" ON "credit_transactions" USING btree ("user_id","created_at" DESC NULLS LAST);

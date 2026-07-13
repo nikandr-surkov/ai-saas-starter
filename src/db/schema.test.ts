@@ -35,12 +35,14 @@ describe("credit_transactions", () => {
     ).toBe(true);
   });
 
-  it("indexes userId (every FK gets an index)", () => {
-    expect(
-      config.indexes.some(
-        (index) => index.config.name === "credit_transactions_user_id_idx",
-      ),
-    ).toBe(true);
+  it("has the composite (user_id, created_at) index backing getHistory", () => {
+    const composite = config.indexes.find(
+      (index) =>
+        index.config.name === "credit_transactions_user_id_created_at_idx",
+    );
+    expect(composite).toBeDefined();
+    // user_id leads, so the index also serves as the FK index.
+    expect(composite?.config.columns).toHaveLength(2);
   });
 });
 

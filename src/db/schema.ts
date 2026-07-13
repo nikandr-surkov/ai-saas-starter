@@ -161,7 +161,12 @@ export const creditTransactions = pgTable(
       .defaultNow(),
   },
   (t) => [
-    index("credit_transactions_user_id_idx").on(t.userId),
+    // Composite: powers getHistory (newest-first per user); the user_id
+    // prefix also satisfies the every-FK-gets-an-index rule.
+    index("credit_transactions_user_id_created_at_idx").on(
+      t.userId,
+      t.createdAt.desc(),
+    ),
     check("credit_transactions_amount_nonzero", sql`${t.amount} <> 0`),
   ],
 );
