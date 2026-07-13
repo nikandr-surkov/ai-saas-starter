@@ -80,6 +80,16 @@ describe("parseEnv", () => {
     );
   });
 
+  it("refuses AI_MOCK in production — placeholders must never charge credits", () => {
+    expect(() =>
+      parseEnv({ ...validEnv, NODE_ENV: "production", AI_MOCK: "true" }),
+    ).toThrowError(/AI_MOCK/);
+    expect(
+      parseEnv({ ...validEnv, NODE_ENV: "production", AI_MOCK: "false" })
+        .AI_MOCK,
+    ).toBe(false);
+  });
+
   it("treats empty strings as unset", () => {
     const env = parseEnv({
       ...validEnv,

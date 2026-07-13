@@ -194,5 +194,12 @@ export const generations = pgTable(
       .notNull()
       .defaultNow(),
   },
-  (t) => [index("generations_user_id_idx").on(t.userId)],
+  (t) => [
+    // Composite: powers the history grid (newest-first per user); the
+    // user_id prefix also satisfies the every-FK-gets-an-index rule.
+    index("generations_user_id_created_at_idx").on(
+      t.userId,
+      t.createdAt.desc(),
+    ),
+  ],
 );

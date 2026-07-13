@@ -110,6 +110,14 @@ const schema = z
           });
         }
       }
+      if (env.AI_MOCK) {
+        ctx.addIssue({
+          code: "custom",
+          path: ["AI_MOCK"],
+          message:
+            "must not be enabled in production — it returns placeholder images while still charging credits",
+        });
+      }
     }
   });
 

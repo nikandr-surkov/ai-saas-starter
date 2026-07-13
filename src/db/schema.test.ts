@@ -70,7 +70,13 @@ describe("foreign-key indexes", () => {
   it.each([
     ["sessions", getTableConfig(sessions), "sessions_user_id_idx"],
     ["accounts", getTableConfig(accounts), "accounts_user_id_idx"],
-    ["generations", getTableConfig(generations), "generations_user_id_idx"],
+    // Composite (user_id, created_at DESC) — user_id leads, so it also
+    // serves as the FK index, mirroring credit_transactions.
+    [
+      "generations",
+      getTableConfig(generations),
+      "generations_user_id_created_at_idx",
+    ],
   ])("%s indexes user_id", (_name, config, indexName) => {
     expect(
       config.indexes.some((index) => index.config.name === indexName),
