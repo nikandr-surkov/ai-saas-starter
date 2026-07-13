@@ -89,6 +89,13 @@ const ledgerEntries = [
     ref: "checkout cs_a1b2c3",
     amount: 100,
   },
+  {
+    id: "5",
+    timestamp: "2026-07-01 00:00",
+    type: "expiry",
+    ref: "policy pro_annual",
+    amount: -40,
+  },
 ];
 
 function Section({

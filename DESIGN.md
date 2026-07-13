@@ -63,7 +63,9 @@ Derived (examples — keep derivations in CSS, not new hex values):
 
 - `--hairline` — default borders, row separators.
 - `--rule` — stronger 2px rules: top of ledger blocks, table header underline.
-- `--debit` — destructive/negative only (delete buttons, negative amounts).
+- `--debit` — destructive actions, errors, and expiry rows ONLY. Ordinary
+  negative amounts (routine spends) render in ink: spending credits is
+  normal operation, not a warning.
 
 ## Typography
 

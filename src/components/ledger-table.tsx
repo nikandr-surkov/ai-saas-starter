@@ -17,11 +17,15 @@ export type LedgerEntry = {
   id: string;
   /** Preformatted, e.g. "2026-07-12 09:14". */
   timestamp: string;
-  /** Ledger type, e.g. "subscription_grant", "spend", "refund", "topup". */
+  /** Ledger type, e.g. "subscription_grant", "spend", "refund", "expiry". */
   type: string;
   /** Preformatted reference, e.g. "invoice in_1Nx4h2". */
   ref: string;
-  /** Signed credits. Positive renders green, negative renders debit red. */
+  /**
+   * Signed credits. Positive renders green; negative renders ink — a
+   * routine spend is normal operation, not a warning. Only expiry rows
+   * render debit red (DESIGN.md token notes).
+   */
   amount: number;
 };
 
@@ -70,7 +74,8 @@ function LedgerTable({
             <TableCell
               className={cn(
                 "text-right font-mono",
-                entry.amount > 0 ? "text-primary" : "text-destructive",
+                entry.amount > 0 && "text-primary",
+                entry.type === "expiry" && "text-destructive",
               )}
             >
               {formatAmount(entry.amount)}

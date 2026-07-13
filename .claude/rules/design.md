@@ -16,7 +16,8 @@ Full system in DESIGN.md. The hard rules, restated:
   grids.
 - All numerals `tabular-nums`.
 - Accent green only for: primary CTA, links/active nav, positive credit
-  amounts, success states. `--debit` red only for destructive/negative.
+  amounts, success states. `--debit` red only for destructive actions,
+  errors, and expiry rows — routine spends render in ink, not red.
 - Motion is CSS-only, ≤200ms, and always inside a
   `prefers-reduced-motion: no-preference` guard.
 - Fonts: Instrument Sans (UI/display), Martian Mono (eyebrows, labels,
