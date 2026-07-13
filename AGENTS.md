@@ -104,6 +104,9 @@ no TODO comments left behind.
   must not double-grant: unique-key violation = already processed = success.
 - Testing subscription lifecycles (renewal, cancellation) needs Stripe **test
   clocks** — you can't wait a month. See README's Stripe section.
+- Stripe portal cancellations set `cancel_at`, not the legacy
+  `cancel_at_period_end` boolean — sync derives the flag from both. Don't
+  "simplify" it back.
 - Swap the image model via `AI_IMAGE_MODEL` env (format `provider/model`),
   not in code. `AI_MOCK=true` returns placeholder images: free dev and e2e.
 - Missing optional env degrades, not crashes: no Google/GitHub keys → button

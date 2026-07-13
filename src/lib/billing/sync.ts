@@ -56,7 +56,13 @@ export async function syncStripeDataToDb(customerId: string): Promise<void> {
     status: sub.status,
     priceId: item?.price.id ?? null,
     currentPeriodEnd: item ? new Date(item.current_period_end * 1000) : null,
-    cancelAtPeriodEnd: sub.cancel_at_period_end,
+    // Stripe's Basil changelog (2025-05-28, cancel_at enums): portal
+    // cancellations now set cancel_at (== current period end) and leave the
+    // legacy cancel_at_period_end boolean false — so derive the flag from
+    // both. Verified live: a portal cancel arrived exactly this way. No flow
+    // in this repo produces a mid-period cancel_at; storing the precise
+    // timestamp is deliberately out of scope (Pro version).
+    cancelAtPeriodEnd: sub.cancel_at_period_end || sub.cancel_at != null,
     paymentMethodBrand: paymentMethod?.card?.brand ?? null,
     paymentMethodLast4: paymentMethod?.card?.last4 ?? null,
   };

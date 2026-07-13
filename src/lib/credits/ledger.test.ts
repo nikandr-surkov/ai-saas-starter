@@ -1,13 +1,11 @@
 import { randomUUID } from "node:crypto";
 
 import { desc, eq, sql } from "drizzle-orm";
-import { migrate } from "drizzle-orm/node-postgres/migrator";
-import { Pool } from "pg";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 import { db } from "@/db";
 import { creditTransactions, users } from "@/db/schema";
-import { env } from "@/lib/env";
+import { closeDb, ensureTestDatabase } from "@/test/db";
 
 import {
   InsufficientCreditsError,
@@ -27,30 +25,11 @@ import {
 //   users.credit_balance === SUM(credit_transactions.amount)
 
 beforeAll(async () => {
-  // Create the test database if missing (local convenience — CI's service
-  // container provides one), then bring it to the current schema. Applying
-  // committed migrations to this throwaway DB is test tooling, not a
-  // deployment.
-  const dbName = new URL(env.DATABASE_URL).pathname.slice(1);
-  const adminUrl = new URL(env.DATABASE_URL);
-  adminUrl.pathname = "/postgres";
-  const admin = new Pool({ connectionString: adminUrl.toString(), max: 1 });
-  try {
-    const exists = await admin.query(
-      "SELECT 1 FROM pg_database WHERE datname = $1",
-      [dbName],
-    );
-    if (exists.rowCount === 0) {
-      await admin.query(`CREATE DATABASE "${dbName}"`);
-    }
-  } finally {
-    await admin.end();
-  }
-  await migrate(db, { migrationsFolder: "drizzle" });
+  await ensureTestDatabase();
 }, 60_000);
 
 afterAll(async () => {
-  await (db.$client as Pool).end();
+  await closeDb();
 });
 
 let userCounter = 0;
