@@ -4,6 +4,10 @@ import { magicLink } from "better-auth/plugins";
 
 import { db } from "@/db";
 import * as schema from "@/db/schema";
+import MagicLinkEmail from "@/emails/magic-link";
+import ResetPasswordEmail from "@/emails/reset-password";
+import VerifyEmail from "@/emails/verify-email";
+import WelcomeEmail from "@/emails/welcome";
 import {
   cancelSubscriptionsForUser,
   ensureStripeCustomer,
@@ -90,7 +94,7 @@ export const auth = betterAuth({
       await sendEmail({
         to: user.email,
         subject: "Reset your password",
-        text: `Reset your password:\n\n${url}\n\nThe link expires in one hour. If you didn't request this, ignore this email.`,
+        react: ResetPasswordEmail({ url }),
       });
     },
   },
@@ -101,7 +105,7 @@ export const auth = betterAuth({
       await sendEmail({
         to: user.email,
         subject: "Verify your email address",
-        text: `Welcome. Verify your email address to activate your account:\n\n${url}`,
+        react: VerifyEmail({ url }),
       });
     },
   },
@@ -113,6 +117,22 @@ export const auth = betterAuth({
           // Every new account gets its welcome credits through the ledger —
           // idempotent on welcome_{userId}.
           await grantWelcomeCredits(user.id);
+          // Welcome email is best-effort — signup never fails on email.
+          try {
+            await sendEmail({
+              to: user.email,
+              subject: "Welcome — your credits are ready",
+              react: WelcomeEmail({
+                name: user.name,
+                appUrl: env.BETTER_AUTH_URL,
+              }),
+            });
+          } catch (error) {
+            console.error(
+              "[email] welcome email failed:",
+              error instanceof Error ? error.message : error,
+            );
+          }
           // Stripe customers are created at signup, never lazily at
           // checkout. Failure is non-fatal: signup must not depend on
           // Stripe uptime; ensureStripeCustomer heals at checkout.
@@ -137,7 +157,7 @@ export const auth = betterAuth({
             await sendEmail({
               to: email,
               subject: "Your sign-in link",
-              text: `Sign in to your account:\n\n${url}\n\nThe link expires in five minutes. If you didn't request this, ignore this email.`,
+              react: MagicLinkEmail({ url }),
             });
           },
         }),

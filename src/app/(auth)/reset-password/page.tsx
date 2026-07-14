@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ResetPasswordForm } from "@/components/auth/reset-password-form";
 
 export const metadata: Metadata = {
-  title: "Set new password — ai-saas-starter",
+  title: "Set new password",
 };
 
 export default async function ResetPasswordPage({

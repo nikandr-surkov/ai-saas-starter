@@ -1,7 +1,13 @@
 import type Stripe from "stripe";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
 
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import SubscriptionConfirmedEmail from "@/emails/subscription-confirmed";
 import { grantCredits } from "@/lib/credits";
+import { sendEmail } from "@/lib/email";
+import { env } from "@/lib/env";
 
 import { userIdForStripeCustomer } from "./customer";
 import { planByPriceId } from "./plans";
@@ -30,6 +36,7 @@ const customerField = z.object({
 
 const invoiceSchema = z.object({
   id: z.string(),
+  billing_reason: z.string().nullish(),
   parent: z.object({ type: z.string() }).nullish(),
   lines: z.object({
     data: z.array(
@@ -117,6 +124,34 @@ async function grantSubscriptionCredits(
     ref: { type: "invoice", id: invoice.id },
     idempotencyKey: `grant_${invoice.id}`,
   });
+
+  // First invoice of a new subscription → confirmation email. Best-effort:
+  // a mail failure must never 500 the webhook into a Stripe retry loop.
+  if (invoice.billing_reason === "subscription_create") {
+    try {
+      const [user] = await db
+        .select({ email: users.email })
+        .from(users)
+        .where(eq(users.id, userId))
+        .limit(1);
+      if (user) {
+        await sendEmail({
+          to: user.email,
+          subject: `${plan.name} is active — ${plan.monthlyCredits} credits granted`,
+          react: SubscriptionConfirmedEmail({
+            planName: plan.name,
+            monthlyCredits: plan.monthlyCredits,
+            appUrl: env.BETTER_AUTH_URL,
+          }),
+        });
+      }
+    } catch (error) {
+      console.error(
+        "[email] subscription confirmation failed:",
+        error instanceof Error ? error.message : error,
+      );
+    }
+  }
 }
 
 /**

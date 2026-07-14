@@ -11,7 +11,7 @@ import { getHistory } from "@/lib/credits";
 import { LedgerTable, type LedgerEntry } from "@/components/ledger-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export const metadata: Metadata = { title: "Dashboard — ai-saas-starter" };
+export const metadata: Metadata = { title: "Dashboard" };
 
 function formatTimestamp(date: Date): string {
   // UTC, ledger style: 2026-07-13 09:14

@@ -5,6 +5,8 @@ export const siteConfig = {
   name: "ai-saas-starter",
   description:
     "Open-source SaaS foundation: auth, Stripe subscriptions, and a credits ledger that survives webhook retries.",
+  /** Canonical production URL — set to your deployment before launch. */
+  url: "https://ai-saas-starter.vercel.app",
   github: "https://github.com/nikandr-surkov/ai-saas-starter",
   /** The paid multi-provider version. One link, no upsell copy. */
   pro: "https://nikandr.com",

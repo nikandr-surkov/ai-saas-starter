@@ -11,7 +11,7 @@ import { auth } from "@/lib/auth";
 import { requireSession } from "@/lib/auth/session";
 import { features } from "@/lib/env";
 
-export const metadata: Metadata = { title: "Settings — ai-saas-starter" };
+export const metadata: Metadata = { title: "Settings" };
 
 export default async function SettingsPage() {
   const session = await requireSession();

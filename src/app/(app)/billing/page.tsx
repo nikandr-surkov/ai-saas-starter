@@ -20,7 +20,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export const metadata: Metadata = { title: "Billing — ai-saas-starter" };
+export const metadata: Metadata = { title: "Billing" };
 
 function usd(cents: number): string {
   return `$${(cents / 100).toLocaleString("en-US", { maximumFractionDigits: 2 })}`;

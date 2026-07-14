@@ -29,10 +29,10 @@ instincts conflict with this file, this file wins.
 | `pnpm db:migrate`      | Apply pending migrations                                   |
 | `pnpm db:studio`       | Drizzle Studio, browse the DB                              |
 | `pnpm stripe:listen`   | Stripe CLI → forwards webhooks to localhost:3000           |
-| `pnpm email:dev`       | React Email preview server (M6)                            |
+| `pnpm email:dev`       | React Email preview server                                 |
 | `docker compose up -d` | Local Postgres 17                                          |
 
-Scripts marked (M6)/(M7) land in that milestone — they are not in
+Scripts marked (M7) land in that milestone — they are not in
 `package.json` yet. Remove each marker when its script arrives.
 
 ## Definition of done

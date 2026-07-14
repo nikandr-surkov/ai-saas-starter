@@ -1,26 +1,51 @@
+import Link from "next/link";
+
 import { siteConfig } from "@/config/site";
 
 export function MarketingFooter() {
   return (
     <footer className="border-t">
-      <div className="mx-auto flex w-full max-w-[1160px] flex-col gap-4 px-6 py-10 font-mono text-xs tracking-wider text-muted-foreground uppercase sm:flex-row sm:items-center sm:justify-between">
-        <p>{siteConfig.name} · MIT</p>
-        <nav className="flex gap-6">
+      <div className="mx-auto flex w-full max-w-[1160px] flex-col gap-3 px-6 pt-7 pb-10 font-mono text-[10.5px] tracking-wider text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <span>
+          <span aria-hidden className="text-primary">
+            ▮
+          </span>{" "}
+          {siteConfig.name} · MIT · 2026
+        </span>
+        <nav className="flex flex-wrap gap-x-4 gap-y-1">
           <a
             href={siteConfig.github}
             target="_blank"
             rel="noreferrer"
             className="transition-colors hover:text-foreground"
           >
-            GitHub
+            github
           </a>
+          <Link
+            href="/pricing"
+            className="transition-colors hover:text-foreground"
+          >
+            pricing
+          </Link>
+          <Link
+            href="/privacy"
+            className="transition-colors hover:text-foreground"
+          >
+            privacy
+          </Link>
+          <Link
+            href="/terms"
+            className="transition-colors hover:text-foreground"
+          >
+            terms
+          </Link>
           <a
             href={siteConfig.pro}
             target="_blank"
             rel="noreferrer"
             className="transition-colors hover:text-foreground"
           >
-            Pro version
+            nikandr.com
           </a>
         </nav>
       </div>

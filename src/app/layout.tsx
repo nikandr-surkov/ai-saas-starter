@@ -3,6 +3,7 @@ import { Instrument_Sans, Martian_Mono } from "next/font/google";
 import "./globals.css";
 
 import { Toaster } from "@/components/ui/sonner";
+import { siteConfig } from "@/config/site";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
@@ -15,9 +16,27 @@ const martianMono = Martian_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ai-saas-starter",
-  description:
-    "Open-source SaaS foundation: auth, Stripe subscriptions, and a credits ledger that survives webhook retries.",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: `${siteConfig.name} — auth, Stripe, and a credits ledger that survives retries`,
+    template: `%s — ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [
+      { url: "/og.png", width: 1200, height: 630, alt: siteConfig.name },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: ["/og.png"],
+  },
 };
 
 // Applies the stored (or system) theme before first paint — no flash.

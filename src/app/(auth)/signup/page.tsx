@@ -5,7 +5,7 @@ import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { SignupForm } from "@/components/auth/signup-form";
 import { features } from "@/lib/env";
 
-export const metadata: Metadata = { title: "Create account — ai-saas-starter" };
+export const metadata: Metadata = { title: "Create account" };
 
 export default function SignupPage() {
   return (

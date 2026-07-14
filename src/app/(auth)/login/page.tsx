@@ -5,7 +5,7 @@ import { LoginForm } from "@/components/auth/login-form";
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { features } from "@/lib/env";
 
-export const metadata: Metadata = { title: "Sign in — ai-saas-starter" };
+export const metadata: Metadata = { title: "Sign in" };
 
 export default async function LoginPage({
   searchParams,

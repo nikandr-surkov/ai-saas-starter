@@ -9,7 +9,7 @@ import { requireSession } from "@/lib/auth/session";
 import { env } from "@/lib/env";
 import { GenerateForm } from "@/components/generate/generate-form";
 
-export const metadata: Metadata = { title: "Generate — ai-saas-starter" };
+export const metadata: Metadata = { title: "Generate" };
 
 function formatTimestamp(date: Date): string {
   return date.toISOString().slice(0, 16).replace("T", " ");
