@@ -6,6 +6,7 @@ import { GENERATION_COST_CREDITS } from "@/config/plans";
 import { db } from "@/db";
 import { generations } from "@/db/schema";
 import { requireSession } from "@/lib/auth/session";
+import { env } from "@/lib/env";
 import { GenerateForm } from "@/components/generate/generate-form";
 
 export const metadata: Metadata = { title: "Generate — ai-saas-starter" };
@@ -34,6 +35,7 @@ export default async function GeneratePage() {
       <GenerateForm
         balance={session.user.creditBalance ?? 0}
         cost={GENERATION_COST_CREDITS}
+        mock={env.AI_MOCK}
       />
 
       <section>

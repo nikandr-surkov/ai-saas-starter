@@ -25,9 +25,12 @@ const errorMessages: Record<NonNullable<GenerateResult["error"]>, string> = {
 export function GenerateForm({
   balance,
   cost,
+  mock,
 }: {
   balance: number;
   cost: number;
+  /** AI_MOCK is on — surface the "FAIL" failure switch in the placeholder. */
+  mock: boolean;
 }) {
   const formRef = React.useRef<HTMLFormElement>(null);
   // The server action goes to useActionState directly, keeping the form
@@ -57,7 +60,11 @@ export function GenerateForm({
         <Textarea
           id="generate-prompt"
           name="prompt"
-          placeholder="A ledger book on a desk, studio light"
+          placeholder={
+            mock
+              ? 'A ledger book on a desk, studio light — mock mode: "FAIL" in the prompt simulates a provider error and refunds the credit'
+              : "A ledger book on a desk, studio light"
+          }
           minLength={3}
           maxLength={1000}
           required

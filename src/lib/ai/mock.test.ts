@@ -19,4 +19,13 @@ describe("mock provider", () => {
     expect(first.width).toBe(1024);
     expect(first.height).toBe(1024);
   });
+
+  it('throws when the prompt contains "FAIL" — the demoable failure switch', async () => {
+    await expect(
+      mockProvider.generateImage({
+        prompt: "this one should FAIL loudly",
+        userId: "user_1",
+      }),
+    ).rejects.toThrow(/simulated failure/);
+  });
 });

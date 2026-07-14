@@ -44,6 +44,7 @@ vi.mock("@/lib/credits", async (importOriginal) => ({
 
 import { db } from "@/db";
 import { creditTransactions, generations, users } from "@/db/schema";
+import { mockProvider } from "@/lib/ai/mock";
 import * as credits from "@/lib/credits";
 import { grantCredits } from "@/lib/credits";
 import { closeDb, ensureTestDatabase } from "@/test/db";
@@ -197,6 +198,29 @@ describe("generateImageAction", () => {
     expect(rows).toHaveLength(10); // no 11th record either
     expect(spends).toHaveLength(10);
     expect(await balanceOf(userId)).toBe(10);
+    await expectInvariant(userId);
+  });
+
+  it("FAIL prompt through the REAL mock provider: spend + refund, balance unchanged, marked failed", async () => {
+    const userId = await createUser(5);
+    // Delegate to the real mock provider so its failure switch is exercised
+    // end to end through the action (the M7 Playwright suite drives the
+    // same string through the browser).
+    providerGenerate.mockImplementationOnce((input) =>
+      mockProvider.generateImage(input),
+    );
+
+    const result = await runAction(
+      promptForm("A ledger book, but make it FAIL"),
+    );
+
+    expect(result).toEqual({ ok: false, error: "generation_failed" });
+    expect(await balanceOf(userId)).toBe(5); // round-trip: unchanged
+    const { generations: rows, spends, refunds } = await rowsFor(userId);
+    expect(rows).toHaveLength(1);
+    expect(rows[0]?.status).toBe("failed");
+    expect(spends).toHaveLength(1);
+    expect(refunds).toHaveLength(1);
     await expectInvariant(userId);
   });
 

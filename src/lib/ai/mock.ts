@@ -13,7 +13,15 @@ const placeholderDataUrl = `data:image/svg+xml;base64,${Buffer.from(placeholderS
 
 export const mockProvider: ImageProvider = {
   modelId: "mock/placeholder",
-  async generateImage() {
+  async generateImage({ prompt }) {
+    // Failure switch: a prompt containing "FAIL" simulates a provider error,
+    // making the spend → fail → refund path demoable in the browser and
+    // testable end-to-end (documented in .env.example next to AI_MOCK).
+    if (prompt.includes("FAIL")) {
+      throw new Error(
+        "mock provider: simulated failure (prompt contains FAIL)",
+      );
+    }
     return {
       url: placeholderDataUrl,
       width: WIDTH,
