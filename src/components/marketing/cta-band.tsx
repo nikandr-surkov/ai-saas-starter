@@ -23,7 +23,7 @@ export function CtaBand() {
             rel="noreferrer"
             className="border-b border-rule pb-0.5 font-mono text-xs tracking-wider text-foreground uppercase transition-colors hover:border-foreground"
           >
-            Pro version →
+            Pro version · $299 →
           </a>
         </div>
       </div>

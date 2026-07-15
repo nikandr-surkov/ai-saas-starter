@@ -56,7 +56,7 @@ export function Compare() {
                 Free · this repo
               </th>
               <th className="w-[240px] border-b px-2 py-3.5 text-center font-normal">
-                Pro ·{" "}
+                Pro · $299 ·{" "}
                 <a
                   href={siteConfig.pro}
                   target="_blank"

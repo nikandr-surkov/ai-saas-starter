@@ -24,16 +24,13 @@ instincts conflict with this file, this file wins.
 | `pnpm lint`            | ESLint                                                     |
 | `pnpm format`          | Prettier, write mode                                       |
 | `pnpm test`            | Vitest. Ledger tests need Postgres: `docker compose up -d` |
-| `pnpm test:e2e`        | Playwright. Set `AI_MOCK=true` so generation is free (M7)  |
+| `pnpm test:e2e`        | Playwright vs dev server. Needs Postgres up                |
 | `pnpm db:generate`     | drizzle-kit: `src/db/schema.ts` → SQL migration            |
 | `pnpm db:migrate`      | Apply pending migrations                                   |
 | `pnpm db:studio`       | Drizzle Studio, browse the DB                              |
 | `pnpm stripe:listen`   | Stripe CLI → forwards webhooks to localhost:3000           |
 | `pnpm email:dev`       | React Email preview server                                 |
 | `docker compose up -d` | Local Postgres 17                                          |
-
-Scripts marked (M7) land in that milestone — they are not in
-`package.json` yet. Remove each marker when its script arrives.
 
 ## Definition of done
 

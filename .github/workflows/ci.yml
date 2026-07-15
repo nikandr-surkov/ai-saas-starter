@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm typecheck
+
+      - run: pnpm lint
+
+      # Vitest. The ledger/sync/action suites create and migrate their own
+      # ai_saas_starter_test database on the service container.
+      - run: pnpm test
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/ai_saas_starter_test
+
+      # Production build. NODE_ENV=production enforces the full env schema:
+      # the dummy Stripe values below satisfy it, and AI_MOCK stays UNSET —
+      # env validation refuses AI_MOCK=true in production (src/lib/env.ts).
+      # This env context is deliberately separate from the e2e step's.
+      - run: pnpm build
+        env:
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/ai_saas_starter_test
+          BETTER_AUTH_SECRET: ci-only-secret-ci-only-secret-ci-only
+          STRIPE_SECRET_KEY: sk_test_ci_dummy
+          STRIPE_WEBHOOK_SECRET: whsec_ci_dummy
+          STRIPE_PRICE_PRO_MONTHLY: price_ci_pro
+          STRIPE_PRICE_ULTRA_MONTHLY: price_ci_ultra
+          STRIPE_PRICE_TOPUP_100: price_ci_topup
+
+      - run: pnpm exec playwright install --with-deps chromium
+
+      # e2e runs against `next dev`, NOT the build above, on purpose:
+      # generation must be free (AI_MOCK=true) and env validation refuses
+      # that flag in production builds — a build+start e2e would either fail
+      # to boot or hit a real provider. playwright.config.ts boots its own
+      # dev server with AI_MOCK/DATABASE_URL/BETTER_AUTH_* set for e2e.
+      # Do not "fix" this into a prod-build run.
+      - run: pnpm test:e2e
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-traces
+          path: test-results/
+          retention-days: 7

@@ -32,7 +32,7 @@ export default async function AppLayout({
           <div className="ml-auto flex items-center gap-4">
             <div className="flex items-baseline gap-2" title="Credit balance">
               <span className="eyebrow">Credits</span>
-              <span className="font-mono text-sm">
+              <span className="font-mono text-sm" data-testid="credit-balance">
                 {session.user.creditBalance}
               </span>
             </div>

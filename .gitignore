@@ -46,3 +46,7 @@ next-env.d.ts
 
 # local scratch/review artifacts
 /_to_delete/
+
+# playwright artifacts
+/test-results/
+/playwright-report/
