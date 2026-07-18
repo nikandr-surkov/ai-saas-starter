@@ -1,16 +1,18 @@
 # ai-saas-starter
 
-Open-source SaaS foundation: auth, Stripe subscriptions, an append-only
-credits ledger, and AI image generation — built as an AI-native repo that
-Claude Code, Cursor, and Codex can extend without breaking the money paths.
+The free, open-source AI SaaS boilerplate and starter kit for Next.js 16.
+
+Auth, Stripe subscriptions, an append-only credits ledger, and AI image
+generation — built as an AI-native repo that Claude Code, Cursor, and
+Codex can extend without breaking the money paths.
 
 [![CI](https://github.com/nikandr-surkov/ai-saas-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/nikandr-surkov/ai-saas-starter/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-1f7a4d.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/nikandr-surkov/ai-saas-starter)](https://github.com/nikandr-surkov/ai-saas-starter/stargazers)
 
-![The Ledger — landing page](docs/landing.png)
+![ai-saas-starter — Next.js AI SaaS boilerplate, landing page in the Ledger design (light theme)](docs/landing.png)
 
-## Why
+## Why another SaaS boilerplate?
 
 AI assistants are good at building product features and bad at the 20% that
 loses money when improvised: webhook retries, concurrent spends, refund
@@ -155,6 +157,12 @@ comment in [playwright.config.ts](playwright.config.ts) explains.
 standard most products never reach (races, replays, invariants, adversarial
 webhooks). The legal pages are placeholders and the product on top is
 yours to build.
+
+**Is this a free alternative to ShipFast or Makerkit?** It overlaps where
+every SaaS starter overlaps — auth, Stripe, landing page — but the focus
+is different: a tested credits ledger, an AI generation loop, and agent
+context files, free and MIT. The paid kits are broader (teams, i18n,
+admin); the Pro version covers that ground.
 
 **Why is generation mocked by default?** So a fresh clone works offline and
 free. Set `AI_GATEWAY_API_KEY` and `AI_MOCK=false` for real images; in mock
