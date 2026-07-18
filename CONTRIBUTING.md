@@ -27,6 +27,7 @@ pnpm dev
 - Schema changes: edit `src/db/schema.ts`, `pnpm db:generate`, review the
   SQL, commit schema + migration together. Never edit an applied migration.
 - UI follows [DESIGN.md](DESIGN.md). Check `/styleguide` in both themes.
+- If you added tests, update the test counts in README.md and CHANGELOG.md.
 - Conventional commits (`feat:`, `fix:`, `docs:`, `chore:`).
 
 ## Using an AI agent to contribute

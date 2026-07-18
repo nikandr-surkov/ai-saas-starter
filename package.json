@@ -2,6 +2,12 @@
   "name": "ai-saas-starter",
   "version": "0.1.0",
   "private": true,
+  "description": "Open-source SaaS foundation: auth, Stripe subscriptions, an append-only credits ledger, and AI image generation — built AI-native.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nikandr-surkov/ai-saas-starter.git"
+  },
+  "author": "Nikandr Surkov <nikandr.dev@gmail.com> (https://nikandr.com)",
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
