@@ -138,18 +138,55 @@ comment in [playwright.config.ts](playwright.config.ts) explains.
    advance time. Portal cancellations set `cancel_at` (not the legacy
    boolean) — the sync handles both; don't "simplify" it.
 
-## Deploy (Vercel)
+## Deploy to production (Vercel + Neon)
 
-1. Push to GitHub, import in Vercel.
-2. Set the env vars from `.env.example` — in production the Stripe vars are
-   required at boot, `AI_MOCK` must be false/unset, and you'll want
-   `BLOB_READ_WRITE_TOKEN` (image storage) plus a real `RESEND_API_KEY`.
-3. Point a production Stripe webhook at
-   `https://your-domain/api/stripe/webhook` and use ITS signing secret.
-4. Set `BETTER_AUTH_URL` and `siteConfig.url`
-   ([src/config/site.ts](src/config/site.ts)) to your domain.
-5. Run migrations against your production database:
-   `DATABASE_URL=... pnpm db:migrate`.
+The order matters — follow it top to bottom.
+
+1. **Neon** — create a project and copy BOTH connection strings: the
+   **pooled** one (contains `-pooler`, for the running app) and the
+   **direct** one (for migrations).
+2. **Vercel** — import the GitHub repo. Don't deploy yet.
+3. **Blob store** — in the Vercel project: Storage → Create → Blob, with
+   **Access: Public**, and **tick "Add a read-write token env var"** — the
+   default flow skips it and leaves `BLOB_READ_WRITE_TOKEN` unset, which
+   silently sends generated images to the (nonexistent) local fallback.
+4. **Environment variables** — everything from `.env.example`:
+
+   | Variable                               | Value                                     |
+   | -------------------------------------- | ----------------------------------------- |
+   | `DATABASE_URL`                         | the **pooled** Neon URL (runtime traffic) |
+   | `BETTER_AUTH_SECRET`                   | `openssl rand -base64 32`                 |
+   | `BETTER_AUTH_URL`                      | the exact deployed URL — see step 9       |
+   | `STRIPE_SECRET_KEY` + 3 price IDs      | from your Stripe dashboard                |
+   | `STRIPE_WEBHOOK_SECRET`                | placeholder for now — replaced in step 7  |
+   | `AI_GATEWAY_API_KEY`, `AI_IMAGE_MODEL` | AI Gateway; `AI_MOCK` stays UNSET         |
+   | `RESEND_API_KEY`, `EMAIL_FROM`         | verified Resend domain                    |
+   | `BLOB_READ_WRITE_TOKEN`                | added by step 3's checkbox                |
+
+5. **Deploy** and note the real production domain Vercel assigns — it may
+   suffix the project name (e.g. `-six`).
+6. **Migrate once**, locally, with the **direct** URL (the pooler rejects
+   some DDL): `DATABASE_URL="<direct Neon URL>" pnpm db:migrate`
+7. **Stripe webhook** — create the endpoint for the REAL deployed domain:
+   `https://<real-domain>/api/stripe/webhook`, events `invoice.paid`,
+   `checkout.session.completed`, `customer.subscription.updated`,
+   `customer.subscription.deleted` — then copy its `whsec_...` into the
+   Vercel env, replacing the placeholder.
+8. **Redeploy** — env changes never apply to a running deployment.
+9. **Pin the domain** — set `BETTER_AUTH_URL` (env) and `siteConfig.url`
+   ([src/config/site.ts](src/config/site.ts)) to the exact production URL
+   from step 5, push, and redeploy if either changed.
+
+### Common deploy errors
+
+| Error                                              | Cause                                                                                              | Fix                                                                |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `Invalid origin: ...` on signup/login              | `BETTER_AUTH_URL` doesn't match the actual domain — Vercel may have suffixed the project name      | Set the exact URL in the env, redeploy                             |
+| `Free tier users do not have access to this model` | The AI Gateway key has no paid credits — the key's quota is a spending cap, not a balance          | Add credits to the gateway account, or bring your own provider key |
+| Signup 500 / `relation "users" does not exist`     | Migrations never ran against the production database                                               | `DATABASE_URL="<direct Neon URL>" pnpm db:migrate`                 |
+| Subscribed but no credits arrived                  | Webhook endpoint points at the wrong domain, stale `whsec_`, or the env changed without a redeploy | Recheck step 7's domain, replace the secret, redeploy              |
+
+Every env change requires a redeploy — Vercel bakes env at build time.
 
 ## FAQ
 
