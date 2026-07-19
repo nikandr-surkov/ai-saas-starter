@@ -4,25 +4,32 @@ paths:
   - "src/app/(marketing)/**"
 ---
 
-# Design rules — "The Ledger"
+# Design rules — "The Ledger", Neo-Brutalist edition (v2)
 
 Full system in DESIGN.md. The hard rules, restated:
 
-- No gradients. No glassmorphism or `backdrop-blur`. No drop shadows —
-  borders and the paper/paper-2 surface ladder only (focus rings exempt).
-- Radius is 2px everywhere.
-- No emoji in the UI. Icons are lucide-react.
-- Features/lists render as numbered, ruled **ledger rows** — never 3-card
-  grids.
-- All numerals `tabular-nums`.
-- Accent green only for: primary CTA, links/active nav, positive credit
-  amounts, success states. `--debit` red only for destructive actions,
-  errors, and expiry rows — routine spends render in ink, not red.
-- Motion is CSS-only, ≤200ms, and always inside a
-  `prefers-reduced-motion: no-preference` guard.
-- Fonts: Instrument Sans (UI/display), Martian Mono (eyebrows, labels,
-  numbers, code). Nothing else.
-- Copy: brief, concrete, names real technologies. Banned: "Build faster",
-  "Ship smarter", "Streamline", "Supercharge", "Unleash".
-- Use existing tokens from `globals.css`; derive new shades with
-  `color-mix()`, never new hex/oklch literals in components.
+- 2px solid `var(--ink)` borders on every container, button, input,
+  table. No faint hairlines.
+- Shadows are HARD offsets only (`4px 4px 0 0 var(--ink)`), no blur.
+  Soft shadows, gradients, and glassmorphism stay banned.
+- Interactive press physics: hover −2px/−2px with a 6px shadow; active
+  +2px/+2px with no shadow.
+- Radius 6px globally; pills only for badges/stickers.
+- Accent green only for primary actions, positive amounts, success.
+  Yellow `--highlight` is for emphasis marks only — NEVER buttons.
+  `--debit` red only for destructive/errors/expiry; spends are ink.
+  Raw `--debit` is illegal as light-mode text — use `--debit-text`.
+- One rotated sticker per page, maximum.
+- Features/lists render as numbered ledger rows with 2px separators —
+  never card grids.
+- All numerals `tabular-nums`. No emoji; icons are lucide-react.
+- Display type is Bricolage Grotesque (700/800); body Instrument Sans;
+  mono Martian Mono. Nothing else.
+- Focus rings: ink, 2px, offset 2px — on every focusable element.
+- Motion CSS-only, ≤200ms, always inside the `prefers-reduced-motion`
+  guard. No scroll-jacking, marquees, or infinite loops.
+- Copy: brief, concrete, real technology names. Banned: "Build faster",
+  "Ship smarter", "Streamline", "Supercharge", "Unleash". No emoji, no
+  exclamation marks. Errors are human sentences with a next step.
+- Use tokens from `globals.css`; derive shades with `color-mix()`, never
+  new hex/oklch literals in components.
