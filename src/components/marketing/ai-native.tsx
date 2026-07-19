@@ -25,7 +25,7 @@ export function AiNative() {
       id="ai-native"
       className="mx-auto w-full max-w-[1160px] scroll-mt-16 px-6 pt-26"
     >
-      <div className="mb-11 max-w-[62ch]">
+      <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Built for agents</p>
         <h2 className="mt-3 mb-3 text-3xl">
           Your AI assistant gets a briefing, guardrails, and a definition of
@@ -37,10 +37,10 @@ export function AiNative() {
         </p>
       </div>
       <div className="grid items-start gap-14 lg:grid-cols-2">
-        <div className="rounded-sm border border-rule px-5 py-5 font-mono text-xs leading-8 font-light">
+        <div className="rounded-md border-2 px-5 py-5 font-mono text-xs leading-8 font-light">
           {tree.map(([name, comment, highlight]) => (
             <div key={name} className="whitespace-nowrap">
-              <span className={highlight ? "text-primary" : ""}>{name}</span>
+              <span className={highlight ? "text-primary-text" : ""}>{name}</span>
               {comment ? (
                 <span className="text-muted-foreground"> {comment}</span>
               ) : null}
@@ -51,9 +51,9 @@ export function AiNative() {
           {checklist.map((item) => (
             <li
               key={item}
-              className="border-b py-2.5 text-[15.5px] last:border-0"
+              className="border-b-2 py-2.5 text-[15.5px] last:border-0"
             >
-              <span aria-hidden className="font-mono text-primary">
+              <span aria-hidden className="font-mono text-primary-text">
                 ✓{" "}
               </span>
               {item}

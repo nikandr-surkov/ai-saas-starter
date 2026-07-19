@@ -30,7 +30,7 @@ function LedgerRow({
   return (
     <li
       className={cn(
-        "grid grid-cols-[2.5rem_1fr] items-baseline gap-x-4 border-b px-2 py-5 transition-colors hover:bg-accent-soft sm:grid-cols-[3rem_1fr_auto]",
+        "grid grid-cols-[2.5rem_1fr] items-baseline gap-x-4 border-b-2 px-2 py-5 transition-[background-color,translate] hover:bg-accent-soft motion-safe:hover:translate-x-0.5 sm:grid-cols-[3rem_1fr_auto]",
         className,
       )}
       {...props}

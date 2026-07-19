@@ -8,7 +8,7 @@ export default function AuthLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="flex h-14 items-center justify-between border-b px-6">
+      <header className="flex h-14 items-center justify-between border-b-2 px-6">
         <Link href="/" className="font-mono text-sm font-medium">
           {siteConfig.name}
         </Link>

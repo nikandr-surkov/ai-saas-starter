@@ -3,6 +3,8 @@ import { StarIcon } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 
+import { Sticker } from "@/components/sticker";
+
 import { CopyInstall } from "./copy-install";
 import { HeroLedger } from "./hero-ledger";
 
@@ -14,8 +16,10 @@ export function Hero() {
           <p className="eyebrow">Open source · MIT · Next.js 16</p>
           <h1 className="text-display mt-5 mb-4">
             Auth, Stripe subscriptions, and a{" "}
-            <span className="text-primary">credits ledger</span> that survives
-            webhook retries.
+            <span className="bg-highlight px-1.5 text-on-accent">
+              credits ledger
+            </span>{" "}
+            that survives webhook retries.
           </h1>
           <p className="mb-7 max-w-[52ch] text-lg text-muted-foreground">
             A complete AI-SaaS foundation — Better Auth, Drizzle, atomic credit
@@ -25,7 +29,7 @@ export function Hero() {
           <div className="mb-7 flex flex-wrap items-center gap-6">
             <Link
               href="/signup"
-              className="inline-flex items-center rounded-sm bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+              className="inline-flex items-center rounded-md border-2 press bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground"
             >
               Start free — 10 credits
             </Link>
@@ -41,7 +45,13 @@ export function Hero() {
           </div>
           <CopyInstall command={`git clone ${siteConfig.github}.git`} />
         </div>
-        <HeroLedger />
+        <div className="relative">
+          {/* The page's one sticker (DESIGN.md v2 hard rule 6). */}
+          <Sticker className="absolute -top-4 -right-2 z-10">
+            10 free credits
+          </Sticker>
+          <HeroLedger />
+        </div>
       </div>
     </header>
   );

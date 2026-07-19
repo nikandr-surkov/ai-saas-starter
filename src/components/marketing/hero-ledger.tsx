@@ -20,7 +20,7 @@ const balance = rows.reduce((sum, row) => sum + row.amount, 0);
 
 function amountClass(row: (typeof rows)[number]): string {
   if (row.type === "expiry") return "text-destructive";
-  return row.amount > 0 ? "text-primary" : "text-foreground";
+  return row.amount > 0 ? "text-primary-text" : "text-foreground";
 }
 
 function formatAmount(amount: number): string {
@@ -31,11 +31,11 @@ export function HeroLedger() {
   return (
     <div
       aria-label="Credit transactions ledger demo"
-      className="rounded-sm border border-rule bg-background font-mono text-[11.5px]"
+      className="rounded-md border-2 bg-background font-mono shadow-hard text-[11.5px]"
     >
       <div className="flex items-center justify-between border-b-2 border-rule px-4 py-3">
         <span className="font-medium tracking-wider">credit_transactions</span>
-        <span className="flex items-center gap-1.5 text-primary">
+        <span className="flex items-center gap-1.5 text-primary-text">
           <span
             aria-hidden
             className="size-1.5 rounded-full bg-primary motion-safe:animate-pulse"
@@ -47,7 +47,7 @@ export function HeroLedger() {
         {rows.map((row, i) => (
           <li
             key={`${row.type}-${row.ref}`}
-            className="grid grid-cols-[100px_1fr_64px] gap-3 border-b px-4 py-2.5 whitespace-nowrap motion-safe:animate-[ledger-in_500ms_ease-out_both]"
+            className="grid grid-cols-[100px_1fr_64px] gap-3 border-b-2 px-4 py-2.5 whitespace-nowrap motion-safe:animate-[ledger-in_500ms_ease-out_both]"
             style={{ animationDelay: `${i * 100}ms` }}
           >
             <span className="overflow-hidden text-ellipsis text-muted-foreground">
@@ -64,7 +64,7 @@ export function HeroLedger() {
       </ul>
       <div className="flex items-center justify-between border-t-2 border-rule px-4 py-3">
         <span className="text-muted-foreground">balance = Σ(amount)</span>
-        <span className="text-primary">{balance} ✓ invariant holds</span>
+        <span className="text-primary-text">{balance} ✓ invariant holds</span>
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ export default async function LoginPage({
         No account?{" "}
         <Link
           href="/signup"
-          className="text-primary underline underline-offset-4"
+          className="text-primary-text underline underline-offset-4"
         >
           Create one
         </Link>

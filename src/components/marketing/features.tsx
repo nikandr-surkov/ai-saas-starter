@@ -51,7 +51,7 @@ export function Features() {
       id="features"
       className="mx-auto w-full max-w-[1160px] scroll-mt-16 px-6 pt-26"
     >
-      <div className="mb-11 max-w-[62ch]">
+      <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Ledger of features</p>
         <h2 className="mt-3 mb-3 text-3xl">
           The 20% of a SaaS your AI agent shouldn&apos;t be trusted to

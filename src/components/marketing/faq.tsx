@@ -33,13 +33,13 @@ export function Faq() {
       id="faq"
       className="mx-auto w-full max-w-[1160px] scroll-mt-16 px-6 pt-26"
     >
-      <div className="mb-11 max-w-[62ch]">
+      <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Questions</p>
         <h2 className="mt-3 text-3xl">Asked before you asked.</h2>
       </div>
       <div className="border-t-2 border-rule">
         {faqs.map((faq) => (
-          <details key={faq.q} name="faq" className="group border-b">
+          <details key={faq.q} name="faq" className="group border-b-2">
             <summary className="flex cursor-pointer items-baseline justify-between gap-4 py-5 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
               {faq.q}
               <span

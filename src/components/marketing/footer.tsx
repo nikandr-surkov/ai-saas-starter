@@ -4,10 +4,10 @@ import { siteConfig } from "@/config/site";
 
 export function MarketingFooter() {
   return (
-    <footer className="border-t">
+    <footer className="border-t-2">
       <div className="mx-auto flex w-full max-w-[1160px] flex-col gap-3 px-6 pt-7 pb-10 font-mono text-[10.5px] tracking-wider text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
         <span>
-          <span aria-hidden className="text-primary">
+          <span aria-hidden className="text-primary-text">
             ▮
           </span>{" "}
           {siteConfig.name} · MIT · 2026

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
-import { Instrument_Sans, Martian_Mono } from "next/font/google";
+import {
+  Bricolage_Grotesque,
+  Instrument_Sans,
+  Martian_Mono,
+} from "next/font/google";
 import "./globals.css";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -12,6 +16,11 @@ const instrumentSans = Instrument_Sans({
 
 const martianMono = Martian_Mono({
   variable: "--font-martian-mono",
+  subsets: ["latin"],
+});
+
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
 });
 
@@ -52,7 +61,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${instrumentSans.variable} ${martianMono.variable} h-full antialiased`}
+      className={`${instrumentSans.variable} ${martianMono.variable} ${bricolage.variable} h-full antialiased`}
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />

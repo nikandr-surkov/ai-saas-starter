@@ -13,14 +13,16 @@ import {
 // text on paper, one green accent (DESIGN.md, translated to email-safe hex —
 // oklch doesn't survive email clients). Font stacks instead of webfonts.
 
+// v2 neo-brutalist palette in email-safe hex: warm cream, near-black ink,
+// vivid green with INK text on it, 2px ink borders.
 export const emailTheme = {
-  paper: "#fafaf5",
-  paper2: "#f1f0e9",
-  ink: "#242e27",
-  muted: "#68716b",
-  hairline: "#e2e1d8",
-  accent: "#12714b",
-  accentInk: "#fafaf5",
+  paper: "#f7f2df",
+  paper2: "#ece5cf",
+  ink: "#26241d",
+  muted: "#6e6a5c",
+  hairline: "#cfc8b2",
+  accent: "#3ede83",
+  accentInk: "#26241d",
   mono: "'Courier New', Courier, monospace",
   sans: "Helvetica, Arial, sans-serif",
 } as const;
@@ -48,8 +50,8 @@ export function EmailLayout({
         <Container
           style={{
             backgroundColor: emailTheme.paper,
-            border: `1px solid ${emailTheme.hairline}`,
-            borderRadius: 2,
+            border: `2px solid ${emailTheme.ink}`,
+            borderRadius: 6,
             maxWidth: 520,
             padding: "0 32px 28px",
           }}

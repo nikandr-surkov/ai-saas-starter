@@ -14,7 +14,7 @@ export function PricingSection() {
       id="pricing"
       className="mx-auto w-full max-w-[1160px] scroll-mt-16 px-6 pt-26"
     >
-      <div className="mb-11 max-w-[62ch]">
+      <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Pricing</p>
         <h2 className="mt-3 mb-3 text-3xl">
           Integer credits. No expiry. No surprises.
@@ -28,7 +28,7 @@ export function PricingSection() {
         {Object.values(plans).map((plan) => (
           <div
             key={plan.id}
-            className="grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 gap-y-2 border-b px-2 py-6 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_150px_1fr_110px_auto]"
+            className="grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 gap-y-2 border-b-2 px-2 py-6 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_150px_1fr_110px_auto]"
           >
             <span className="font-mono text-xs text-muted-foreground">
               {plan.id}
@@ -44,13 +44,13 @@ export function PricingSection() {
             </span>
             <Link
               href="/signup"
-              className="col-start-3 self-center justify-self-end rounded-sm border border-rule px-3 py-1.5 font-mono text-xs tracking-wider uppercase transition-colors hover:bg-secondary sm:col-start-5"
+              className="col-start-3 self-center justify-self-end rounded-md border-2 press bg-background px-3 py-1.5 font-mono text-xs tracking-wider uppercase sm:col-start-5"
             >
               Start →
             </Link>
           </div>
         ))}
-        <div className="grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 border-b px-2 py-6 text-muted-foreground sm:grid-cols-[64px_150px_1fr_110px_auto]">
+        <div className="grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 border-b-2 px-2 py-6 text-muted-foreground sm:grid-cols-[64px_150px_1fr_110px_auto]">
           <span className="font-mono text-xs">topup</span>
           <h3 className="text-[17px] font-semibold text-foreground">
             {topupPack.name}

@@ -20,10 +20,10 @@ export async function MarketingNav() {
   const session = await getSession();
 
   return (
-    <header className="sticky top-0 z-40 border-b bg-background">
+    <header className="sticky top-0 z-40 border-b-2 bg-background">
       <div className="mx-auto flex h-[60px] w-full max-w-[1160px] items-center gap-7 px-6">
         <Link href="/" className="font-mono text-[13px] font-medium">
-          <span aria-hidden className="text-primary">
+          <span aria-hidden className="text-primary-text">
             ▮
           </span>{" "}
           {siteConfig.name}
@@ -45,7 +45,7 @@ export async function MarketingNav() {
             href={siteConfig.github}
             target="_blank"
             rel="noreferrer"
-            className="hidden items-center gap-2 rounded-sm border border-rule px-3 py-1.5 font-mono text-xs transition-colors hover:bg-secondary sm:flex"
+            className="hidden items-center gap-2 rounded-md border-2 press px-3 py-1.5 font-mono text-xs sm:flex"
           >
             <StarIcon className="size-3.5" aria-hidden />
             GitHub
@@ -54,7 +54,7 @@ export async function MarketingNav() {
           {session ? (
             <Link
               href="/dashboard"
-              className="rounded-sm bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+              className="rounded-md border-2 press bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground"
             >
               Dashboard
             </Link>
@@ -68,7 +68,7 @@ export async function MarketingNav() {
               </Link>
               <Link
                 href="/signup"
-                className="rounded-sm bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+                className="rounded-md border-2 press bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground"
               >
                 Get started
               </Link>

@@ -66,14 +66,14 @@ export default async function DashboardPage() {
           <CardContent className="text-sm text-muted-foreground">
             <Link
               href="/billing"
-              className="text-primary underline underline-offset-4"
+              className="text-primary-text underline underline-offset-4"
             >
               Buy more
             </Link>{" "}
             or{" "}
             <Link
               href="/generate"
-              className="text-primary underline underline-offset-4"
+              className="text-primary-text underline underline-offset-4"
             >
               generate an image
             </Link>
@@ -98,7 +98,7 @@ export default async function DashboardPage() {
                 No subscription —{" "}
                 <Link
                   href="/billing"
-                  className="text-primary underline underline-offset-4"
+                  className="text-primary-text underline underline-offset-4"
                 >
                   see plans
                 </Link>

@@ -35,7 +35,7 @@ export function SidebarNav() {
               "flex items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-sm transition-colors",
               // Active nav is a sanctioned use of accent (DESIGN.md rule 8).
               active
-                ? "bg-accent-soft text-primary"
+                ? "bg-accent-soft text-primary-text"
                 : "text-muted-foreground hover:bg-accent hover:text-foreground",
             )}
           >

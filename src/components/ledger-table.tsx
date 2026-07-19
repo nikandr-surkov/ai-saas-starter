@@ -74,7 +74,7 @@ function LedgerTable({
             <TableCell
               className={cn(
                 "text-right font-mono",
-                entry.amount > 0 && "text-primary",
+                entry.amount > 0 && "text-primary-text",
                 entry.type === "expiry" && "text-destructive",
               )}
             >

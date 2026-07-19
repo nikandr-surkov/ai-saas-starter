@@ -9,7 +9,7 @@ const stack = [
 
 export function StackStrip() {
   return (
-    <div className="border-y">
+    <div className="border-y-2">
       <div className="mx-auto flex w-full max-w-[1160px] flex-wrap justify-between gap-x-6 gap-y-3 px-6 py-4.5 font-mono text-[11px] tracking-wider text-muted-foreground uppercase">
         {stack.map(([tech, detail]) => (
           <span key={tech}>

@@ -9,7 +9,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-instrument-sans);
   --font-mono: var(--font-martian-mono);
-  --font-heading: var(--font-instrument-sans);
+  --font-display: var(--font-bricolage);
+  --font-heading: var(--font-bricolage);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -36,17 +37,20 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
   --color-primary-foreground: var(--primary-foreground);
-  --color-primary-hover: var(--primary-hover);
+  --color-primary-text: var(--primary-text);
   --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-paper-2: var(--paper-2);
+  --color-highlight: var(--highlight);
+  --color-on-accent: var(--on-accent);
+  --color-debit-text: var(--debit-text);
   --color-hairline: var(--hairline);
   --color-rule: var(--rule);
-  /* DESIGN.md hard rule 4: radius is 2px everywhere. Every step collapses
-     to --radius on purpose — do not reintroduce a scale. */
+  /* DESIGN.md v2 hard rule 4: radius is 6px globally. Every step collapses
+     to --radius on purpose; pills use rounded-full explicitly. */
   --radius-sm: var(--radius);
   --radius-md: var(--radius);
   --radius-lg: var(--radius);
@@ -56,53 +60,53 @@
   --radius-4xl: var(--radius);
 }
 
-/* ── Ledger raw tokens (DESIGN.md) ──────────────────────────────────────────
-   Hard-coded oklch values live ONLY in these two blocks. DESIGN.md's --muted
-   is named --muted-ink here because shadcn reserves --muted for a surface.
-
-   Ledger green (DESIGN.md --accent/--accent-hover/--accent-ink) lives in
-   --primary/--primary-hover/--primary-foreground and --ring ONLY. shadcn's
-   --accent (in the derived block below) is a NEUTRAL hover tint for
-   menu/select hover states — do NOT point it at ledger green. That would
-   spray green across every menu hover and break DESIGN.md rule 8 (accent is
-   scarce: primary CTA, links/active nav, positive amounts, success only). */
+/* ── Neo-brutalist raw tokens (DESIGN.md v2) ────────────────────────────────
+   Hard-coded oklch values live ONLY in these two blocks. --on-accent is the
+   text color on primary/highlight fills: always near-black (the ink in
+   light mode, the charcoal paper in dark). --primary-text and --debit-text
+   exist because the raw fills FAIL WCAG as text on light paper (1.55 and
+   3.63) — never use raw primary/debit for light-mode text. */
 
 :root {
-  /* light — "the ledger" */
+  /* light — warm cream ledger */
   color-scheme: light;
-  --paper: oklch(0.985 0.003 95);
-  --paper-2: oklch(0.965 0.004 95);
-  --ink: oklch(0.21 0.012 145);
-  --muted-ink: oklch(0.5 0.015 145);
-  --debit: oklch(0.5 0.19 27);
-  --primary: oklch(0.42 0.11 162);
-  --primary-hover: oklch(0.36 0.11 162);
-  --radius: 2px;
+  --paper: oklch(0.96 0.02 90);
+  --ink: oklch(0.2 0.01 90);
+  --primary: oklch(0.8 0.19 150);
+  --highlight: oklch(0.87 0.17 95);
+  --debit: oklch(0.62 0.23 27);
+  --radius: 6px;
+  --on-accent: var(--ink);
+  --primary-text: color-mix(in oklch, var(--primary), var(--ink) 50%);
+  --debit-text: color-mix(in oklch, var(--debit), var(--ink) 25%);
 }
 
 .dark {
-  /* dark — "the terminal" */
+  /* dark — charcoal ledger, light ink */
   color-scheme: dark;
-  --paper: oklch(0.16 0.008 150);
-  --paper-2: oklch(0.19 0.008 150);
-  --ink: oklch(0.93 0.005 145);
-  --muted-ink: oklch(0.62 0.01 145);
-  --debit: oklch(0.68 0.17 27);
-  --primary: oklch(0.78 0.13 162);
-  --primary-hover: oklch(0.85 0.13 162);
+  --paper: oklch(0.2 0.015 90);
+  --ink: oklch(0.95 0.01 90);
+  --primary: oklch(0.83 0.19 150);
+  --highlight: oklch(0.88 0.15 95);
+  --debit: oklch(0.7 0.2 27);
+  --on-accent: var(--paper);
+  --primary-text: var(--primary);
+  --debit-text: var(--debit);
 }
 
 /* ── Derived tokens + shadcn semantic mapping ───────────────────────────────
-   Declared on BOTH :root and .dark: custom properties bake their var()
-   substitutions into a computed value on the element that declares them, so
-   a nested `.dark` wrapper (e.g. /styleguide?theme=dark) would otherwise
-   inherit values resolved against the light raw tokens at :root. Re-declaring
-   here makes every derivation recompute wherever the theme class sits. */
+   Declared on BOTH :root and .dark so nested theme wrappers (e.g.
+   /styleguide?theme=dark) recompute every derivation — custom properties
+   bake their var() substitutions at the declaring element. */
 :root,
 .dark {
-  --hairline: color-mix(in oklch, var(--ink), transparent 88%);
-  --rule: color-mix(in oklch, var(--ink), transparent 72%);
-  --primary-foreground: var(--paper);
+  --paper-2: color-mix(in oklch, var(--paper), var(--ink) 5%);
+  --muted-ink: color-mix(in oklch, var(--ink), var(--paper) 35%);
+  --debit-deep: color-mix(in oklch, var(--debit), var(--ink) 30%);
+  /* Legacy names from v1 kept as aliases — both map to ink now; widths
+     come from border-2 classes. */
+  --hairline: var(--ink);
+  --rule: var(--ink);
 
   --background: var(--paper);
   --foreground: var(--ink);
@@ -110,33 +114,35 @@
   --card-foreground: var(--ink);
   --popover: var(--paper);
   --popover-foreground: var(--ink);
+  --primary-foreground: var(--on-accent);
   --secondary: var(--paper-2);
   --secondary-foreground: var(--ink);
   --muted: var(--paper-2);
   --muted-foreground: var(--muted-ink);
-  /* Neutral hover tint — see the note above :root. */
-  --accent: color-mix(in oklch, var(--ink), transparent 94%);
+  /* Neutral hover tint for menus — never green, never yellow. */
+  --accent: color-mix(in oklch, var(--ink), transparent 90%);
   --accent-foreground: var(--ink);
-  /* Soft green wash for LedgerRow hover — the one sanctioned green tint. */
-  --accent-soft: color-mix(in oklch, var(--primary), transparent 92%);
-  --destructive: var(--debit);
+  /* The one sanctioned green wash (ledger-row hover). */
+  --accent-soft: color-mix(in oklch, var(--primary), transparent 88%);
+  --destructive: var(--debit-deep);
   --destructive-foreground: var(--paper);
-  --border: var(--hairline);
-  --input: var(--hairline);
-  --ring: var(--primary);
+  --border: var(--ink);
+  --input: var(--ink);
+  /* Focus rings are ink (DESIGN.md v2). */
+  --ring: var(--ink);
   --chart-1: var(--primary);
-  --chart-2: color-mix(in oklch, var(--primary), var(--ink) 40%);
+  --chart-2: var(--primary-text);
   --chart-3: var(--muted-ink);
-  --chart-4: color-mix(in oklch, var(--ink), transparent 40%);
+  --chart-4: var(--highlight);
   --chart-5: var(--debit);
   --sidebar: var(--paper-2);
   --sidebar-foreground: var(--ink);
   --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--primary-foreground);
-  --sidebar-accent: color-mix(in oklch, var(--ink), transparent 94%);
+  --sidebar-primary-foreground: var(--on-accent);
+  --sidebar-accent: color-mix(in oklch, var(--ink), transparent 90%);
   --sidebar-accent-foreground: var(--ink);
-  --sidebar-border: var(--hairline);
-  --sidebar-ring: var(--primary);
+  --sidebar-border: var(--ink);
+  --sidebar-ring: var(--ink);
 }
 
 @layer base {
@@ -148,21 +154,60 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* DESIGN.md hard rule 7: all numerals tabular. */
+    /* DESIGN.md v2 hard rule 8: all numerals tabular. */
     font-variant-numeric: tabular-nums;
   }
+  /* Display headings: Bricolage Grotesque, tight leading. */
   h1,
   h2,
-  h3,
-  h4 {
-    font-weight: 600;
-    letter-spacing: -0.03em;
-    line-height: 1.08;
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
     text-wrap: balance;
+  }
+  h1 {
+    font-weight: 800;
+    line-height: 1.02;
   }
 }
 
-/* Mono uppercase micro-label (DESIGN.md typography: eyebrows). */
+@layer components {
+  /* Interactive press physics (DESIGN.md v2 hard rule 3). Non-interactive
+     containers use .shadow-hard without the transforms. */
+  .press {
+    box-shadow: 4px 4px 0 0 var(--ink);
+    transition:
+      translate 150ms ease,
+      box-shadow 150ms ease;
+  }
+  .press:hover {
+    translate: -2px -2px;
+    box-shadow: 6px 6px 0 0 var(--ink);
+  }
+  .press:active {
+    translate: 2px 2px;
+    box-shadow: 0 0 0 0 var(--ink);
+  }
+
+  /* Sonner toasts join the system. */
+  .cn-toast {
+    border: 2px solid var(--ink) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: 4px 4px 0 0 var(--ink) !important;
+  }
+}
+
+/* Hard offset shadows — never blurred (DESIGN.md v2 hard rule 2). */
+@utility shadow-hard {
+  box-shadow: 4px 4px 0 0 var(--ink);
+}
+@utility shadow-hard-md {
+  box-shadow: 6px 6px 0 0 var(--ink);
+}
+
+/* Mono uppercase micro-label (eyebrows). */
 @utility eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -172,17 +217,17 @@
   color: var(--muted-ink);
 }
 
-/* Display headline (DESIGN.md H1 clamp). */
+/* Display headline (DESIGN.md v2 H1 clamp). */
 @utility text-display {
-  font-size: clamp(2.4rem, 1.4rem + 3.4vw, 3.7rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  line-height: 1.08;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 1.4rem + 4vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.02;
   text-wrap: balance;
 }
 
-/* Ledger stagger (hero art, LedgerTable animated mode). 200ms, ease-out,
-   CSS-only — and neutralized entirely by the reduced-motion guard below. */
+/* Ledger stagger (hero art). Neutralized by the reduced-motion guard. */
 @keyframes ledger-in {
   from {
     opacity: 0;
@@ -194,9 +239,43 @@
   }
 }
 
-/* DESIGN.md hard rule 9: every animation/transition respects
-   prefers-reduced-motion. Global kill switch — covers tw-animate-css and
-   radix data-state animations too. */
+/* Sticker wobble — one shot on hover, never looping. */
+@keyframes wobble {
+  0% {
+    rotate: -2deg;
+  }
+  50% {
+    rotate: 1deg;
+  }
+  100% {
+    rotate: -2deg;
+  }
+}
+
+/* Section-header fade-up via scroll-driven animation — progressive
+   enhancement only, doubly guarded by @supports and reduced-motion. */
+@keyframes fade-up-kf {
+  from {
+    opacity: 0.2;
+    translate: 0 16px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-up {
+      animation: fade-up-kf linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+  }
+}
+
+/* DESIGN.md v2 hard rule 10: the kill switch is law. Covers press physics,
+   tw-animate-css, radix data-state animations, and everything above. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

@@ -32,7 +32,7 @@ export default function PricingPage() {
         {Object.values(plans).map((plan) => (
           <div
             key={plan.id}
-            className="grid grid-cols-[64px_1fr] items-baseline gap-x-6 gap-y-2 border-b px-2 py-7 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_160px_1fr_auto]"
+            className="grid grid-cols-[64px_1fr] items-baseline gap-x-6 gap-y-2 border-b-2 px-2 py-7 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_160px_1fr_auto]"
           >
             <span className="font-mono text-xs text-muted-foreground">
               {plan.id}
@@ -50,7 +50,7 @@ export default function PricingPage() {
             </div>
           </div>
         ))}
-        <div className="grid grid-cols-[64px_1fr] items-baseline gap-x-6 gap-y-2 border-b px-2 py-7 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_160px_1fr_auto]">
+        <div className="grid grid-cols-[64px_1fr] items-baseline gap-x-6 gap-y-2 border-b-2 px-2 py-7 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_160px_1fr_auto]">
           <span className="font-mono text-xs text-muted-foreground">topup</span>
           <h2 className="text-xl">{topupPack.name}</h2>
           <p className="col-start-2 text-[15px] text-muted-foreground sm:col-start-3">
@@ -67,7 +67,7 @@ export default function PricingPage() {
         Start free —{" "}
         <Link
           href="/signup"
-          className="text-primary underline underline-offset-4"
+          className="text-primary-text underline underline-offset-4"
         >
           create an account
         </Link>{" "}

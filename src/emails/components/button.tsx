@@ -16,7 +16,8 @@ export function EmailButton({
       style={{
         backgroundColor: emailTheme.accent,
         color: emailTheme.accentInk,
-        borderRadius: 2,
+        border: `2px solid ${emailTheme.ink}`,
+        borderRadius: 6,
         fontSize: 14,
         fontWeight: 600,
         padding: "11px 22px",

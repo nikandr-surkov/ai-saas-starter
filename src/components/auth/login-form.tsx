@@ -119,7 +119,7 @@ export function LoginForm({
         </Button>
       </form>
       {magicLink ? (
-        <form onSubmit={onMagicLink} className="grid gap-2 border-t pt-4">
+        <form onSubmit={onMagicLink} className="grid gap-2 border-t-2 pt-4">
           <Label htmlFor="magic-email" className="text-muted-foreground">
             Or get a sign-in link by email
           </Label>

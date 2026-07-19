@@ -80,7 +80,7 @@ export function GenerateForm({
             Out of credits —{" "}
             <Link
               href="/billing"
-              className="text-primary underline underline-offset-4"
+              className="text-primary-text underline underline-offset-4"
             >
               top up in Billing
             </Link>

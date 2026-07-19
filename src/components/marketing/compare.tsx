@@ -30,7 +30,7 @@ const rows = [
 ] as const;
 
 function cellClass(kind: "yes" | "no" | "val"): string {
-  if (kind === "yes") return "font-mono text-xs text-primary";
+  if (kind === "yes") return "font-mono text-xs text-primary-text";
   if (kind === "val") return "font-mono text-[11.5px]";
   return "text-muted-foreground";
 }
@@ -41,7 +41,7 @@ export function Compare() {
       id="pro"
       className="mx-auto w-full max-w-[1160px] scroll-mt-16 px-6 pt-26"
     >
-      <div className="mb-11 max-w-[62ch]">
+      <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Free vs Pro</p>
         <h2 className="mt-3 text-3xl">
           This repo is complete. Pro is what comes after product-market fit.
@@ -51,17 +51,17 @@ export function Compare() {
         <table className="w-full border-t-2 border-rule">
           <thead>
             <tr className="text-left font-mono text-[10.5px] tracking-widest text-muted-foreground uppercase">
-              <th className="border-b py-3.5 pr-2 font-normal">Capability</th>
-              <th className="w-[190px] border-b px-2 py-3.5 text-center font-normal">
+              <th className="border-b-2 py-3.5 pr-2 font-normal">Capability</th>
+              <th className="w-[190px] border-b-2 px-2 py-3.5 text-center font-normal">
                 Free · this repo
               </th>
-              <th className="w-[240px] border-b px-2 py-3.5 text-center font-normal">
+              <th className="w-[240px] border-b-2 px-2 py-3.5 text-center font-normal">
                 Pro · $299 ·{" "}
                 <a
                   href={siteConfig.pro}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-primary normal-case underline underline-offset-4"
+                  className="text-primary-text normal-case underline underline-offset-4"
                 >
                   nikandr.com
                 </a>
@@ -71,16 +71,16 @@ export function Compare() {
           <tbody>
             {rows.map((row) => (
               <tr key={row.capability}>
-                <td className="border-b py-3.5 pr-2 text-[15px]">
+                <td className="border-b-2 py-3.5 pr-2 text-[15px]">
                   {row.capability}
                 </td>
                 <td
-                  className={`border-b px-2 py-3.5 text-center ${cellClass(row.free.kind)}`}
+                  className={`border-b-2 px-2 py-3.5 text-center ${cellClass(row.free.kind)}`}
                 >
                   {row.free.label}
                 </td>
                 <td
-                  className={`border-b px-2 py-3.5 text-center ${cellClass(row.pro.kind)}`}
+                  className={`border-b-2 px-2 py-3.5 text-center ${cellClass(row.pro.kind)}`}
                 >
                   {row.pro.label}
                 </td>

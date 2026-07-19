@@ -16,8 +16,8 @@ export default async function AppLayout({
 
   return (
     <div className="flex min-h-dvh w-full">
-      <aside className="hidden w-56 shrink-0 flex-col border-r bg-sidebar md:flex">
-        <div className="flex h-14 items-center border-b px-4">
+      <aside className="hidden w-56 shrink-0 flex-col border-r-2 bg-sidebar md:flex">
+        <div className="flex h-14 items-center border-b-2 px-4">
           <Link href="/dashboard" className="font-mono text-sm font-medium">
             {siteConfig.name}
           </Link>
@@ -27,7 +27,7 @@ export default async function AppLayout({
         </div>
       </aside>
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b px-6">
+        <header className="flex h-14 shrink-0 items-center justify-between gap-4 border-b-2 px-6">
           <span className="eyebrow md:hidden">{siteConfig.name}</span>
           <div className="ml-auto flex items-center gap-4">
             <div className="flex items-baseline gap-2" title="Credit balance">

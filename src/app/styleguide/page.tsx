@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { LedgerList, LedgerRow } from "@/components/ledger-row";
 import { LedgerTable } from "@/components/ledger-table";
+import { Sticker } from "@/components/sticker";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -54,10 +55,11 @@ const swatches = [
   { name: "paper-2", className: "bg-paper-2" },
   { name: "ink", className: "bg-foreground" },
   { name: "muted-ink", className: "bg-muted-foreground" },
-  { name: "hairline", className: "bg-hairline" },
-  { name: "rule", className: "bg-rule" },
-  { name: "accent — green", className: "bg-primary" },
-  { name: "debit", className: "bg-destructive" },
+  { name: "primary (fills)", className: "bg-primary" },
+  { name: "primary-text", className: "bg-primary-text" },
+  { name: "highlight (marks)", className: "bg-highlight" },
+  { name: "debit (fills)", className: "bg-destructive" },
+  { name: "debit-text", className: "bg-debit-text" },
 ] as const;
 
 const ledgerEntries = [
@@ -127,8 +129,8 @@ export default async function StyleguidePage({
         <div className="mx-auto w-full max-w-[1160px] space-y-12 px-6 py-16">
           <header className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Styleguide · dev only</p>
-              <h1 className="mt-2 text-3xl">The Ledger</h1>
+              <p className="eyebrow">Styleguide · dev only · v2</p>
+              <h1 className="mt-2 text-3xl">The Ledger, Neo-Brutalist</h1>
             </div>
             <div className="flex items-center gap-3 font-mono text-xs">
               <Link href="/styleguide" className="underline underline-offset-4">
@@ -164,7 +166,7 @@ export default async function StyleguidePage({
               Auth, Stripe subscriptions, and a credits ledger that survives
               webhook retries.
             </p>
-            <h3 className="text-xl">Section heading — Instrument Sans 600</h3>
+            <h3 className="text-xl">Section heading — Bricolage Grotesque</h3>
             <p className="max-w-xl text-muted-foreground">
               Body text in Instrument Sans. Muted ink on paper. Concrete copy,
               no adjectives: Next.js 16, Better Auth 1.5, Drizzle, Stripe, AI
@@ -174,6 +176,10 @@ export default async function StyleguidePage({
             <p className="font-mono text-sm">
               1,024 credits · $29.00 · 2026-07-12 — tabular numerals
             </p>
+          </Section>
+
+          <Section title="Sticker — one per page">
+            <Sticker>10 free credits</Sticker>
           </Section>
 
           <Section title="Buttons">
