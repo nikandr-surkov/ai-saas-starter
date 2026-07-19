@@ -44,7 +44,12 @@ export function LoginForm({
     setPending(true);
     const { error: signInError } = await authClient.signIn.email(parsed.data);
     if (signInError) {
-      setError(signInError.message ?? "Sign-in failed");
+      const message = signInError.message ?? "";
+      setError(
+        /invalid|credential|password/i.test(message)
+          ? "That email and password don't match — try again, or reset your password below."
+          : message || "Sign-in failed — try again in a moment.",
+      );
       setPending(false);
       return;
     }
@@ -113,9 +118,9 @@ export function LoginForm({
             required
           />
         </div>
-        {error ? <p className="text-sm text-destructive">{error}</p> : null}
+        {error ? <p className="text-sm text-debit-text">{error}</p> : null}
         <Button type="submit" disabled={pending}>
-          Sign in
+          {pending ? "Signing in…" : "Sign in"}
         </Button>
       </form>
       {magicLink ? (
@@ -132,7 +137,7 @@ export function LoginForm({
               placeholder="you@example.com"
             />
             <Button type="submit" variant="outline" disabled={pending}>
-              Send link
+              {pending ? "Sending…" : "Send link"}
             </Button>
           </div>
         </form>

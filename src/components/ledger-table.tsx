@@ -75,7 +75,7 @@ function LedgerTable({
               className={cn(
                 "text-right font-mono",
                 entry.amount > 0 && "text-primary-text",
-                entry.type === "expiry" && "text-destructive",
+                entry.type === "expiry" && "text-debit-text",
               )}
             >
               {formatAmount(entry.amount)}

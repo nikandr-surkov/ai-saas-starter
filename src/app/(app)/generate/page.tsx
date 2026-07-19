@@ -41,9 +41,14 @@ export default async function GeneratePage() {
       <section>
         <p className="eyebrow mb-3">generations</p>
         {history.length === 0 ? (
-          <p className="border-t-2 border-rule pt-3 text-sm text-muted-foreground">
-            Nothing generated yet.
-          </p>
+          <div className="max-w-md rounded-md border-2 px-5 py-6 shadow-hard">
+            <p className="eyebrow">First entry pending</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Nothing generated yet — and your welcome credits are ready.
+              Describe an image in the form above; the result lands here and
+              the ledger records the spend.
+            </p>
+          </div>
         ) : (
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {history.map((generation) => (
@@ -65,8 +70,8 @@ export default async function GeneratePage() {
                       <span
                         className={
                           generation.status === "failed"
-                            ? "eyebrow text-destructive"
-                            : "eyebrow"
+                            ? "eyebrow text-debit-text"
+                            : "eyebrow motion-safe:animate-pulse"
                         }
                       >
                         {generation.status}

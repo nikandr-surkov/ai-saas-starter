@@ -19,7 +19,7 @@ const rows = [
 const balance = rows.reduce((sum, row) => sum + row.amount, 0);
 
 function amountClass(row: (typeof rows)[number]): string {
-  if (row.type === "expiry") return "text-destructive";
+  if (row.type === "expiry") return "text-debit-text";
   return row.amount > 0 ? "text-primary-text" : "text-foreground";
 }
 

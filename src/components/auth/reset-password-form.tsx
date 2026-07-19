@@ -56,9 +56,9 @@ export function ResetPasswordForm({ token }: { token: string }) {
           required
         />
       </div>
-      {error ? <p className="text-sm text-destructive">{error}</p> : null}
+      {error ? <p className="text-sm text-debit-text">{error}</p> : null}
       <Button type="submit" disabled={pending}>
-        Set new password
+        {pending ? "Saving…" : "Set new password"}
       </Button>
     </form>
   );

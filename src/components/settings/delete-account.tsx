@@ -71,9 +71,15 @@ export function DeleteAccount({
             <DialogTitle>Delete this account?</DialogTitle>
             <DialogDescription>
               {hasPassword
-                ? "Confirm with your password. Everything is removed permanently."
-                : "We send a confirmation link to your email. Everything is removed permanently."}
+                ? "Confirm with your password. This permanently removes:"
+                : "We send a confirmation link to your email. Confirming permanently removes:"}
             </DialogDescription>
+            <ul className="space-y-1 text-sm text-muted-foreground">
+              <li>— your account and every sign-in method</li>
+              <li>— all generated images</li>
+              <li>— the entire credit ledger history</li>
+              <li>— any active subscription (canceled at Stripe first)</li>
+            </ul>
           </DialogHeader>
           <form onSubmit={onDelete} className="grid gap-4">
             {hasPassword ? (

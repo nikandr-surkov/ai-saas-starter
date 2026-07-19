@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import { plans } from "@/config/plans";
 import { db } from "@/db";
-import { subscriptions } from "@/db/schema";
+import { generations, subscriptions } from "@/db/schema";
 import { requireSession } from "@/lib/auth/session";
 import { planByPriceId } from "@/lib/billing/plans";
 import { getHistory } from "@/lib/credits";
+import { features } from "@/lib/env";
 import { LedgerTable, type LedgerEntry } from "@/components/ledger-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -27,13 +28,17 @@ function formatRef(refType: string | null, refId: string | null): string {
 export default async function DashboardPage() {
   const session = await requireSession();
 
-  const [history, [sub]] = await Promise.all([
+  const [history, [sub], [generated]] = await Promise.all([
     getHistory(session.user.id, 10),
     db
       .select()
       .from(subscriptions)
       .where(eq(subscriptions.userId, session.user.id))
       .limit(1),
+    db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(generations)
+      .where(eq(generations.userId, session.user.id)),
   ]);
 
   const isActive = sub?.status === "active" || sub?.status === "trialing";
@@ -54,6 +59,40 @@ export default async function DashboardPage() {
         <p className="eyebrow">Overview</p>
         <h2 className="mt-1 text-xl">Dashboard</h2>
       </div>
+
+      {features.email && !session.user.emailVerified ? (
+        <div className="max-w-2xl rounded-md border-2 px-5 py-4 shadow-hard">
+          <p className="eyebrow">Verify your email</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            We sent a link to {session.user.email}. Everything works
+            meanwhile — verifying keeps the account recoverable.
+          </p>
+        </div>
+      ) : null}
+
+      {(generated?.count ?? 0) === 0 ? (
+        <div className="max-w-2xl rounded-md border-2 px-5 py-4 shadow-hard">
+          <p className="eyebrow">First steps</p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Your welcome credits are on the books. Head to{" "}
+            <Link
+              href="/generate"
+              className="text-primary-text underline underline-offset-4"
+            >
+              Generate
+            </Link>{" "}
+            to spend the first one — each image costs 1 credit and failed
+            generations refund themselves. Plans and top-ups live in{" "}
+            <Link
+              href="/billing"
+              className="text-primary-text underline underline-offset-4"
+            >
+              Billing
+            </Link>
+            .
+          </p>
+        </div>
+      ) : null}
 
       <div className="grid max-w-2xl gap-4 sm:grid-cols-2">
         <Card>

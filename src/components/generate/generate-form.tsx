@@ -16,9 +16,9 @@ import { Textarea } from "@/components/ui/textarea";
 const initialState: GenerateResult = { ok: true };
 
 const errorMessages: Record<NonNullable<GenerateResult["error"]>, string> = {
-  invalid_prompt: "Prompt must be 3–1000 characters",
-  rate_limited: "Rate limit reached — try again in a minute",
-  insufficient_credits: "Not enough credits — top up in Billing",
+  invalid_prompt: "Prompts need 3–1000 characters — one sentence works",
+  rate_limited: "Slow down — 10 per minute. Try again in a moment.",
+  insufficient_credits: "You're out of credits — top up in Billing and try again.",
   generation_failed: "Generation failed — credit refunded",
 };
 
@@ -73,17 +73,18 @@ export function GenerateForm({
       </div>
       <div className="flex items-center gap-3">
         <Button type="submit" disabled={pending || outOfCredits}>
-          {pending ? "Generating" : `Generate — ${cost} credit`}
+          {pending ? "Generating…" : `Generate — ${cost} credit`}
         </Button>
         {outOfCredits ? (
           <p className="text-sm text-muted-foreground">
-            Out of credits —{" "}
+            You&apos;re out of credits —{" "}
             <Link
               href="/billing"
               className="text-primary-text underline underline-offset-4"
             >
               top up in Billing
-            </Link>
+            </Link>{" "}
+            and the balance updates the moment payment lands.
           </p>
         ) : null}
       </div>

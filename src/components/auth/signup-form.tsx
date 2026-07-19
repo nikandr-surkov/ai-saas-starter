@@ -42,7 +42,14 @@ export function SignupForm({
     setPending(true);
     const { error: signUpError } = await authClient.signUp.email(parsed.data);
     if (signUpError) {
-      setError(signUpError.message ?? "Sign-up failed");
+      const message = signUpError.message ?? "";
+      setError(
+        /exist|already/i.test(message)
+          ? "That email already has an account — sign in instead."
+          : /password/i.test(message)
+            ? "That password is too easy to guess — use at least 8 characters."
+            : message || "Sign-up failed — try again in a moment.",
+      );
       setPending(false);
       return;
     }
@@ -89,9 +96,9 @@ export function SignupForm({
           required
         />
       </div>
-      {error ? <p className="text-sm text-destructive">{error}</p> : null}
+      {error ? <p className="text-sm text-debit-text">{error}</p> : null}
       <Button type="submit" disabled={pending}>
-        Create account
+        {pending ? "Creating account…" : "Create account"}
       </Button>
     </form>
   );

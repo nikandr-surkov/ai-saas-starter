@@ -115,7 +115,7 @@ export default async function BillingPage() {
             </p>
           ) : null}
           {sub && !isActive && sub.status !== "none" ? (
-            <p className="text-sm text-destructive">
+            <p className="text-sm text-debit-text">
               Subscription status: {sub.status} — check the customer portal.
             </p>
           ) : null}
