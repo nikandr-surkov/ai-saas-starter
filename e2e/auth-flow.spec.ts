@@ -29,4 +29,13 @@ test("signup → sign out → login → dashboard shows 10 welcome credits", asy
   await page.getByRole("button", { name: "Sign in" }).click();
   await page.waitForURL("**/dashboard");
   await expect(creditBalance(page)).toHaveText("10");
+
+  // Signed-in marketing nav collapses to a single Dashboard button.
+  await page.goto("/");
+  await expect(
+    page.getByRole("banner").getByRole("link", { name: "Dashboard" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("banner").getByRole("link", { name: "Get started" }),
+  ).toHaveCount(0);
 });

@@ -1,11 +1,26 @@
 import { expect, test } from "@playwright/test";
 
-test("landing renders the ledger sections", async ({ page }) => {
+test("landing renders the ledger sections with signed-out auth CTAs", async ({
+  page,
+}) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
     "credits ledger",
   );
+  // Signed-out nav: Sign in + Get started; hero CTA goes to signup.
+  await expect(
+    page.getByRole("banner").getByRole("link", { name: "Get started" }),
+  ).toHaveAttribute("href", "/signup");
+  await expect(
+    page.getByRole("banner").getByRole("link", { name: "Sign in" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: "Start free — 10 credits" }),
+  ).toHaveAttribute("href", "/signup");
   await expect(page.locator("#features")).toBeVisible();
+  // Pricing section reads from config/plans.ts.
+  await expect(page.locator("#pricing")).toBeVisible();
+  await expect(page.locator("#pricing")).toContainText("$9/mo");
   await expect(page.locator("#code pre")).toContainText(
     "export async function spendCredits",
   );

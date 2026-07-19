@@ -5,6 +5,7 @@ import { CtaBand } from "@/components/marketing/cta-band";
 import { Faq } from "@/components/marketing/faq";
 import { Features } from "@/components/marketing/features";
 import { Hero } from "@/components/marketing/hero";
+import { PricingSection } from "@/components/marketing/pricing-section";
 import { StackStrip } from "@/components/marketing/stack-strip";
 import { siteConfig } from "@/config/site";
 
@@ -36,6 +37,7 @@ export default function Home() {
       <Features />
       <CodeExhibit />
       <AiNative />
+      <PricingSection />
       <Compare />
       <Faq />
       <CtaBand />

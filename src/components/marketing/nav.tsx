@@ -1,17 +1,24 @@
 import Link from "next/link";
 import { StarIcon } from "lucide-react";
 
+import { getSession } from "@/lib/auth/session";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { siteConfig } from "@/config/site";
 
 const links = [
   { href: "/#features", label: "Features" },
+  { href: "/#pricing", label: "Pricing" },
   { href: "/#code", label: "Code" },
   { href: "/#ai-native", label: "AI-native" },
   { href: "/#pro", label: "Pro" },
 ] as const;
 
-export function MarketingNav() {
+// Auth-aware (server-side session): visitors get Sign in + Get started,
+// signed-in users get one Dashboard button. This read makes marketing pages
+// dynamic — see outputFileTracingIncludes in next.config.ts.
+export async function MarketingNav() {
+  const session = await getSession();
+
   return (
     <header className="sticky top-0 z-40 border-b bg-background">
       <div className="mx-auto flex h-[60px] w-full max-w-[1160px] items-center gap-7 px-6">
@@ -33,17 +40,40 @@ export function MarketingNav() {
           ))}
         </nav>
         <div className="ml-auto flex items-center gap-3 md:ml-0">
-          {/* Star count is a constant until the repo is public (M7). */}
+          {/* Star count is a constant until the repo has one worth showing. */}
           <a
             href={siteConfig.github}
             target="_blank"
             rel="noreferrer"
-            className="flex items-center gap-2 rounded-sm border border-rule px-3 py-1.5 font-mono text-xs transition-colors hover:bg-secondary"
+            className="hidden items-center gap-2 rounded-sm border border-rule px-3 py-1.5 font-mono text-xs transition-colors hover:bg-secondary sm:flex"
           >
             <StarIcon className="size-3.5" aria-hidden />
             GitHub
           </a>
           <ThemeToggle />
+          {session ? (
+            <Link
+              href="/dashboard"
+              className="rounded-sm bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+            >
+              Dashboard
+            </Link>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/signup"
+                className="rounded-sm bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+              >
+                Get started
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>

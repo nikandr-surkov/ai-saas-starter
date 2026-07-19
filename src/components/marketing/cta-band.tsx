@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { siteConfig } from "@/config/site";
 
 export function CtaBand() {
@@ -9,14 +11,12 @@ export function CtaBand() {
           <h2 className="mt-3 text-3xl">Clone the ledger. Ship the SaaS.</h2>
         </div>
         <div className="flex flex-wrap items-center gap-6">
-          <a
-            href={siteConfig.github}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            href="/signup"
             className="inline-flex items-center rounded-sm bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
           >
-            Get the code — free
-          </a>
+            Start free
+          </Link>
           <a
             href={siteConfig.pro}
             target="_blank"

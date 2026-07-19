@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { StarIcon } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
@@ -22,22 +23,20 @@ export function Hero() {
             Claude Code, Cursor, or Codex. AGENTS.md included.
           </p>
           <div className="mb-7 flex flex-wrap items-center gap-6">
+            <Link
+              href="/signup"
+              className="inline-flex items-center rounded-sm bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+            >
+              Start free — 10 credits
+            </Link>
             <a
               href={siteConfig.github}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-sm bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+              className="inline-flex items-center gap-2 border-b border-rule pb-0.5 font-mono text-xs tracking-wider text-foreground uppercase transition-colors hover:border-foreground"
             >
-              <StarIcon className="size-4" aria-hidden />
-              Star on GitHub
-            </a>
-            <a
-              href={`${siteConfig.github}#readme`}
-              target="_blank"
-              rel="noreferrer"
-              className="border-b border-rule pb-0.5 font-mono text-xs tracking-wider text-foreground uppercase transition-colors hover:border-foreground"
-            >
-              Read the docs →
+              <StarIcon className="size-3.5" aria-hidden />
+              Star on GitHub →
             </a>
           </div>
           <CopyInstall command={`git clone ${siteConfig.github}.git`} />

@@ -13,6 +13,18 @@ export function MarketingFooter() {
           {siteConfig.name} · MIT · 2026
         </span>
         <nav className="flex flex-wrap gap-x-4 gap-y-1">
+          <Link
+            href="/login"
+            className="transition-colors hover:text-foreground"
+          >
+            sign in
+          </Link>
+          <Link
+            href="/signup"
+            className="transition-colors hover:text-foreground"
+          >
+            sign up
+          </Link>
           <a
             href={siteConfig.github}
             target="_blank"
