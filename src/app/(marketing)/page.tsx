@@ -5,8 +5,8 @@ import { CtaBand } from "@/components/marketing/cta-band";
 import { Faq } from "@/components/marketing/faq";
 import { Features } from "@/components/marketing/features";
 import { Hero } from "@/components/marketing/hero";
+import { Marquee } from "@/components/marketing/marquee";
 import { PricingSection } from "@/components/marketing/pricing-section";
-import { StackStrip } from "@/components/marketing/stack-strip";
 import { siteConfig } from "@/config/site";
 
 const jsonLd = {
@@ -36,7 +36,7 @@ export default function Home() {
           mint features → sky agents → cream pricing/compare → pink FAQ
           → ink closing band (DESIGN.md "Landing composition"). */}
       <Hero />
-      <StackStrip />
+      <Marquee />
       <CodeExhibit />
       <Features />
       <AiNative />

@@ -1,5 +1,8 @@
+import { ChevronRightIcon } from "lucide-react";
+
 // Native exclusive accordions: <details name="faq"> — opening one closes
-// the others, zero JavaScript. v4: pop-pink block, answers <=18 words.
+// the others, zero JavaScript. v4: pop-pink block, answers <=18 words,
+// chevron spins 90deg on open, summary presses on click.
 const faqs = [
   {
     q: "Is this production-ready?",
@@ -34,27 +37,19 @@ export function Faq() {
       className="scroll-mt-16 border-t-[3px] bg-pop-pink [--title-shadow:var(--canvas)]"
     >
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-        <div className="fade-up mb-11">
+        <div className="pop-in mb-11">
           <p className="eyebrow">Asked before you asked</p>
           <h2 className="text-title mt-4">Questions.</h2>
         </div>
         <div className="border-t-[3px]">
           {faqs.map((faq) => (
             <details key={faq.q} name="faq" className="group border-b-[3px]">
-              <summary className="flex cursor-pointer items-baseline justify-between gap-4 py-5 text-[17px] font-semibold [&::-webkit-details-marker]:hidden">
+              <summary className="pop-in flex cursor-pointer items-center justify-between gap-4 py-5 text-[17px] font-semibold select-none active:translate-x-0.5 active:translate-y-0.5 [&::-webkit-details-marker]:hidden">
                 {faq.q}
-                <span
+                <ChevronRightIcon
                   aria-hidden
-                  className="font-mono text-xs text-muted-foreground group-open:hidden"
-                >
-                  +
-                </span>
-                <span
-                  aria-hidden
-                  className="hidden font-mono text-xs text-muted-foreground group-open:inline"
-                >
-                  −
-                </span>
+                  className="size-4 shrink-0 transition-transform duration-200 group-open:rotate-90"
+                />
               </summary>
               <p className="max-w-[70ch] pb-6 text-[15px] text-muted-foreground">
                 {faq.a}

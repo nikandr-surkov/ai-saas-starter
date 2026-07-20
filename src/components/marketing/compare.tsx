@@ -39,7 +39,7 @@ export function Compare() {
   return (
     <section id="pro" className="scroll-mt-16 border-t-[3px]">
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-        <div className="fade-up mb-11">
+        <div className="pop-in mb-11">
           <p className="eyebrow">This repo is complete</p>
           <h2 className="text-title mt-4">Free vs Pro.</h2>
           <p className="mt-4 max-w-[52ch] text-muted-foreground">

@@ -26,7 +26,7 @@ export function AiNative() {
       className="scroll-mt-16 border-t-[3px] bg-pop-sky [--title-shadow:var(--canvas)]"
     >
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-        <div className="fade-up mb-11">
+        <div className="pop-in mb-11">
           <p className="eyebrow">AI-native</p>
           <h2 className="text-title mt-4">Built for AI agents.</h2>
           <p className="mt-4 max-w-[52ch] text-muted-foreground">
@@ -35,7 +35,7 @@ export function AiNative() {
           </p>
         </div>
         <div className="grid items-start gap-14 lg:grid-cols-2">
-          <div className="border-hard rounded-md bg-background px-5 py-5 font-mono text-xs leading-8 font-light shadow-hard">
+          <div className="border-hard pop-in tilt-l rounded-md bg-background px-5 py-5 font-mono text-xs leading-8 font-light shadow-hard">
             {tree.map(([name, comment, highlight]) => (
               <div key={name} className="whitespace-nowrap">
                 <span className={highlight ? "text-primary-text" : ""}>

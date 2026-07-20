@@ -16,7 +16,7 @@ export function PricingSection() {
   return (
     <section id="pricing" className="scroll-mt-16 border-t-[3px]">
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-        <div className="fade-up mb-11 flex items-end justify-between gap-8">
+        <div className="pop-in mb-11 flex items-end justify-between gap-8">
           <div>
             <p className="eyebrow">Pricing</p>
             <h2 className="text-title mt-4">Pick a plan.</h2>
@@ -38,7 +38,7 @@ export function PricingSection() {
           {Object.values(plans).map((plan) => (
             <div
               key={plan.id}
-              className="grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 gap-y-2 border-b-2 px-2 py-6 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_150px_1fr_110px_auto]"
+              className="pop-in grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 gap-y-2 border-b-2 px-2 py-6 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_150px_1fr_110px_auto]"
             >
               <span className="font-mono text-xs text-muted-foreground">
                 {plan.id}

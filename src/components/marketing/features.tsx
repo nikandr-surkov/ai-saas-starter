@@ -46,7 +46,7 @@ export function Features() {
       className="scroll-mt-16 border-t-[3px] bg-pop-mint [--title-shadow:var(--canvas)]"
     >
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-        <div className="fade-up mb-12">
+        <div className="pop-in mb-12">
           <p className="eyebrow">Ledger of features</p>
           <h2 className="text-title mt-4">It handles the money.</h2>
           <p className="mt-4 max-w-[52ch] text-muted-foreground">
@@ -57,7 +57,7 @@ export function Features() {
           {features.map((feature) => (
             <div
               key={feature.index}
-              className="grid grid-cols-[auto_1fr] items-baseline gap-x-7 border-b-[3px] py-7 sm:grid-cols-[90px_1fr_auto]"
+              className="pop-in grid grid-cols-[auto_1fr] items-baseline gap-x-7 border-b-[3px] py-7 sm:grid-cols-[90px_1fr_auto]"
             >
               <span className="font-mono text-3xl font-bold sm:text-4xl">
                 {feature.index}

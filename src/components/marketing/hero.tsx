@@ -22,7 +22,20 @@ export function Hero() {
             </Sticker>
             <Sparkle className="text-foreground" />
           </div>
-          <h1 className="text-display mt-6 mb-5">A complete AI SaaS. Free.</h1>
+          {/* Entrance: words pop in staggered (motion kit). Spaces live
+              between the spans so textContent stays a normal sentence. */}
+          <h1 className="text-display mt-6 mb-5">
+            {["A", "complete", "AI", "SaaS.", "Free."].map((word, i) => (
+              <span key={word} className="contents">
+                <span
+                  className="hero-word inline-block"
+                  style={{ animationDelay: `${i * 70}ms` }}
+                >
+                  {word}
+                </span>{" "}
+              </span>
+            ))}
+          </h1>
           <p className="mb-7 max-w-[46ch] text-lg font-medium">
             Auth, Stripe subscriptions, credits, AI images — working, tested,
             MIT. Clone it and build YOUR product.
@@ -47,8 +60,11 @@ export function Hero() {
           <CopyInstall command={`git clone ${siteConfig.github}.git`} />
           <Squiggle className="mt-6 text-pop-pink" />
         </div>
-        <div className="relative">
-          <Sticker color="pink" className="absolute top-4 right-4 z-10">
+        <div className="hero-art relative">
+          <Sticker
+            color="pink"
+            className="hero-sticker absolute top-4 right-4 z-10"
+          >
             10 free credits
           </Sticker>
           <Image
@@ -57,7 +73,7 @@ export function Hero() {
             width={520}
             height={520}
             priority
-            className="mx-auto h-auto w-full max-w-[520px]"
+            className="float-idle mx-auto h-auto w-full max-w-[520px]"
           />
         </div>
       </div>

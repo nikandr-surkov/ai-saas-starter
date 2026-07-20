@@ -33,10 +33,12 @@ async function spendCreditsSource(): Promise<string> {
 export async function CodeExhibit() {
   const source = await spendCreditsSource();
 
+  // No border-t on this section: the marquee's bottom rule already
+  // separates hero and proof.
   return (
-    <section id="code" className="scroll-mt-16 border-t-[3px]">
+    <section id="code" className="scroll-mt-16">
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-        <div className="fade-up mb-11">
+        <div className="pop-in mb-11">
           <p className="eyebrow">Exhibit A</p>
           <h2 className="text-title mt-4">Real code. Tested.</h2>
           <p className="mt-4 max-w-[52ch] text-muted-foreground">
@@ -44,7 +46,7 @@ export async function CodeExhibit() {
             cannot drift from the shipped implementation.
           </p>
         </div>
-        <div className="border-hard overflow-hidden rounded-md bg-secondary shadow-hard">
+        <div className="border-hard pop-in tilt overflow-hidden rounded-md bg-secondary shadow-hard">
           <div className="flex justify-between border-b-2 px-4.5 py-2.5 font-mono text-[10.5px] tracking-wider text-muted-foreground uppercase">
             <span>src/lib/credits/index.ts · spendCredits</span>
             <span>rendered from source at build</span>
