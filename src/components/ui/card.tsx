@@ -12,8 +12,9 @@ function Card({
       data-slot="card"
       data-size={size}
       className={cn(
-        // Paper surface + hairline border, no shadow (DESIGN.md Components > Card).
-        "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-lg border-2 bg-card shadow-hard py-(--card-spacing) text-sm text-card-foreground [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-lg *:[img:last-child]:rounded-b-lg",
+        // Calm app register: sm shadow tier (DESIGN.md v3.1 hard rule 3).
+        // Marketing surfaces that need the loud md tier add shadow-hard.
+        "group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-lg border-2 bg-card shadow-hard-sm py-(--card-spacing) text-sm text-card-foreground [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-lg *:[img:last-child]:rounded-b-lg",
         className,
       )}
       {...props}

@@ -13,7 +13,7 @@ export function CtaBand() {
         <div className="flex flex-wrap items-center gap-6">
           <Link
             href="/signup"
-            className="inline-flex items-center rounded-md border-2 press bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground"
+            className="border-emph press inline-flex items-center rounded-md bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground"
           >
             Start free
           </Link>

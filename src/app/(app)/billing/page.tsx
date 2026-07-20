@@ -85,7 +85,7 @@ export default async function BillingPage() {
         <h2 className="mt-1 text-xl">Billing</h2>
       </div>
 
-      <Card className="max-w-xl bg-pop-sky">
+      <Card className="max-w-xl border-l-[6px] border-l-pop-sky">
         <CardHeader>
           <p className="eyebrow">Current plan</p>
           <CardTitle>
@@ -144,7 +144,7 @@ export default async function BillingPage() {
         </CardFooter>
       </Card>
 
-      <Card className="max-w-xl bg-pop-yellow">
+      <Card className="max-w-xl border-l-[6px] border-l-pop-yellow">
         <CardHeader>
           <p className="eyebrow">Credits</p>
           <CardTitle className="font-mono">

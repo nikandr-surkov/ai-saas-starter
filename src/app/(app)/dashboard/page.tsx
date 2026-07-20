@@ -9,7 +9,7 @@ import { requireSession } from "@/lib/auth/session";
 import { planByPriceId } from "@/lib/billing/plans";
 import { getHistory } from "@/lib/credits";
 import { features } from "@/lib/env";
-import { DigitBoxes } from "@/components/digit-boxes";
+import { CountUpDigits } from "@/components/count-up-digits";
 import { LedgerTable, type LedgerEntry } from "@/components/ledger-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -62,17 +62,17 @@ export default async function DashboardPage() {
       </div>
 
       {features.email && !session.user.emailVerified ? (
-        <div className="max-w-2xl rounded-md border-2 px-5 py-4 shadow-hard">
+        <div className="max-w-2xl rounded-md border-2 border-l-[6px] border-l-pop-orange px-5 py-4">
           <p className="eyebrow">Verify your email</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            We sent a link to {session.user.email}. Everything works
-            meanwhile — verifying keeps the account recoverable.
+            We sent a link to {session.user.email}. Everything works meanwhile —
+            verifying keeps the account recoverable.
           </p>
         </div>
       ) : null}
 
       {(generated?.count ?? 0) === 0 ? (
-        <div className="max-w-2xl rounded-md border-2 px-5 py-4 shadow-hard">
+        <div className="max-w-2xl rounded-md border-2 border-l-[6px] border-l-pop-sky px-5 py-4">
           <p className="eyebrow">First steps</p>
           <p className="mt-1 text-sm text-muted-foreground">
             Your welcome credits are on the books. Head to{" "}
@@ -96,11 +96,11 @@ export default async function DashboardPage() {
       ) : null}
 
       <div className="grid max-w-2xl gap-4 sm:grid-cols-2">
-        <Card className="bg-pop-yellow">
+        <Card className="border-l-[6px] border-l-pop-yellow">
           <CardHeader>
             <p className="eyebrow">Credits</p>
             <CardTitle>
-              <DigitBoxes value={session.user.creditBalance ?? 0} />
+              <CountUpDigits value={session.user.creditBalance ?? 0} />
             </CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
@@ -120,7 +120,7 @@ export default async function DashboardPage() {
             .
           </CardContent>
         </Card>
-        <Card className="bg-pop-mint">
+        <Card className="border-l-[6px] border-l-pop-mint">
           <CardHeader>
             <p className="eyebrow">Plan</p>
             <CardTitle>{currentPlan.name}</CardTitle>

@@ -76,7 +76,8 @@
 :root {
   color-scheme: light;
   --ink: oklch(0.2 0.02 90);
-  --canvas: oklch(0.96 0.02 90);
+  /* Warm cream ≈ #FFFDF5 (DESIGN.md v3.1). */
+  --canvas: oklch(0.993 0.011 95);
   --pop-yellow: oklch(0.88 0.16 95);
   --pop-mint: oklch(0.88 0.13 150);
   --pop-sky: oklch(0.86 0.09 230);
@@ -87,8 +88,9 @@
   --radius: 12px;
   --credit-text: color-mix(in oklch, var(--credit), var(--ink) 45%);
   --debit-text: color-mix(in oklch, var(--debit), var(--ink) 25%);
-  /* muted text stays ≥4.5 on every panel: 35% mix in light… */
-  --muted-ink: color-mix(in oklch, var(--ink), var(--canvas) 35%);
+  /* muted text stays ≥4.5 on every panel: 25% mix in light (the warm
+     canvas lightens the mix — 35% failed on sky/pink/orange)… */
+  --muted-ink: color-mix(in oklch, var(--ink), var(--canvas) 25%);
 }
 
 .dark {
@@ -112,6 +114,14 @@
    Declared on BOTH :root and .dark so nested theme wrappers recompute. */
 :root,
 .dark {
+  /* v3.1 grammar: tokenized border widths + THREE shadow tiers, one
+     direction (down-right), no exceptions. sm = badges/chips/app cards,
+     md = marketing cards/buttons, lg = dialogs/popovers/toasts. */
+  --border-w: 2px;
+  --border-w-emph: 3px;
+  --shadow-hard-sm: 3px 3px 0 0 var(--ink);
+  --shadow-hard-md: 5px 5px 0 0 var(--ink);
+  --shadow-hard-lg: 8px 8px 0 0 var(--ink);
   --action: var(--pop-yellow);
   --on-accent: var(--ink);
   --paper-2: color-mix(in oklch, var(--canvas), var(--ink) 5%);
@@ -164,6 +174,12 @@
   * {
     @apply border-border outline-ring/50;
   }
+  /* v3.1 premium detail: selection carries the brand. Dark mode swaps in
+     the muted yellow with light ink — 11.0:1 either way. */
+  ::selection {
+    background-color: var(--pop-yellow);
+    color: var(--ink);
+  }
   html {
     @apply font-sans;
   }
@@ -188,16 +204,17 @@
 }
 
 @layer components {
-  /* Press physics (DESIGN.md v3 hard rule 2). */
+  /* Press physics (DESIGN.md v3.1 hard rule 2): rest at the md tier,
+     hover grows +2px, active collapses to 0. */
   .press {
-    box-shadow: 4px 4px 0 0 var(--ink);
+    box-shadow: var(--shadow-hard-md);
     transition:
       translate 150ms ease,
       box-shadow 150ms ease;
   }
   .press:hover {
     translate: -2px -2px;
-    box-shadow: 6px 6px 0 0 var(--ink);
+    box-shadow: 7px 7px 0 0 var(--ink);
   }
   .press:active {
     translate: 2px 2px;
@@ -231,19 +248,31 @@
     }
   }
 
+  /* Toasts float on the lg tier and enter with a press-release: they
+     slide in from the shadow offset. `translate` composes with sonner's
+     transform-based positioning; the kill switch below covers it. */
   .cn-toast {
     border: 2px solid var(--ink) !important;
     border-radius: var(--radius) !important;
-    box-shadow: 4px 4px 0 0 var(--ink) !important;
+    box-shadow: var(--shadow-hard-lg) !important;
+    animation: toast-press-in 200ms ease-out;
   }
 }
 
-/* Hard offset shadows — never blurred. */
-@utility shadow-hard {
-  box-shadow: 4px 4px 0 0 var(--ink);
+/* Hard offset shadows — never blurred, always down-right (v3.1 tiers). */
+@utility shadow-hard-sm {
+  box-shadow: var(--shadow-hard-sm);
 }
-@utility shadow-hard-md {
-  box-shadow: 6px 6px 0 0 var(--ink);
+@utility shadow-hard {
+  box-shadow: var(--shadow-hard-md);
+}
+@utility shadow-hard-lg {
+  box-shadow: var(--shadow-hard-lg);
+}
+
+/* 3px emphasis border — hero/CTA only (DESIGN.md v3.1 hard rule 1). */
+@utility border-emph {
+  border-width: var(--border-w-emph);
 }
 
 /* RetroUI-style dot-grid texture for the marketing canvas. */
@@ -310,6 +339,25 @@
   to {
     scale: 1 1;
   }
+}
+
+/* Toast entry: released from the pressed position (see .cn-toast). */
+@keyframes toast-press-in {
+  from {
+    translate: 6px 6px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+/* Cross-document View Transitions between marketing pages where the
+   browser supports them (Chrome 126+). Next.js Link navigations are
+   same-document and stay instant by design — revisit when Next's
+   experimental viewTransition flag stabilizes. Reduced-motion browsers
+   skip these natively. */
+@view-transition {
+  navigation: auto;
 }
 
 /* The one sanctioned loop: slow sparkle twinkle. */

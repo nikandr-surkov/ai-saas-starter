@@ -33,8 +33,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 
 import { ToastDemo } from "./toast-demo";
@@ -132,8 +135,10 @@ export default async function StyleguidePage({
         <div className="mx-auto w-full max-w-[1160px] space-y-12 px-6 py-16">
           <header className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Styleguide · dev only · v3</p>
-              <h1 className="mt-2 text-3xl">The Ledger, <span className="marker">Playful</span></h1>
+              <p className="eyebrow">Styleguide · dev only · v3.1</p>
+              <h1 className="mt-2 text-3xl">
+                The Ledger, <span className="marker">Playful</span>
+              </h1>
             </div>
             <div className="flex items-center gap-3 font-mono text-xs">
               <Link href="/styleguide" className="underline underline-offset-4">
@@ -195,8 +200,9 @@ export default async function StyleguidePage({
               <Squiggle className="text-pop-pink" />
             </div>
             <p className="max-w-md text-lg">
-              Heading words get the <span className="marker">marker swoosh</span>{" "}
-              and the hero word gets the{" "}
+              Heading words get the{" "}
+              <span className="marker">marker swoosh</span> and the hero word
+              gets the{" "}
               <span className="text-pop-shadow font-display font-bold">
                 pop shadow
               </span>
@@ -247,6 +253,42 @@ export default async function StyleguidePage({
                   id="sg-prompt"
                   placeholder="A ledger book on a desk, studio light"
                 />
+              </div>
+            </div>
+          </Section>
+
+          <Section title="Shadow tiers — one direction, three sizes">
+            <div className="flex flex-wrap items-end gap-8 font-mono text-xs">
+              <div className="shadow-hard-sm rounded-lg border-2 bg-background px-5 py-4">
+                sm 3px — badges, chips, app cards
+              </div>
+              <div className="shadow-hard rounded-lg border-2 bg-background px-5 py-4">
+                md 5px — marketing cards, buttons
+              </div>
+              <div className="shadow-hard-lg rounded-lg border-2 bg-background px-5 py-4">
+                lg 8px — dialogs, menus, toasts
+              </div>
+            </div>
+          </Section>
+
+          <Section title="Selection controls & skeleton">
+            <div className="flex flex-wrap items-center gap-8">
+              <div className="flex items-center gap-2.5">
+                <Checkbox id="sg-check" defaultChecked />
+                <Label htmlFor="sg-check">Email me receipts</Label>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Switch id="sg-switch" defaultChecked />
+                <Label htmlFor="sg-switch">Mock mode</Label>
+              </div>
+            </div>
+            <div className="grid max-w-md gap-3">
+              <div className="flex gap-3">
+                <Skeleton className="size-14" />
+                <div className="flex-1 space-y-2">
+                  <Skeleton className="h-5" />
+                  <Skeleton className="h-5 w-2/3" />
+                </div>
               </div>
             </div>
           </Section>
