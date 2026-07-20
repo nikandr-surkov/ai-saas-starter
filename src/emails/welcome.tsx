@@ -21,7 +21,7 @@ export default function WelcomeEmail({
       <EmailHeading>Welcome, {name}.</EmailHeading>
       <EmailText>
         Your account is live and{" "}
-        <span style={{ color: emailTheme.accent, fontWeight: 600 }}>
+        <span style={{ color: emailTheme.credit, fontWeight: 600 }}>
           {WELCOME_CREDITS} welcome credits
         </span>{" "}
         are already on it — enough to generate your first images. Each

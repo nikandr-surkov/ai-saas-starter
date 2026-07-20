@@ -7,7 +7,7 @@ export default function MarketingLayout({
   return (
     <>
       <MarketingNav />
-      <main className="flex-1">{children}</main>
+      <main className="dot-grid flex-1">{children}</main>
       <MarketingFooter />
     </>
   );

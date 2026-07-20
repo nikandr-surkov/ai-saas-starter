@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import { plans, topupPack } from "@/config/plans";
 
+import { DigitBoxes } from "@/components/digit-boxes";
+
 export const metadata: Metadata = {
   title: "Pricing",
   description:
@@ -43,10 +45,12 @@ export default function PricingPage() {
                 <li key={feature}>{feature}</li>
               ))}
             </ul>
-            <div className="col-start-2 font-mono text-sm sm:col-start-4 sm:text-right">
-              {plan.priceMonthlyCents === 0
-                ? "free"
-                : `${usd(plan.priceMonthlyCents)}/mo`}
+            <div className="col-start-2 sm:col-start-4 sm:justify-self-end">
+              {plan.priceMonthlyCents === 0 ? (
+                <span className="font-mono text-sm">free</span>
+              ) : (
+                <span className="flex items-end gap-1"><DigitBoxes size="sm" value={usd(plan.priceMonthlyCents)} /><span className="font-mono text-xs text-muted-foreground">/mo</span></span>
+              )}
             </div>
           </div>
         ))}
@@ -57,8 +61,8 @@ export default function PricingPage() {
             {topupPack.credits} credits, one-time. No subscription required —
             stack them whenever you run low.
           </p>
-          <div className="col-start-2 font-mono text-sm sm:col-start-4 sm:text-right">
-            {usd(topupPack.priceCents)}
+          <div className="col-start-2 sm:col-start-4 sm:justify-self-end">
+            <DigitBoxes size="sm" value={usd(topupPack.priceCents)} />
           </div>
         </div>
       </div>

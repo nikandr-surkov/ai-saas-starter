@@ -32,10 +32,10 @@ export function SidebarNav() {
             href={item.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "flex items-center gap-2.5 rounded-sm px-2.5 py-1.5 text-sm transition-colors",
-              // Active nav is a sanctioned use of accent (DESIGN.md rule 8).
+              "flex items-center gap-2.5 rounded-full px-3 py-1.5 text-sm transition-colors",
+              // Active nav gets the marker treatment (DESIGN.md v3).
               active
-                ? "bg-accent-soft text-primary-text"
+                ? "border-2 bg-pop-yellow font-semibold text-foreground"
                 : "text-muted-foreground hover:bg-accent hover:text-foreground",
             )}
           >

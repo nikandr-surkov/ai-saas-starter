@@ -23,7 +23,7 @@ export default function SubscriptionConfirmedEmail({
       <EmailHeading>{planName} is active</EmailHeading>
       <EmailText>
         Your subscription is live and{" "}
-        <span style={{ color: emailTheme.accent, fontWeight: 600 }}>
+        <span style={{ color: emailTheme.credit, fontWeight: 600 }}>
           {monthlyCredits} credits
         </span>{" "}
         have been added to your balance. The same amount arrives with every paid

@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 
 import { LedgerList, LedgerRow } from "@/components/ledger-row";
 import { LedgerTable } from "@/components/ledger-table";
+import { DigitBoxes } from "@/components/digit-boxes";
+import { Asterisk, Sparkle, Squiggle } from "@/components/doodads";
 import { Sticker } from "@/components/sticker";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -51,15 +53,16 @@ export const metadata: Metadata = {
 // force-wraps the page in `.dark` regardless — used for screenshots.
 
 const swatches = [
-  { name: "paper", className: "bg-background" },
-  { name: "paper-2", className: "bg-paper-2" },
+  { name: "canvas", className: "bg-background" },
   { name: "ink", className: "bg-foreground" },
-  { name: "muted-ink", className: "bg-muted-foreground" },
-  { name: "primary (fills)", className: "bg-primary" },
-  { name: "primary-text", className: "bg-primary-text" },
-  { name: "highlight (marks)", className: "bg-highlight" },
-  { name: "debit (fills)", className: "bg-destructive" },
-  { name: "debit-text", className: "bg-debit-text" },
+  { name: "pop-yellow (action)", className: "bg-pop-yellow" },
+  { name: "pop-mint", className: "bg-pop-mint" },
+  { name: "pop-sky", className: "bg-pop-sky" },
+  { name: "pop-pink", className: "bg-pop-pink" },
+  { name: "pop-orange", className: "bg-pop-orange" },
+  { name: "credit", className: "bg-credit" },
+  { name: "credit-text", className: "bg-credit-text" },
+  { name: "debit", className: "bg-debit-text" },
 ] as const;
 
 const ledgerEntries = [
@@ -129,8 +132,8 @@ export default async function StyleguidePage({
         <div className="mx-auto w-full max-w-[1160px] space-y-12 px-6 py-16">
           <header className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Styleguide · dev only · v2</p>
-              <h1 className="mt-2 text-3xl">The Ledger, Neo-Brutalist</h1>
+              <p className="eyebrow">Styleguide · dev only · v3</p>
+              <h1 className="mt-2 text-3xl">The Ledger, <span className="marker">Playful</span></h1>
             </div>
             <div className="flex items-center gap-3 font-mono text-xs">
               <Link href="/styleguide" className="underline underline-offset-4">
@@ -178,8 +181,28 @@ export default async function StyleguidePage({
             </p>
           </Section>
 
-          <Section title="Sticker — one per page">
-            <Sticker>10 free credits</Sticker>
+          <Section title="Stickers, markers, doodads, digit boxes">
+            <div className="flex flex-wrap items-center gap-4">
+              <Sticker>10 free credits</Sticker>
+              <Sticker color="mint" className="rotate-2">
+                MIT · Open source
+              </Sticker>
+              <Sticker color="pink" className="rotate-1">
+                Most popular
+              </Sticker>
+              <Sparkle className="text-pop-orange" />
+              <Asterisk className="text-pop-sky" />
+              <Squiggle className="text-pop-pink" />
+            </div>
+            <p className="max-w-md text-lg">
+              Heading words get the <span className="marker">marker swoosh</span>{" "}
+              and the hero word gets the{" "}
+              <span className="text-pop-shadow font-display font-bold">
+                pop shadow
+              </span>
+              .
+            </p>
+            <DigitBoxes value={210} label="Credit balance" />
           </Section>
 
           <Section title="Buttons">

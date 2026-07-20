@@ -35,7 +35,7 @@ export function Faq() {
     >
       <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Questions</p>
-        <h2 className="mt-3 text-3xl">Asked before you asked.</h2>
+        <h2 className="mt-3 text-3xl">Asked <span className="marker">before you asked</span>.</h2>
       </div>
       <div className="border-t-2 border-rule">
         {faqs.map((faq) => (

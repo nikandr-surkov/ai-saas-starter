@@ -2,6 +2,9 @@ import Link from "next/link";
 
 import { plans, topupPack } from "@/config/plans";
 
+import { DigitBoxes } from "@/components/digit-boxes";
+import { Sticker } from "@/components/sticker";
+
 function usd(cents: number): string {
   return `$${(cents / 100).toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
 }
@@ -17,7 +20,7 @@ export function PricingSection() {
       <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Pricing</p>
         <h2 className="mt-3 mb-3 text-3xl">
-          Integer credits. No expiry. No surprises.
+          Integer credits. No expiry. <span className="marker">No surprises</span>.
         </h2>
         <p className="text-muted-foreground">
           One config file drives this section, checkout, and the webhook grants.
@@ -33,14 +36,23 @@ export function PricingSection() {
             <span className="font-mono text-xs text-muted-foreground">
               {plan.id}
             </span>
-            <h3 className="text-[17px] font-semibold">{plan.name}</h3>
+            <h3 className="flex items-center gap-3 text-[17px] font-semibold">
+              {plan.name}
+              {plan.id === "pro" ? (
+                <Sticker color="pink" className="text-[9px]">
+                  Most popular
+                </Sticker>
+              ) : null}
+            </h3>
             <p className="col-span-2 col-start-2 text-[15px] text-muted-foreground sm:col-span-1 sm:col-start-3">
               {plan.features.join(" · ")}
             </p>
-            <span className="col-start-2 font-mono text-sm sm:col-start-4 sm:text-right">
-              {plan.priceMonthlyCents === 0
-                ? "free"
-                : `${usd(plan.priceMonthlyCents)}/mo`}
+            <span className="col-start-2 sm:col-start-4 sm:justify-self-end">
+              {plan.priceMonthlyCents === 0 ? (
+                <span className="font-mono text-sm">free</span>
+              ) : (
+                <span className="flex items-end gap-1"><DigitBoxes size="sm" value={usd(plan.priceMonthlyCents)} /><span className="font-mono text-xs text-muted-foreground">/mo</span></span>
+              )}
             </span>
             <Link
               href="/signup"

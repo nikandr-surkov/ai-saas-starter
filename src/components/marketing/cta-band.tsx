@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 
 export function CtaBand() {
   return (
-    <div className="mt-26 border-t-2 border-rule bg-secondary">
+    <div className="mt-26 border-t-2 bg-pop-pink">
       <div className="mx-auto flex w-full max-w-[1160px] flex-wrap items-center justify-between gap-8 px-6 py-18">
         <div>
           <p className="eyebrow">Closing entry</p>

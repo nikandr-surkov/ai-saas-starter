@@ -9,6 +9,7 @@ import { requireSession } from "@/lib/auth/session";
 import { planByPriceId } from "@/lib/billing/plans";
 import { getHistory } from "@/lib/credits";
 import { features } from "@/lib/env";
+import { DigitBoxes } from "@/components/digit-boxes";
 import { LedgerTable, type LedgerEntry } from "@/components/ledger-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -95,11 +96,11 @@ export default async function DashboardPage() {
       ) : null}
 
       <div className="grid max-w-2xl gap-4 sm:grid-cols-2">
-        <Card>
+        <Card className="bg-pop-yellow">
           <CardHeader>
             <p className="eyebrow">Credits</p>
-            <CardTitle className="font-mono text-2xl">
-              {session.user.creditBalance}
+            <CardTitle>
+              <DigitBoxes value={session.user.creditBalance ?? 0} />
             </CardTitle>
           </CardHeader>
           <CardContent className="text-sm text-muted-foreground">
@@ -119,7 +120,7 @@ export default async function DashboardPage() {
             .
           </CardContent>
         </Card>
-        <Card>
+        <Card className="bg-pop-mint">
           <CardHeader>
             <p className="eyebrow">Plan</p>
             <CardTitle>{currentPlan.name}</CardTitle>

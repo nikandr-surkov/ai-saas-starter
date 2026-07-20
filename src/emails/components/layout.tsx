@@ -13,16 +13,17 @@ import {
 // text on paper, one green accent (DESIGN.md, translated to email-safe hex —
 // oklch doesn't survive email clients). Font stacks instead of webfonts.
 
-// v2 neo-brutalist palette in email-safe hex: warm cream, near-black ink,
-// vivid green with INK text on it, 2px ink borders.
+// v3 playful palette in email-safe hex: warm cream, near-black ink, yellow
+// action button with ink text, credit green for amounts, 2px ink borders.
 export const emailTheme = {
   paper: "#f7f2df",
   paper2: "#ece5cf",
   ink: "#26241d",
   muted: "#6e6a5c",
   hairline: "#cfc8b2",
-  accent: "#3ede83",
+  accent: "#f3d84a",
   accentInk: "#26241d",
+  credit: "#27a562",
   mono: "'Courier New', Courier, monospace",
   sans: "Helvetica, Arial, sans-serif",
 } as const;

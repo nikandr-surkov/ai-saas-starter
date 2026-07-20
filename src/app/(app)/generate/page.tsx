@@ -41,7 +41,7 @@ export default async function GeneratePage() {
       <section>
         <p className="eyebrow mb-3">generations</p>
         {history.length === 0 ? (
-          <div className="max-w-md rounded-md border-2 px-5 py-6 shadow-hard">
+          <div className="max-w-md rounded-md border-2 bg-pop-mint px-5 py-6 shadow-hard">
             <p className="eyebrow">First entry pending</p>
             <p className="mt-2 text-sm text-muted-foreground">
               Nothing generated yet — and your welcome credits are ready.

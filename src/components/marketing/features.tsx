@@ -47,15 +47,13 @@ const features = [
 
 export function Features() {
   return (
-    <section
-      id="features"
-      className="mx-auto w-full max-w-[1160px] scroll-mt-16 px-6 pt-26"
-    >
+    <section id="features" className="mt-26 scroll-mt-16 border-y-2 bg-pop-mint">
+      <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
       <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Ledger of features</p>
         <h2 className="mt-3 mb-3 text-3xl">
-          The 20% of a SaaS your AI agent shouldn&apos;t be trusted to
-          improvise.
+          The 20% of a SaaS your AI agent shouldn&apos;t be trusted to{" "}
+          <span className="marker">improvise</span>.
         </h2>
         <p className="text-muted-foreground">
           Everything here is tested, idempotent, and boring on purpose.
@@ -67,6 +65,7 @@ export function Features() {
           <LedgerRow key={feature.index} {...feature} />
         ))}
       </LedgerList>
+      </div>
     </section>
   );
 }

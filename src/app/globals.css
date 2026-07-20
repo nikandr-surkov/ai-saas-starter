@@ -44,13 +44,19 @@
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --color-paper-2: var(--paper-2);
-  --color-highlight: var(--highlight);
+  --color-pop-yellow: var(--pop-yellow);
+  --color-pop-mint: var(--pop-mint);
+  --color-pop-sky: var(--pop-sky);
+  --color-pop-pink: var(--pop-pink);
+  --color-pop-orange: var(--pop-orange);
+  --color-credit: var(--credit);
+  --color-credit-text: var(--credit-text);
+  --color-highlight: var(--pop-yellow);
   --color-on-accent: var(--on-accent);
   --color-debit-text: var(--debit-text);
   --color-hairline: var(--hairline);
   --color-rule: var(--rule);
-  /* DESIGN.md v2 hard rule 4: radius is 6px globally. Every step collapses
-     to --radius on purpose; pills use rounded-full explicitly. */
+  /* DESIGN.md v3: 12px radius for cards/buttons; pills via rounded-full. */
   --radius-sm: var(--radius);
   --radius-md: var(--radius);
   --radius-lg: var(--radius);
@@ -60,85 +66,94 @@
   --radius-4xl: var(--radius);
 }
 
-/* ── Neo-brutalist raw tokens (DESIGN.md v2) ────────────────────────────────
-   Hard-coded oklch values live ONLY in these two blocks. --on-accent is the
-   text color on primary/highlight fills: always near-black (the ink in
-   light mode, the charcoal paper in dark). --primary-text and --debit-text
-   exist because the raw fills FAIL WCAG as text on light paper (1.55 and
-   3.63) — never use raw primary/debit for light-mode text. */
+/* ── Playful neo-brutalist raw tokens (DESIGN.md v3) ────────────────────────
+   Hard-coded oklch values live ONLY in these two blocks. Color roles are
+   strict: --action (yellow) = primary buttons with ink text; --credit =
+   positive amounts/success ONLY; --debit = negative/destructive ONLY;
+   --pop-* panels are backgrounds, never text. --credit-text/--debit-text
+   exist because the raw values FAIL WCAG as light-mode text (1.85 / 3.63). */
 
 :root {
-  /* light — warm cream ledger */
   color-scheme: light;
-  --paper: oklch(0.96 0.02 90);
-  --ink: oklch(0.2 0.01 90);
-  --primary: oklch(0.8 0.19 150);
-  --highlight: oklch(0.87 0.17 95);
+  --ink: oklch(0.2 0.02 90);
+  --canvas: oklch(0.96 0.02 90);
+  --pop-yellow: oklch(0.88 0.16 95);
+  --pop-mint: oklch(0.88 0.13 150);
+  --pop-sky: oklch(0.86 0.09 230);
+  --pop-pink: oklch(0.86 0.1 350);
+  --pop-orange: oklch(0.82 0.13 60);
+  --credit: oklch(0.75 0.18 150);
   --debit: oklch(0.62 0.23 27);
-  --radius: 6px;
-  --on-accent: var(--ink);
-  --primary-text: color-mix(in oklch, var(--primary), var(--ink) 50%);
+  --radius: 12px;
+  --credit-text: color-mix(in oklch, var(--credit), var(--ink) 45%);
   --debit-text: color-mix(in oklch, var(--debit), var(--ink) 25%);
+  /* muted text stays ≥4.5 on every panel: 35% mix in light… */
+  --muted-ink: color-mix(in oklch, var(--ink), var(--canvas) 35%);
 }
 
 .dark {
-  /* dark — charcoal ledger, light ink */
   color-scheme: dark;
-  --paper: oklch(0.2 0.015 90);
+  --canvas: oklch(0.19 0.02 90);
   --ink: oklch(0.95 0.01 90);
-  --primary: oklch(0.83 0.19 150);
-  --highlight: oklch(0.88 0.15 95);
+  --pop-yellow: oklch(0.32 0.07 95);
+  --pop-mint: oklch(0.32 0.06 150);
+  --pop-sky: oklch(0.32 0.05 230);
+  --pop-pink: oklch(0.32 0.05 350);
+  --pop-orange: oklch(0.32 0.06 60);
+  --credit: oklch(0.75 0.18 150);
   --debit: oklch(0.7 0.2 27);
-  --on-accent: var(--paper);
-  --primary-text: var(--primary);
+  --credit-text: var(--credit);
   --debit-text: var(--debit);
+  /* …and 30% in dark (35% dips to 4.36 on dark panels). */
+  --muted-ink: color-mix(in oklch, var(--ink), var(--canvas) 30%);
 }
 
 /* ── Derived tokens + shadcn semantic mapping ───────────────────────────────
-   Declared on BOTH :root and .dark so nested theme wrappers (e.g.
-   /styleguide?theme=dark) recompute every derivation — custom properties
-   bake their var() substitutions at the declaring element. */
+   Declared on BOTH :root and .dark so nested theme wrappers recompute. */
 :root,
 .dark {
-  --paper-2: color-mix(in oklch, var(--paper), var(--ink) 5%);
-  --muted-ink: color-mix(in oklch, var(--ink), var(--paper) 35%);
+  --action: var(--pop-yellow);
+  --on-accent: var(--ink);
+  --paper-2: color-mix(in oklch, var(--canvas), var(--ink) 5%);
   --debit-deep: color-mix(in oklch, var(--debit), var(--ink) 30%);
-  /* Legacy names from v1 kept as aliases — both map to ink now; widths
-     come from border-2 classes. */
+  /* Legacy aliases — widths come from border-2 classes. */
   --hairline: var(--ink);
   --rule: var(--ink);
+  /* Positive-amount / link text keeps the ledger-green heritage. */
+  --primary-text: var(--credit-text);
 
-  --background: var(--paper);
+  --background: var(--canvas);
   --foreground: var(--ink);
-  --card: var(--paper);
+  --card: var(--canvas);
   --card-foreground: var(--ink);
-  --popover: var(--paper);
+  --popover: var(--canvas);
   --popover-foreground: var(--ink);
-  --primary-foreground: var(--on-accent);
+  /* Primary buttons are ACTION yellow with ink text (RetroUI style). */
+  --primary: var(--action);
+  --primary-foreground: var(--ink);
   --secondary: var(--paper-2);
   --secondary-foreground: var(--ink);
   --muted: var(--paper-2);
   --muted-foreground: var(--muted-ink);
-  /* Neutral hover tint for menus — never green, never yellow. */
+  /* Neutral hover tint for menus — never a pop color. */
   --accent: color-mix(in oklch, var(--ink), transparent 90%);
   --accent-foreground: var(--ink);
-  /* The one sanctioned green wash (ledger-row hover). */
-  --accent-soft: color-mix(in oklch, var(--primary), transparent 88%);
+  /* Row-hover wash keeps the credit-green heritage. */
+  --accent-soft: color-mix(in oklch, var(--credit), transparent 88%);
   --destructive: var(--debit-deep);
-  --destructive-foreground: var(--paper);
+  --destructive-foreground: var(--canvas);
   --border: var(--ink);
   --input: var(--ink);
-  /* Focus rings are ink (DESIGN.md v2). */
   --ring: var(--ink);
-  --chart-1: var(--primary);
-  --chart-2: var(--primary-text);
-  --chart-3: var(--muted-ink);
-  --chart-4: var(--highlight);
+  --chart-1: var(--credit);
+  --chart-2: var(--pop-sky);
+  --chart-3: var(--pop-pink);
+  --chart-4: var(--pop-orange);
   --chart-5: var(--debit);
   --sidebar: var(--paper-2);
   --sidebar-foreground: var(--ink);
-  --sidebar-primary: var(--primary);
-  --sidebar-primary-foreground: var(--on-accent);
+  --sidebar-primary: var(--action);
+  --sidebar-primary-foreground: var(--ink);
   --sidebar-accent: color-mix(in oklch, var(--ink), transparent 90%);
   --sidebar-accent-foreground: var(--ink);
   --sidebar-border: var(--ink);
@@ -154,10 +169,9 @@
   }
   body {
     @apply bg-background text-foreground;
-    /* DESIGN.md v2 hard rule 8: all numerals tabular. */
+    /* DESIGN.md v3 hard rule 8: all numerals tabular. */
     font-variant-numeric: tabular-nums;
   }
-  /* Display headings: Bricolage Grotesque, tight leading. */
   h1,
   h2,
   h3 {
@@ -174,8 +188,7 @@
 }
 
 @layer components {
-  /* Interactive press physics (DESIGN.md v2 hard rule 3). Non-interactive
-     containers use .shadow-hard without the transforms. */
+  /* Press physics (DESIGN.md v3 hard rule 2). */
   .press {
     box-shadow: 4px 4px 0 0 var(--ink);
     transition:
@@ -191,7 +204,33 @@
     box-shadow: 0 0 0 0 var(--ink);
   }
 
-  /* Sonner toasts join the system. */
+  /* Marker highlight: skewed pop-yellow swoosh behind heading words and
+     the active nav pill. Draws in once on view where supported. */
+  .marker {
+    position: relative;
+    isolation: isolate;
+    white-space: nowrap;
+  }
+  .marker::before {
+    content: "";
+    position: absolute;
+    inset: 10% -0.18em;
+    z-index: -1;
+    background: var(--pop-yellow);
+    border-radius: 0.4em;
+    transform: skewX(-8deg);
+  }
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .marker::before {
+        transform-origin: left center;
+        animation: marker-draw 250ms ease-out both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 30%;
+      }
+    }
+  }
+
   .cn-toast {
     border: 2px solid var(--ink) !important;
     border-radius: var(--radius) !important;
@@ -199,12 +238,21 @@
   }
 }
 
-/* Hard offset shadows — never blurred (DESIGN.md v2 hard rule 2). */
+/* Hard offset shadows — never blurred. */
 @utility shadow-hard {
   box-shadow: 4px 4px 0 0 var(--ink);
 }
 @utility shadow-hard-md {
   box-shadow: 6px 6px 0 0 var(--ink);
+}
+
+/* RetroUI-style dot-grid texture for the marketing canvas. */
+@utility dot-grid {
+  background-image: radial-gradient(
+    color-mix(in oklch, var(--ink), transparent 85%) 1.5px,
+    transparent 1.5px
+  );
+  background-size: 26px 26px;
 }
 
 /* Mono uppercase micro-label (eyebrows). */
@@ -217,7 +265,7 @@
   color: var(--muted-ink);
 }
 
-/* Display headline (DESIGN.md v2 H1 clamp). */
+/* Display headline. */
 @utility text-display {
   font-family: var(--font-display);
   font-size: clamp(2.6rem, 1.4rem + 4vw, 4.2rem);
@@ -227,7 +275,11 @@
   text-wrap: balance;
 }
 
-/* Ledger stagger (hero art). Neutralized by the reduced-motion guard. */
+/* The "stand out" hero word: ink text, hard pop-yellow shadow behind it. */
+@utility text-pop-shadow {
+  text-shadow: 4px 4px 0 var(--pop-yellow);
+}
+
 @keyframes ledger-in {
   from {
     opacity: 0;
@@ -239,7 +291,6 @@
   }
 }
 
-/* Sticker wobble — one shot on hover, never looping. */
 @keyframes wobble {
   0% {
     rotate: -2deg;
@@ -252,8 +303,29 @@
   }
 }
 
-/* Section-header fade-up via scroll-driven animation — progressive
-   enhancement only, doubly guarded by @supports and reduced-motion. */
+@keyframes marker-draw {
+  from {
+    scale: 0 1;
+  }
+  to {
+    scale: 1 1;
+  }
+}
+
+/* The one sanctioned loop: slow sparkle twinkle. */
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@utility twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
 @keyframes fade-up-kf {
   from {
     opacity: 0.2;
@@ -274,8 +346,8 @@
   }
 }
 
-/* DESIGN.md v2 hard rule 10: the kill switch is law. Covers press physics,
-   tw-animate-css, radix data-state animations, and everything above. */
+/* DESIGN.md v3 hard rule 9: the kill switch is law — covers the press,
+   markers, twinkle, staggers, tw-animate-css, and radix animations. */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,

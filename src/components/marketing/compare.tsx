@@ -44,7 +44,7 @@ export function Compare() {
       <div className="fade-up mb-11 max-w-[62ch]">
         <p className="eyebrow">Free vs Pro</p>
         <h2 className="mt-3 text-3xl">
-          This repo is complete. Pro is what comes after product-market fit.
+          This repo is <span className="marker">complete</span>. Pro is what comes after product-market fit.
         </h2>
       </div>
       <div className="overflow-x-auto">
