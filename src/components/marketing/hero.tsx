@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { StarIcon } from "lucide-react";
 
@@ -7,7 +8,6 @@ import { Sparkle, Squiggle } from "@/components/doodads";
 import { Sticker } from "@/components/sticker";
 
 import { CopyInstall } from "./copy-install";
-import { HeroLedger } from "./hero-ledger";
 
 export function Hero() {
   return (
@@ -51,11 +51,18 @@ export function Hero() {
           <Squiggle className="mt-6 text-pop-pink" />
         </div>
         <div className="relative">
-          {/* Hero stickers per DESIGN.md v3 placements. */}
-          <Sticker className="absolute -top-4 -right-2 z-10">
+          {/* Hero illustration cluster + sticker (DESIGN.md v3.1). */}
+          <Sticker className="absolute top-4 right-4 z-10">
             10 free credits
           </Sticker>
-          <HeroLedger />
+          <Image
+            src="/illustrations/hero-cluster.png"
+            alt="A retro cartoon robot painting a sparkling landscape at an easel"
+            width={520}
+            height={520}
+            priority
+            className="mx-auto h-auto w-full max-w-[520px]"
+          />
         </div>
       </div>
     </header>

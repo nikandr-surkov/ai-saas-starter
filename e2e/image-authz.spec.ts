@@ -14,8 +14,11 @@ test("image route: owner 200, anonymous 401, traversal 404", async ({
   await page.goto("/generate");
   await page.getByLabel("Prompt").fill("An authz probe image");
   await page.getByRole("button", { name: /^Generate/ }).click();
-  await expect(page.locator("section img").first()).toBeVisible();
-  const src = await page.locator("section img").first().getAttribute("src");
+  // Target the API-served generation specifically — the empty-state mascot
+  // illustration is also a `section img` while the action is in flight.
+  const generated = page.locator('section img[src^="/api/images/"]').first();
+  await expect(generated).toBeVisible();
+  const src = await generated.getAttribute("src");
   expect(src).toMatch(/^\/api\/images\//);
 
   // Owner with a session cookie: served.

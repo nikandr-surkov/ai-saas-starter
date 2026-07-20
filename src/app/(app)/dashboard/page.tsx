@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { eq, sql } from "drizzle-orm";
 
@@ -72,26 +73,35 @@ export default async function DashboardPage() {
       ) : null}
 
       {(generated?.count ?? 0) === 0 ? (
-        <div className="max-w-2xl rounded-md border-2 border-l-[6px] border-l-pop-sky px-5 py-4">
-          <p className="eyebrow">First steps</p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Your welcome credits are on the books. Head to{" "}
-            <Link
-              href="/generate"
-              className="text-primary-text underline underline-offset-4"
-            >
-              Generate
-            </Link>{" "}
-            to spend the first one — each image costs 1 credit and failed
-            generations refund themselves. Plans and top-ups live in{" "}
-            <Link
-              href="/billing"
-              className="text-primary-text underline underline-offset-4"
-            >
-              Billing
-            </Link>
-            .
-          </p>
+        <div className="flex max-w-2xl items-center gap-5 rounded-md border-2 border-l-[6px] border-l-pop-sky px-5 py-4">
+          <Image
+            src="/illustrations/mascot-hello.png"
+            alt="Gold coin mascot with sunglasses pushed up, waving hello"
+            width={96}
+            height={96}
+            className="size-24 shrink-0"
+          />
+          <div>
+            <p className="eyebrow">First steps</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Your welcome credits are on the books. Head to{" "}
+              <Link
+                href="/generate"
+                className="text-primary-text underline underline-offset-4"
+              >
+                Generate
+              </Link>{" "}
+              to spend the first one — each image costs 1 credit and failed
+              generations refund themselves. Plans and top-ups live in{" "}
+              <Link
+                href="/billing"
+                className="text-primary-text underline underline-offset-4"
+              >
+                Billing
+              </Link>
+              .
+            </p>
+          </div>
         </div>
       ) : null}
 

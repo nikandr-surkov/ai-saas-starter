@@ -18,7 +18,8 @@ test("mock generation spends 1 credit and serves the image", async ({
   ).toBeVisible();
   await expect(creditBalance(page)).toHaveText("9");
 
-  const image = page.locator("section img").first();
+  // The API-served generation, not the empty-state mascot illustration.
+  const image = page.locator('section img[src^="/api/images/"]').first();
   await expect(image).toBeVisible();
   const src = await image.getAttribute("src");
   expect(src).toMatch(/^\/api\/images\//);

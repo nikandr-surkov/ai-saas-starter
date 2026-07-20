@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { plans, topupPack } from "@/config/plans";
@@ -17,15 +18,26 @@ export function PricingSection() {
       id="pricing"
       className="mx-auto w-full max-w-[1160px] scroll-mt-16 px-6 pt-26"
     >
-      <div className="fade-up mb-11 max-w-[62ch]">
-        <p className="eyebrow">Pricing</p>
-        <h2 className="mt-3 mb-3 text-3xl">
-          Integer credits. No expiry. <span className="marker">No surprises</span>.
-        </h2>
-        <p className="text-muted-foreground">
-          One config file drives this section, checkout, and the webhook grants.
-          Start free — the welcome credits are already on the account.
-        </p>
+      <div className="fade-up mb-11 flex items-end justify-between gap-8">
+        <div className="max-w-[62ch]">
+          <p className="eyebrow">Pricing</p>
+          <h2 className="mt-3 mb-3 text-3xl">
+            Integer credits. No expiry.{" "}
+            <span className="marker">No surprises</span>.
+          </h2>
+          <p className="text-muted-foreground">
+            One config file drives this section, checkout, and the webhook
+            grants. Start free — the welcome credits are already on the account.
+          </p>
+        </div>
+        {/* Pricing accent (DESIGN.md v3.1 illustration set). */}
+        <Image
+          src="/illustrations/sticker-stack.png"
+          alt="A stack of gold coins with one coin spinning off the top"
+          width={180}
+          height={180}
+          className="hidden shrink-0 sm:block"
+        />
       </div>
       <div className="border-t-2 border-rule">
         {Object.values(plans).map((plan) => (
@@ -51,7 +63,12 @@ export function PricingSection() {
               {plan.priceMonthlyCents === 0 ? (
                 <span className="font-mono text-sm">free</span>
               ) : (
-                <span className="flex items-end gap-1"><DigitBoxes size="sm" value={usd(plan.priceMonthlyCents)} /><span className="font-mono text-xs text-muted-foreground">/mo</span></span>
+                <span className="flex items-end gap-1">
+                  <DigitBoxes size="sm" value={usd(plan.priceMonthlyCents)} />
+                  <span className="font-mono text-xs text-muted-foreground">
+                    /mo
+                  </span>
+                </span>
               )}
             </span>
             <Link
