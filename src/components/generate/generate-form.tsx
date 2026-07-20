@@ -47,7 +47,7 @@ export function GenerateForm({
       toast.error(errorMessages[state.error]);
       return;
     }
-    toast.success(`Image generated — ${cost} credit spent`);
+    toast.success(`Image generated! ${cost} credit spent.`);
     formRef.current?.reset();
   }, [state, cost]);
 

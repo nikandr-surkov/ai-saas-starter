@@ -11,6 +11,41 @@ import { GenerateForm } from "@/components/generate/generate-form";
 
 export const metadata: Metadata = { title: "Generate" };
 
+// The one mascot (DESIGN.md v3, optional): a coin with sunglasses for the
+// empty state. Geometric, inline SVG, decorative only.
+function CoinMascot() {
+  return (
+    <svg aria-hidden viewBox="0 0 64 64" className="size-14 shrink-0">
+      <circle
+        cx="32"
+        cy="32"
+        r="29"
+        className="fill-pop-yellow stroke-foreground"
+        strokeWidth="3.5"
+      />
+      <circle
+        cx="32"
+        cy="32"
+        r="22"
+        fill="none"
+        className="stroke-foreground"
+        strokeWidth="2"
+        strokeDasharray="3 5"
+      />
+      <rect x="15" y="24" width="13" height="8" rx="2.5" className="fill-foreground" />
+      <rect x="36" y="24" width="13" height="8" rx="2.5" className="fill-foreground" />
+      <path d="M28 26h8" className="stroke-foreground" strokeWidth="2.5" />
+      <path
+        d="M22 42q10 8 20 0"
+        fill="none"
+        className="stroke-foreground"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
 function formatTimestamp(date: Date): string {
   return date.toISOString().slice(0, 16).replace("T", " ");
 }
@@ -41,13 +76,16 @@ export default async function GeneratePage() {
       <section>
         <p className="eyebrow mb-3">generations</p>
         {history.length === 0 ? (
-          <div className="max-w-md rounded-md border-2 bg-pop-mint px-5 py-6 shadow-hard">
-            <p className="eyebrow">First entry pending</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Nothing generated yet — and your welcome credits are ready.
-              Describe an image in the form above; the result lands here and
-              the ledger records the spend.
-            </p>
+          <div className="flex max-w-md items-start gap-4 rounded-md border-2 bg-pop-mint px-5 py-6 shadow-hard">
+            <CoinMascot />
+            <div>
+              <p className="eyebrow">First entry pending</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Nothing generated yet — and your welcome credits are ready.
+                Describe an image in the form above; the result lands here
+                and the ledger records the spend.
+              </p>
+            </div>
           </div>
         ) : (
           <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">

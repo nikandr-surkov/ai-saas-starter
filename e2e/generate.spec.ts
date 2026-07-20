@@ -14,7 +14,7 @@ test("mock generation spends 1 credit and serves the image", async ({
   await page.getByRole("button", { name: /^Generate/ }).click();
 
   await expect(
-    page.getByText("Image generated — 1 credit spent"),
+    page.getByText("Image generated! 1 credit spent."),
   ).toBeVisible();
   await expect(creditBalance(page)).toHaveText("9");
 
