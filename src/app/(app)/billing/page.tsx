@@ -85,8 +85,9 @@ export default async function BillingPage() {
         <h2 className="mt-1 text-xl">Billing</h2>
       </div>
 
-      <Card className="max-w-xl border-l-[6px] border-l-pop-sky">
-        <CardHeader>
+      <Card className="max-w-xl pt-0">
+        {/* v4 medium-fun app register: panel-colored header strips. */}
+        <CardHeader className="border-b-2 bg-pop-sky py-3.5">
           <p className="eyebrow">Current plan</p>
           <CardTitle>
             {currentPlan.name}
@@ -144,8 +145,8 @@ export default async function BillingPage() {
         </CardFooter>
       </Card>
 
-      <Card className="max-w-xl border-l-[6px] border-l-pop-yellow">
-        <CardHeader>
+      <Card className="max-w-xl pt-0">
+        <CardHeader className="border-b-2 bg-pop-yellow py-3.5">
           <p className="eyebrow">Credits</p>
           <CardTitle className="font-mono">
             {session.user.creditBalance}

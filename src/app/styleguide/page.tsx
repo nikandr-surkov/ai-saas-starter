@@ -135,9 +135,9 @@ export default async function StyleguidePage({
         <div className="mx-auto w-full max-w-[1160px] space-y-12 px-6 py-16">
           <header className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Styleguide · dev only · v3.1</p>
+              <p className="eyebrow">Styleguide · dev only · v4</p>
               <h1 className="mt-2 text-3xl">
-                The Ledger, <span className="marker">Playful</span>
+                The Ledger, <span className="marker">LOUD</span>
               </h1>
             </div>
             <div className="flex items-center gap-3 font-mono text-xs">
@@ -169,16 +169,13 @@ export default async function StyleguidePage({
             </div>
           </Section>
 
-          <Section title="Typography">
-            <p className="text-display max-w-3xl">
-              Auth, Stripe subscriptions, and a credits ledger that survives
-              webhook retries.
-            </p>
-            <h3 className="text-xl">Section heading — Bricolage Grotesque</h3>
+          <Section title="Typography — four faces, four jobs">
+            <p className="text-display max-w-4xl">A complete AI SaaS. Free.</p>
+            <p className="text-title max-w-3xl">Section titles pop.</p>
+            <h3 className="text-xl">Subhead — Bricolage Grotesque 700/800</h3>
             <p className="max-w-xl text-muted-foreground">
-              Body text in Instrument Sans. Muted ink on paper. Concrete copy,
-              no adjectives: Next.js 16, Better Auth 1.5, Drizzle, Stripe, AI
-              SDK 6.
+              Body text in Instrument Sans. Muted ink on solid color. Concrete
+              copy: Next.js 16, Better Auth 1.5, Drizzle, Stripe, AI SDK 6.
             </p>
             <p className="eyebrow">Eyebrow — Martian Mono 11px +0.12em</p>
             <p className="font-mono text-sm">
@@ -200,13 +197,9 @@ export default async function StyleguidePage({
               <Squiggle className="text-pop-pink" />
             </div>
             <p className="max-w-md text-lg">
-              Heading words get the{" "}
-              <span className="marker">marker swoosh</span> and the hero word
-              gets the{" "}
-              <span className="text-pop-shadow font-display font-bold">
-                pop shadow
-              </span>
-              .
+              Inline emphasis on canvas gets the{" "}
+              <span className="marker">marker swoosh</span>; big titles carry
+              the offset <span className="text-title text-lg">shadow</span>.
             </p>
             <DigitBoxes value={210} label="Credit balance" />
           </Section>
@@ -257,18 +250,22 @@ export default async function StyleguidePage({
             </div>
           </Section>
 
-          <Section title="Shadow tiers — one direction, three sizes">
+          <Section title="Shadow tiers — one direction, register-scoped">
             <div className="flex flex-wrap items-end gap-8 font-mono text-xs">
               <div className="shadow-hard-sm rounded-lg border-2 bg-background px-5 py-4">
-                sm 3px — badges, chips, app cards
+                sm 3px app / 6px marketing — badges, chips, app cards
               </div>
               <div className="shadow-hard rounded-lg border-2 bg-background px-5 py-4">
-                md 5px — marketing cards, buttons
+                md 5px / 9px — marketing cards, buttons
               </div>
               <div className="shadow-hard-lg rounded-lg border-2 bg-background px-5 py-4">
-                lg 8px — dialogs, menus, toasts
+                lg 8px / 12px — dialogs, menus, toasts
               </div>
             </div>
+            <p className="max-w-md text-sm text-muted-foreground">
+              The .loud marketing scope raises the tiers and border widths (3px
+              base, 4px hero); the app keeps the calm values shown here.
+            </p>
           </Section>
 
           <Section title="Selection controls & skeleton">
@@ -293,9 +290,9 @@ export default async function StyleguidePage({
             </div>
           </Section>
 
-          <Section title="Card">
-            <Card className="max-w-sm">
-              <CardHeader>
+          <Section title="Card — app register, tinted header">
+            <Card className="max-w-sm pt-0">
+              <CardHeader className="border-b-2 bg-pop-sky py-3.5">
                 <p className="eyebrow">Current plan</p>
                 <CardTitle>Pro — 200 credits/mo</CardTitle>
               </CardHeader>

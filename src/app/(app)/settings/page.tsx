@@ -37,8 +37,10 @@ export default async function SettingsPage() {
         <h2 className="mt-1 text-xl">Settings</h2>
       </div>
 
-      <Card className="max-w-2xl">
-        <CardHeader>
+      <Card className="max-w-2xl pt-0">
+        {/* v4 medium-fun app register: panel-colored header strips —
+            except the danger zone, which stays neutral. */}
+        <CardHeader className="border-b-2 bg-pop-yellow py-3.5">
           <p className="eyebrow">Profile</p>
           <CardTitle>Name and email</CardTitle>
         </CardHeader>
@@ -49,8 +51,8 @@ export default async function SettingsPage() {
       </Card>
 
       {hasPassword ? (
-        <Card className="max-w-2xl">
-          <CardHeader>
+        <Card className="max-w-2xl pt-0">
+          <CardHeader className="border-b-2 bg-pop-mint py-3.5">
             <p className="eyebrow">Security</p>
             <CardTitle>Password</CardTitle>
           </CardHeader>
@@ -60,8 +62,8 @@ export default async function SettingsPage() {
         </Card>
       ) : null}
 
-      <Card className="max-w-2xl">
-        <CardHeader>
+      <Card className="max-w-2xl pt-0">
+        <CardHeader className="border-b-2 bg-pop-sky py-3.5">
           <p className="eyebrow">Sign-in methods</p>
           <CardTitle>Connected accounts</CardTitle>
         </CardHeader>

@@ -106,8 +106,10 @@ export default async function DashboardPage() {
       ) : null}
 
       <div className="grid max-w-2xl gap-4 sm:grid-cols-2">
-        <Card className="border-l-[6px] border-l-pop-yellow">
-          <CardHeader>
+        <Card className="pt-0">
+          {/* v4 medium-fun app register: panel-colored header strip with
+              an ink rule over a cream body. */}
+          <CardHeader className="border-b-2 bg-pop-yellow py-3.5">
             <p className="eyebrow">Credits</p>
             <CardTitle>
               <CountUpDigits value={session.user.creditBalance ?? 0} />
@@ -130,8 +132,8 @@ export default async function DashboardPage() {
             .
           </CardContent>
         </Card>
-        <Card className="border-l-[6px] border-l-pop-mint">
-          <CardHeader>
+        <Card className="pt-0">
+          <CardHeader className="border-b-2 bg-pop-mint py-3.5">
             <p className="eyebrow">Plan</p>
             <CardTitle>{currentPlan.name}</CardTitle>
           </CardHeader>

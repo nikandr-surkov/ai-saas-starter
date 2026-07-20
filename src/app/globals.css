@@ -302,7 +302,8 @@
   border-width: var(--border-w-emph);
 }
 
-/* RetroUI-style dot-grid texture for the marketing canvas. */
+/* Dot-grid texture — v4: NEVER behind text; only thin transition strips
+   between sections (optional) or inside illustrations. */
 @utility dot-grid {
   background-image: radial-gradient(
     color-mix(in oklch, var(--ink), transparent 85%) 1.5px,
@@ -343,11 +344,6 @@
   text-transform: uppercase;
   text-wrap: balance;
   text-shadow: 0.05em 0.05em 0 var(--title-shadow);
-}
-
-/* The "stand out" hero word: ink text, hard pop-yellow shadow behind it. */
-@utility text-pop-shadow {
-  text-shadow: 4px 4px 0 var(--pop-yellow);
 }
 
 @keyframes ledger-in {
@@ -532,8 +528,10 @@
   }
 }
 
-/* DESIGN.md v3 hard rule 9: the kill switch is law — covers the press,
-   markers, twinkle, staggers, tw-animate-css, and radix animations. */
+/* The kill switch is law (DESIGN.md v4 hard rule 10) — covers the press,
+   markers, twinkle, staggers, tw-animate-css, and radix animations.
+   (Entrance/scroll animations are additionally gated behind
+   no-preference above, since delays aren't shortened here.) */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -542,5 +540,15 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Print has no scroll timeline: without this, view()-driven pop-ins
+   would print at opacity 0. */
+@media print {
+  *,
+  ::before,
+  ::after {
+    animation: none !important;
   }
 }

@@ -25,8 +25,8 @@ export default function PricingPage() {
           Integer credits. No expiry. No surprises.
         </h1>
         <p className="text-lg text-muted-foreground">
-          Every plan reads from one config file — change a number there and the
-          page, checkout, and webhook grants all follow.
+          Every plan reads from one config file — checkout and webhook grants
+          follow it.
         </p>
       </div>
 
@@ -80,8 +80,7 @@ export default function PricingPage() {
         >
           create an account
         </Link>{" "}
-        and the welcome credits are already on it. Subscribe or top up later
-        from Billing.
+        and the welcome credits are waiting. Top up from Billing.
       </p>
     </div>
   );
