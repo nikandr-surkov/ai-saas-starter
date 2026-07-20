@@ -89,11 +89,14 @@ export default async function BillingPage() {
         {/* v4 medium-fun app register: panel-colored header strips. */}
         <CardHeader className="border-b-2 bg-pop-sky py-3.5">
           <p className="eyebrow">Current plan</p>
-          <CardTitle>
+          <CardTitle className="flex items-center gap-2">
             {currentPlan.name}
-            {currentPlan.priceMonthlyCents > 0
-              ? ` — ${usd(currentPlan.priceMonthlyCents)}/mo`
-              : ""}
+            {currentPlan.priceMonthlyCents > 0 ? (
+              // Key numbers render as mono chips (DESIGN.md v4.1).
+              <span className="chip-mono">
+                {usd(currentPlan.priceMonthlyCents)}/mo
+              </span>
+            ) : null}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-1.5">

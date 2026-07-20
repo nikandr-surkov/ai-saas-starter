@@ -256,7 +256,7 @@
     position: absolute;
     inset: 10% -0.18em;
     z-index: -1;
-    background: var(--pop-yellow);
+    background: var(--marker-color, var(--pop-yellow));
     border-radius: 0.4em;
     transform: skewX(-8deg);
   }
@@ -295,7 +295,9 @@
       color 120ms ease;
   }
   .chip:hover {
-    background: var(--pop-yellow);
+    /* Per-surface override: on the yellow hero, yellow-on-yellow is
+       invisible — set --chip-hover (e.g. pop-sky) on the section. */
+    background: var(--chip-hover, var(--pop-yellow));
     color: var(--ink);
     translate: -1px -1px;
     box-shadow: var(--shadow-hard-sm);
@@ -356,6 +358,20 @@
     transparent 1.5px
   );
   background-size: 26px 26px;
+}
+
+/* Inline mono chip (v4.1 typographic effects): key numbers and code-ish
+   tokens inside body copy. Static — not an interactive chip. */
+@utility chip-mono {
+  display: inline-block;
+  border: 2px solid var(--ink);
+  border-radius: 9999px;
+  background: var(--canvas);
+  padding: 0 0.55em;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  line-height: 1.65;
+  white-space: nowrap;
 }
 
 /* Mono uppercase micro-label (eyebrows). */

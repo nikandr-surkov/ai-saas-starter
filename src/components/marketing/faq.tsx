@@ -10,7 +10,12 @@ const faqs = [
   },
   {
     q: "What do I need to run it locally?",
-    a: "pnpm, Docker for Postgres, Stripe test keys. AI generation runs free with AI_MOCK=true.",
+    a: (
+      <>
+        pnpm, Docker for Postgres, Stripe test keys. AI generation runs free
+        with <span className="chip-mono text-foreground">AI_MOCK=true</span>.
+      </>
+    ),
   },
   {
     q: "Why a credits ledger instead of a balance column?",

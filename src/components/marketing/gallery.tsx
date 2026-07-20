@@ -22,7 +22,8 @@ export function Gallery() {
           <p className="eyebrow">Sample generations</p>
           <h2 className="text-title mt-4">Made with it.</h2>
           <p className="mt-4 max-w-[52ch] text-muted-foreground">
-            Six prompts through the same pipeline you get — one credit each.
+            Six prompts through the same pipeline you get —{" "}
+            <span className="chip-mono text-foreground">1 credit</span> each.
           </p>
         </div>
         <div className="grid grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-3">

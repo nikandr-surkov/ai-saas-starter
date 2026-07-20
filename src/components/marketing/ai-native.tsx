@@ -30,8 +30,8 @@ export function AiNative() {
           <p className="eyebrow">AI-native</p>
           <h2 className="text-title mt-4">Built for AI agents.</h2>
           <p className="mt-4 max-w-[52ch] text-muted-foreground">
-            One AGENTS.md briefs Claude Code, Cursor, Codex, Copilot —
-            guardrails included.
+            One <span className="chip-mono text-foreground">AGENTS.md</span>{" "}
+            briefs Claude Code, Cursor, Codex, Copilot — guardrails included.
           </p>
         </div>
         <div className="grid items-start gap-14 lg:grid-cols-2">

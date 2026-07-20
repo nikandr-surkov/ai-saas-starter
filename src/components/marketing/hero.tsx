@@ -13,7 +13,7 @@ import { CopyInstall } from "./copy-install";
 // canvas-colored title shadow, illustration cluster right.
 export function Hero() {
   return (
-    <header className="bg-pop-yellow [--title-shadow:var(--canvas)]">
+    <header className="bg-pop-yellow [--chip-hover:var(--pop-sky)] [--marker-color:var(--canvas)] [--title-shadow:var(--canvas)]">
       <div className="mx-auto grid w-full max-w-[1160px] items-center gap-16 px-6 pt-16 pb-14 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <div className="flex items-center gap-3">
@@ -37,8 +37,9 @@ export function Hero() {
             ))}
           </h1>
           <p className="max-w-[46ch] text-lg font-medium">
-            Auth, Stripe subscriptions, credits, AI images — working, tested,
-            MIT. Clone it and build YOUR product.
+            Auth, Stripe subscriptions, credits, AI images —{" "}
+            <span className="marker">working, tested, MIT</span>. Clone it and
+            build YOUR product.
           </p>
           <p className="mt-3 mb-7 font-mono text-xs">
             Open-source GitHub repo by{" "}
@@ -46,7 +47,7 @@ export function Hero() {
               href="https://nikandr.com"
               target="_blank"
               rel="noreferrer"
-              className="marker-hover font-medium underline underline-offset-4 [--marker-color:var(--canvas)]"
+              className="marker-hover font-medium underline underline-offset-4"
             >
               Nikandr Surkov
             </a>

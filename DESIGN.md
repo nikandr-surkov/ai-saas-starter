@@ -46,6 +46,16 @@ editing it first.
    sentences. Feature rows are six BIG statements: big number, 4-word
    title, one short line — no paragraphs. Concrete stays; hype stays
    banned (no emoji, no "Build faster / Ship smarter").
+   **Typographic effects (v4.1)**: every section's body copy gets AT
+   MOST one of — a marker-highlighted key phrase, a thick ink underline
+   doodle, or an inline `chip-mono`. Key numbers ("10 credits",
+   "$9/mo") ALWAYS render as mono chips or DigitBoxes. Feature titles:
+   Bricolage 800 with an offset shadow in the section accent (the
+   accent never repeats the section's own bg hue — mint section →
+   yellow accent). Nothing stays a bare gray paragraph. `.marker` and
+   `.marker-hover` read `--marker-color` (canvas on yellow, yellow
+   elsewhere); `.chip` hover reads `--chip-hover` (sky on the yellow
+   hero).
 7. **Color roles are strict**: `--action` yellow = primary buttons with
    INK text (ink on yellow always, never yellow text). `--credit` green
    = positive amounts/success ONLY. `--debit` red = negative/

@@ -43,7 +43,8 @@ export function Compare() {
           <p className="eyebrow">This repo is complete</p>
           <h2 className="text-title mt-4">Free vs Pro.</h2>
           <p className="mt-4 max-w-[52ch] text-muted-foreground">
-            Pro is what comes after product-market fit.
+            Pro is what comes after{" "}
+            <span className="marker text-foreground">product-market fit</span>.
           </p>
         </div>
         <div className="overflow-x-auto">

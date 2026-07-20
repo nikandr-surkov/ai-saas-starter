@@ -50,7 +50,9 @@ export function Features() {
           <p className="eyebrow">Ledger of features</p>
           <h2 className="text-title mt-4">It handles the money.</h2>
           <p className="mt-4 max-w-[52ch] text-muted-foreground">
-            Tested, idempotent, boring on purpose. Vibe-code the product on top.
+            Tested, idempotent,{" "}
+            <span className="marker text-foreground">boring on purpose</span>.
+            Vibe-code the product on top.
           </p>
         </div>
         <div className="border-t-[3px]">
@@ -63,7 +65,9 @@ export function Features() {
                 {feature.index}
               </span>
               <div>
-                <h3 className="font-heading text-2xl font-extrabold uppercase sm:text-3xl">
+                {/* Section-accent offset shadow (yellow on mint — the
+                    accent may not repeat the section bg, DESIGN.md). */}
+                <h3 className="font-heading text-2xl font-extrabold uppercase [text-shadow:0.045em_0.045em_0_var(--pop-yellow)] sm:text-3xl">
                   {feature.title}
                 </h3>
                 <p className="mt-1.5 text-[15px] text-muted-foreground">

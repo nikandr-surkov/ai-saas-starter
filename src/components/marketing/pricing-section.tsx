@@ -21,8 +21,8 @@ export function PricingSection() {
             <p className="eyebrow">Pricing</p>
             <h2 className="text-title mt-4">Pick a plan.</h2>
             <p className="mt-4 max-w-[52ch] text-muted-foreground">
-              One config file drives pricing, checkout, and webhook grants.
-              Start free.
+              <span className="marker text-foreground">One config file</span>{" "}
+              drives pricing, checkout, and webhook grants. Start free.
             </p>
           </div>
           {/* Pricing accent (DESIGN.md v3.1 illustration set). */}
