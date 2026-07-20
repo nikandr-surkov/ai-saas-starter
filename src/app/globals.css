@@ -280,6 +280,52 @@
     box-shadow: var(--shadow-hard-lg) !important;
     animation: toast-press-in 200ms ease-out;
   }
+
+  /* v4.1 chip grammar: bordered pill, cream bg; hover flips to
+     pop-yellow with a small lift + sm shadow; active presses flat.
+     Nav links, footer links, the git-clone chip, inline CTAs. */
+  .chip {
+    border: var(--border-w) solid var(--ink);
+    border-radius: 9999px;
+    background: var(--background);
+    transition:
+      translate 120ms ease,
+      box-shadow 120ms ease,
+      background-color 120ms ease,
+      color 120ms ease;
+  }
+  .chip:hover {
+    background: var(--pop-yellow);
+    color: var(--ink);
+    translate: -1px -1px;
+    box-shadow: var(--shadow-hard-sm);
+  }
+  .chip:active {
+    translate: 1px 1px;
+    box-shadow: 0 0 0 0 var(--ink);
+  }
+
+  /* Marker that draws in on hover — author links, footer credit. Set
+     --marker-color per surface (cream on yellow, yellow elsewhere). */
+  .marker-hover {
+    position: relative;
+    isolation: isolate;
+    white-space: nowrap;
+  }
+  .marker-hover::before {
+    content: "";
+    position: absolute;
+    inset: 10% -0.18em;
+    z-index: -1;
+    background: var(--marker-color, var(--pop-yellow));
+    border-radius: 0.4em;
+    transform: skewX(-8deg) scaleX(0);
+    transform-origin: left center;
+    transition: transform 150ms ease;
+  }
+  .marker-hover:hover::before {
+    transform: skewX(-8deg) scaleX(1);
+  }
 }
 
 /* Hard offset shadows — never blurred, always down-right (v3.1 tiers). */
@@ -435,9 +481,15 @@
   }
 }
 
+/* Seamless loop: content is duplicated exactly 2x, so translating the
+   track 0 → -50% lands on an identical frame. transform (not translate)
+   + will-change keeps it compositor-only. */
 @keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
   to {
-    translate: -50% 0;
+    transform: translateX(-50%);
   }
 }
 
@@ -493,6 +545,7 @@
 @media (prefers-reduced-motion: no-preference) {
   .marquee {
     animation: marquee-scroll 30s linear infinite;
+    will-change: transform;
   }
   .marquee:hover {
     animation-play-state: paused;

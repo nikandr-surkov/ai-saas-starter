@@ -36,9 +36,20 @@ export function Hero() {
               </span>
             ))}
           </h1>
-          <p className="mb-7 max-w-[46ch] text-lg font-medium">
+          <p className="max-w-[46ch] text-lg font-medium">
             Auth, Stripe subscriptions, credits, AI images — working, tested,
             MIT. Clone it and build YOUR product.
+          </p>
+          <p className="mt-3 mb-7 font-mono text-xs">
+            Open-source GitHub repo by{" "}
+            <a
+              href="https://nikandr.com"
+              target="_blank"
+              rel="noreferrer"
+              className="marker-hover font-medium underline underline-offset-4 [--marker-color:var(--canvas)]"
+            >
+              Nikandr Surkov
+            </a>
           </p>
           <div className="mb-7 flex flex-wrap items-center gap-6">
             <Link

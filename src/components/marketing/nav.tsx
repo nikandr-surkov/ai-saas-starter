@@ -6,6 +6,8 @@ import { LogoMark } from "@/components/logo-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { siteConfig } from "@/config/site";
 
+import { MobileMenu } from "./nav-mobile";
+
 const links = [
   { href: "/#features", label: "Features" },
   { href: "/#pricing", label: "Pricing" },
@@ -17,12 +19,14 @@ const links = [
 // Auth-aware (server-side session): visitors get Sign in + Get started,
 // signed-in users get one Dashboard button. This read makes marketing pages
 // dynamic — see outputFileTracingIncludes in next.config.ts.
+// v4.1: links are chip pills (bordered, cream, yellow-flip hover) — no
+// underline/opacity/color-only hovers anywhere in the nav.
 export async function MarketingNav() {
   const session = await getSession();
 
   return (
     <header className="sticky top-0 z-40 border-b-[3px] bg-background">
-      <div className="mx-auto flex h-[60px] w-full max-w-[1160px] items-center gap-7 px-6">
+      <div className="relative mx-auto flex h-[60px] w-full max-w-[1160px] items-center gap-6 px-6">
         <Link
           href="/"
           className="flex items-center gap-2 font-mono text-[13px] font-medium"
@@ -30,12 +34,12 @@ export async function MarketingNav() {
           <LogoMark className="size-5" />
           {siteConfig.name}
         </Link>
-        <nav className="ml-auto hidden items-center gap-6 md:flex">
+        <nav className="ml-auto hidden items-center gap-2.5 md:flex">
           {links.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-full px-3 py-1 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              className="chip px-3.5 py-1 text-sm font-medium"
             >
               {link.label}
             </Link>
@@ -47,7 +51,7 @@ export async function MarketingNav() {
             href={siteConfig.github}
             target="_blank"
             rel="noreferrer"
-            className="hidden items-center gap-2 border-hard press rounded-md px-3 py-1.5 font-mono text-xs sm:flex"
+            className="border-hard press hidden items-center gap-2 rounded-md px-3 py-1.5 font-mono text-xs sm:flex"
           >
             <StarIcon className="size-3.5" aria-hidden />
             GitHub
@@ -64,7 +68,7 @@ export async function MarketingNav() {
             <>
               <Link
                 href="/login"
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className="chip hidden px-3.5 py-1 text-sm font-medium sm:inline-block"
               >
                 Sign in
               </Link>
@@ -76,6 +80,7 @@ export async function MarketingNav() {
               </Link>
             </>
           )}
+          <MobileMenu links={links} />
         </div>
       </div>
     </header>

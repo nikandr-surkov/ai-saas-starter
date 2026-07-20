@@ -1,5 +1,6 @@
 {
   "permissions": {
+    "defaultMode": "auto",
     "deny": [
       "Bash(rm -rf *)",
       "Read(./.env)",
