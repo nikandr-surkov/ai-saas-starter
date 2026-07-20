@@ -2,6 +2,7 @@ import Link from "next/link";
 import { StarIcon } from "lucide-react";
 
 import { getSession } from "@/lib/auth/session";
+import { LogoMark } from "@/components/logo-mark";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { siteConfig } from "@/config/site";
 
@@ -20,12 +21,13 @@ export async function MarketingNav() {
   const session = await getSession();
 
   return (
-    <header className="sticky top-0 z-40 border-b-2 bg-background">
+    <header className="sticky top-0 z-40 border-b-[3px] bg-background">
       <div className="mx-auto flex h-[60px] w-full max-w-[1160px] items-center gap-7 px-6">
-        <Link href="/" className="font-mono text-[13px] font-medium">
-          <span aria-hidden className="text-primary-text">
-            ▮
-          </span>{" "}
+        <Link
+          href="/"
+          className="flex items-center gap-2 font-mono text-[13px] font-medium"
+        >
+          <LogoMark className="size-5" />
           {siteConfig.name}
         </Link>
         <nav className="ml-auto hidden items-center gap-6 md:flex">
@@ -45,7 +47,7 @@ export async function MarketingNav() {
             href={siteConfig.github}
             target="_blank"
             rel="noreferrer"
-            className="hidden items-center gap-2 rounded-md border-2 press px-3 py-1.5 font-mono text-xs sm:flex"
+            className="hidden items-center gap-2 border-hard press rounded-md px-3 py-1.5 font-mono text-xs sm:flex"
           >
             <StarIcon className="size-3.5" aria-hidden />
             GitHub
@@ -54,7 +56,7 @@ export async function MarketingNav() {
           {session ? (
             <Link
               href="/dashboard"
-              className="rounded-md border-2 press bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground"
+              className="border-hard press rounded-md bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground"
             >
               Dashboard
             </Link>
@@ -68,7 +70,7 @@ export async function MarketingNav() {
               </Link>
               <Link
                 href="/signup"
-                className="rounded-md border-2 press bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground"
+                className="border-hard press rounded-md bg-primary px-3.5 py-1.5 text-sm font-semibold text-primary-foreground"
               >
                 Get started
               </Link>

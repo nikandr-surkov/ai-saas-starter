@@ -16,7 +16,7 @@ export function CopyInstall({ command }: { command: string }) {
   }
 
   return (
-    <div className="inline-flex items-center gap-4 rounded-md border-2 bg-secondary px-4 py-2.5 font-mono text-xs">
+    <div className="border-hard inline-flex items-center gap-4 rounded-md bg-secondary px-4 py-2.5 font-mono text-xs">
       <span className="whitespace-nowrap">
         <span aria-hidden className="text-primary-text select-none">
           ${" "}

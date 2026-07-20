@@ -49,7 +49,12 @@ export default function PricingPage() {
               {plan.priceMonthlyCents === 0 ? (
                 <span className="font-mono text-sm">free</span>
               ) : (
-                <span className="flex items-end gap-1"><DigitBoxes size="sm" value={usd(plan.priceMonthlyCents)} /><span className="font-mono text-xs text-muted-foreground">/mo</span></span>
+                <span className="flex items-end gap-1">
+                  <DigitBoxes size="sm" value={usd(plan.priceMonthlyCents)} />
+                  <span className="font-mono text-xs text-muted-foreground">
+                    /mo
+                  </span>
+                </span>
               )}
             </div>
           </div>

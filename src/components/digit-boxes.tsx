@@ -22,7 +22,7 @@ export function DigitBoxes({
           <span
             key={`${char}-${i}`}
             className={cn(
-              "flex items-center justify-center rounded-lg border-2 bg-background font-mono shadow-hard-sm",
+              "border-hard flex items-center justify-center rounded-lg bg-background font-mono shadow-hard-sm",
               size === "lg" ? "size-12 text-2xl" : "size-8 text-sm",
             )}
           >

@@ -18,7 +18,8 @@ const initialState: GenerateResult = { ok: true };
 const errorMessages: Record<NonNullable<GenerateResult["error"]>, string> = {
   invalid_prompt: "Prompts need 3–1000 characters — one sentence works",
   rate_limited: "Slow down — 10 per minute. Try again in a moment.",
-  insufficient_credits: "You're out of credits — top up in Billing and try again.",
+  insufficient_credits:
+    "You're out of credits — top up in Billing and try again.",
   generation_failed: "Generation failed — credit refunded",
 };
 

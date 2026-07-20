@@ -25,7 +25,9 @@ editing it first.
 3. **Shadow tiers, ONE direction (down-right)**: marketing 6/9/12px,
    app 3/5/8px — same three utilities (`shadow-hard-sm`, `shadow-hard`,
    `shadow-hard-lg`) reading scoped variables; the `.loud` marketing
-   scope raises them. No blur, no glassmorphism. Press physics: hover
+   scope raises them. On the ink closing band, borders and shadows
+   invert to canvas — the ONE sanctioned inversion (ink on ink is
+   invisible). No blur, no glassmorphism. Press physics: hover
    `translate(-2px,-2px)` + shadow +2px; active `translate(2px,2px)` +
    shadow 0.
 4. **Four faces, four jobs**: **Archivo Black** — hero H1 and section

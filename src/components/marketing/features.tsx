@@ -1,70 +1,81 @@
-import { LedgerList, LedgerRow } from "@/components/ledger-row";
-
+// v4 LOUD features: six BIG statements — big number, 4-word title, one
+// short line (word budgets in DESIGN.md hard rule 6). No paragraphs.
 const features = [
   {
     index: "01",
-    title: "Auth that owns its data",
-    description:
-      "Better Auth with email + Google + GitHub + magic links. Sessions in your Postgres, not a vendor's dashboard.",
-    meta: "better-auth / drizzle",
+    title: "Auth that owns data",
+    line: "Email, Google, GitHub, magic links — sessions in your Postgres.",
+    meta: "better-auth",
   },
   {
     index: "02",
-    title: "Stripe webhooks that survive retries",
-    description:
-      "Signature-verified raw bodies, one sync function as the single writer of subscription state, idempotency keys on every event.",
-    meta: "checkout / portal",
+    title: "Webhooks survive retries",
+    line: "Raw-body signatures, one sync writer, idempotency keys everywhere.",
+    meta: "stripe",
   },
   {
     index: "03",
     title: "Append-only credits ledger",
-    description:
-      "Atomic spend, compensating refunds on provider failure, monthly grants keyed by invoice ID. Balance is a SUM, not a hope.",
-    meta: "tested vs postgres",
+    line: "Atomic spends, automatic refunds. Balance is a SUM, not a hope.",
+    meta: "postgres",
   },
   {
     index: "04",
-    title: "AI image generation, wired end-to-end",
-    description:
-      "Prompt → rate limit → spend 1 credit → AI SDK 6 generateImage → history. Swap providers with one string.",
-    meta: "ai gateway",
+    title: "AI images, wired",
+    line: "Prompt → spend → image → history. Swap models with one env string.",
+    meta: "ai sdk 6",
   },
   {
     index: "05",
-    title: "An AI-native repo, not just a repo",
-    description:
-      'AGENTS.md, CLAUDE.md, path-scoped rules, skills, hooks that block "done" until typecheck passes.',
-    meta: "agents.md standard",
+    title: "Built for agents",
+    line: "AGENTS.md, scoped rules, skills, hooks that block broken code.",
+    meta: "agents.md",
   },
   {
     index: "06",
-    title: "Proof it works",
-    description:
-      "Vitest on the ledger and webhooks against real Postgres, Playwright from signup to generation, CI on every push.",
+    title: "Proof on every push",
+    line: "Vitest and Playwright against real Postgres, in CI.",
     meta: "vitest / playwright",
   },
 ] as const;
 
 export function Features() {
   return (
-    <section id="features" className="mt-26 scroll-mt-16 border-y-2 bg-pop-mint">
+    <section
+      id="features"
+      className="scroll-mt-16 border-t-[3px] bg-pop-mint [--title-shadow:var(--canvas)]"
+    >
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-      <div className="fade-up mb-11 max-w-[62ch]">
-        <p className="eyebrow">Ledger of features</p>
-        <h2 className="mt-3 mb-3 text-3xl">
-          The 20% of a SaaS your AI agent shouldn&apos;t be trusted to{" "}
-          <span className="marker">improvise</span>.
-        </h2>
-        <p className="text-muted-foreground">
-          Everything here is tested, idempotent, and boring on purpose.
-          Vibe-code the product on top.
-        </p>
-      </div>
-      <LedgerList>
-        {features.map((feature) => (
-          <LedgerRow key={feature.index} {...feature} />
-        ))}
-      </LedgerList>
+        <div className="fade-up mb-12">
+          <p className="eyebrow">Ledger of features</p>
+          <h2 className="text-title mt-4">It handles the money.</h2>
+          <p className="mt-4 max-w-[52ch] text-muted-foreground">
+            Tested, idempotent, boring on purpose. Vibe-code the product on top.
+          </p>
+        </div>
+        <div className="border-t-[3px]">
+          {features.map((feature) => (
+            <div
+              key={feature.index}
+              className="grid grid-cols-[auto_1fr] items-baseline gap-x-7 border-b-[3px] py-7 sm:grid-cols-[90px_1fr_auto]"
+            >
+              <span className="font-mono text-3xl font-bold sm:text-4xl">
+                {feature.index}
+              </span>
+              <div>
+                <h3 className="font-heading text-2xl font-extrabold uppercase sm:text-3xl">
+                  {feature.title}
+                </h3>
+                <p className="mt-1.5 text-[15px] text-muted-foreground">
+                  {feature.line}
+                </p>
+              </div>
+              <span className="hidden self-center font-mono text-[10.5px] tracking-widest text-muted-foreground uppercase sm:block">
+                {feature.meta}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );

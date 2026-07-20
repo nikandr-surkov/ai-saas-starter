@@ -5,7 +5,7 @@ test("landing renders the ledger sections with signed-out auth CTAs", async ({
 }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "credits ledger",
+    "A complete AI SaaS. Free.",
   );
   // Signed-out nav: Sign in + Get started; hero CTA goes to signup.
   await expect(

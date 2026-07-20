@@ -2,18 +2,21 @@ import Link from "next/link";
 
 import { siteConfig } from "@/config/site";
 
+// v4 closing band: full-bleed ink, light text, yellow title shadow — the
+// one sanctioned inversion (canvas border/shadow on the CTA, since ink on
+// ink is invisible; documented in DESIGN.md hard rule 3).
 export function CtaBand() {
   return (
-    <div className="mt-26 border-t-2 bg-pop-pink">
-      <div className="mx-auto flex w-full max-w-[1160px] flex-wrap items-center justify-between gap-8 px-6 py-18">
+    <div className="border-t-[3px] bg-foreground text-background [--muted-ink:var(--on-ink-muted)] [--title-shadow:var(--pop-yellow)]">
+      <div className="mx-auto flex w-full max-w-[1160px] flex-wrap items-center justify-between gap-10 px-6 py-20">
         <div>
           <p className="eyebrow">Closing entry</p>
-          <h2 className="mt-3 text-3xl">Clone the ledger. Ship the SaaS.</h2>
+          <h2 className="text-title mt-4">Clone the ledger.</h2>
         </div>
         <div className="flex flex-wrap items-center gap-6">
           <Link
             href="/signup"
-            className="border-emph press inline-flex items-center rounded-md bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground"
+            className="border-emph inline-flex items-center rounded-md border-background bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground transition-[translate] [box-shadow:6px_6px_0_0_var(--background)] hover:-translate-x-0.5 hover:-translate-y-0.5"
           >
             Start free
           </Link>
@@ -21,7 +24,7 @@ export function CtaBand() {
             href={siteConfig.pro}
             target="_blank"
             rel="noreferrer"
-            className="border-b border-rule pb-0.5 font-mono text-xs tracking-wider text-foreground uppercase transition-colors hover:border-foreground"
+            className="border-b-2 border-background pb-0.5 font-mono text-xs tracking-wider text-background uppercase"
           >
             Pro version · $299 →
           </a>

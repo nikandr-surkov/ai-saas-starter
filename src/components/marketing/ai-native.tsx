@@ -21,44 +21,46 @@ const checklist = [
 
 export function AiNative() {
   return (
-    <section id="ai-native" className="mt-26 scroll-mt-16 border-y-2 bg-pop-sky">
+    <section
+      id="ai-native"
+      className="scroll-mt-16 border-t-[3px] bg-pop-sky [--title-shadow:var(--canvas)]"
+    >
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-      <div className="fade-up mb-11 max-w-[62ch]">
-        <p className="eyebrow">Built for agents</p>
-        <h2 className="mt-3 mb-3 text-3xl">
-          Your AI assistant gets a briefing,{" "}
-          <span className="marker">guardrails</span>, and a definition of done.
-        </h2>
-        <p className="text-muted-foreground">
-          Works with Claude Code, Cursor, Codex, Copilot, Gemini CLI — one
-          AGENTS.md as source of truth.
-        </p>
-      </div>
-      <div className="grid items-start gap-14 lg:grid-cols-2">
-        <div className="rounded-md border-2 bg-background px-5 py-5 font-mono text-xs leading-8 font-light shadow-hard">
-          {tree.map(([name, comment, highlight]) => (
-            <div key={name} className="whitespace-nowrap">
-              <span className={highlight ? "text-primary-text" : ""}>{name}</span>
-              {comment ? (
-                <span className="text-muted-foreground"> {comment}</span>
-              ) : null}
-            </div>
-          ))}
+        <div className="fade-up mb-11">
+          <p className="eyebrow">AI-native</p>
+          <h2 className="text-title mt-4">Built for AI agents.</h2>
+          <p className="mt-4 max-w-[52ch] text-muted-foreground">
+            One AGENTS.md briefs Claude Code, Cursor, Codex, Copilot —
+            guardrails included.
+          </p>
         </div>
-        <ul>
-          {checklist.map((item) => (
-            <li
-              key={item}
-              className="border-b-2 py-2.5 text-[15.5px] last:border-0"
-            >
-              <span aria-hidden className="font-mono text-primary-text">
-                ✓{" "}
-              </span>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
+        <div className="grid items-start gap-14 lg:grid-cols-2">
+          <div className="border-hard rounded-md bg-background px-5 py-5 font-mono text-xs leading-8 font-light shadow-hard">
+            {tree.map(([name, comment, highlight]) => (
+              <div key={name} className="whitespace-nowrap">
+                <span className={highlight ? "text-primary-text" : ""}>
+                  {name}
+                </span>
+                {comment ? (
+                  <span className="text-muted-foreground"> {comment}</span>
+                ) : null}
+              </div>
+            ))}
+          </div>
+          <ul>
+            {checklist.map((item) => (
+              <li
+                key={item}
+                className="border-b-2 py-2.5 text-[15.5px] last:border-0"
+              >
+                <span aria-hidden className="font-mono text-primary-text">
+                  ✓{" "}
+                </span>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
   );

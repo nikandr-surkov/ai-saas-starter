@@ -1,15 +1,14 @@
 import Link from "next/link";
 
+import { LogoMark } from "@/components/logo-mark";
 import { siteConfig } from "@/config/site";
 
 export function MarketingFooter() {
   return (
-    <footer className="border-t-2">
+    <footer className="border-t-[3px]">
       <div className="mx-auto flex w-full max-w-[1160px] flex-col gap-3 px-6 pt-7 pb-10 font-mono text-[10.5px] tracking-wider text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-        <span>
-          <span aria-hidden className="text-primary-text">
-            ▮
-          </span>{" "}
+        <span className="flex items-center gap-2">
+          <LogoMark className="size-4" />
           {siteConfig.name} · MIT · 2026
         </span>
         <nav className="flex flex-wrap gap-x-4 gap-y-1">

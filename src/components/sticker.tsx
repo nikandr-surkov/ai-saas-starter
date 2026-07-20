@@ -21,7 +21,7 @@ export function Sticker({
   return (
     <span
       className={cn(
-        "inline-block -rotate-2 rounded-full border-2 px-3.5 py-1.5 font-mono text-[11px] font-medium tracking-widest text-foreground uppercase shadow-hard-sm motion-safe:hover:animate-[wobble_200ms_ease-in-out]",
+        "border-hard inline-block -rotate-2 rounded-full px-3.5 py-1.5 font-mono text-[11px] font-medium tracking-widest text-foreground uppercase shadow-hard-sm motion-safe:hover:animate-[wobble_200ms_ease-in-out]",
         colors[color],
         className,
       )}

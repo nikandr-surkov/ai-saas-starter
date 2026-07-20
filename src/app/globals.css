@@ -9,7 +9,10 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-instrument-sans);
   --font-mono: var(--font-martian-mono);
-  --font-display: var(--font-bricolage);
+  /* v4 four faces, four jobs: Archivo Black = display (H1 + section
+     titles ONLY), Bricolage = subheads/cards, Instrument = body,
+     Martian Mono = data. */
+  --font-display: var(--font-archivo);
   --font-heading: var(--font-bricolage);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -91,6 +94,8 @@
   /* muted text stays ≥4.5 on every panel: 25% mix in light (the warm
      canvas lightens the mix — 35% failed on sky/pink/orange)… */
   --muted-ink: color-mix(in oklch, var(--ink), var(--canvas) 25%);
+  /* …and muted text on the ink closing band. */
+  --on-ink-muted: color-mix(in oklch, var(--canvas), var(--ink) 22%);
 }
 
 .dark {
@@ -108,6 +113,7 @@
   --debit-text: var(--debit);
   /* …and 30% in dark (35% dips to 4.36 on dark panels). */
   --muted-ink: color-mix(in oklch, var(--ink), var(--canvas) 30%);
+  --on-ink-muted: color-mix(in oklch, var(--canvas), var(--ink) 22%);
 }
 
 /* ── Derived tokens + shadcn semantic mapping ───────────────────────────────
@@ -122,6 +128,10 @@
   --shadow-hard-sm: 3px 3px 0 0 var(--ink);
   --shadow-hard-md: 5px 5px 0 0 var(--ink);
   --shadow-hard-lg: 8px 8px 0 0 var(--ink);
+  --shadow-hover: 7px 7px 0 0 var(--ink);
+  /* Section-title offset shadow: pop-yellow on canvas sections and the
+     ink band; pop panels override to var(--canvas). */
+  --title-shadow: var(--pop-yellow);
   --action: var(--pop-yellow);
   --on-accent: var(--ink);
   --paper-2: color-mix(in oklch, var(--canvas), var(--ink) 5%);
@@ -170,6 +180,17 @@
   --sidebar-ring: var(--ink);
 }
 
+/* v4 register scoping: inside the marketing shell (<main class="loud">)
+   borders and shadow tiers get louder; the app keeps the calm values. */
+.loud {
+  --border-w: 3px;
+  --border-w-emph: 4px;
+  --shadow-hard-sm: 6px 6px 0 0 var(--ink);
+  --shadow-hard-md: 9px 9px 0 0 var(--ink);
+  --shadow-hard-lg: 12px 12px 0 0 var(--ink);
+  --shadow-hover: 11px 11px 0 0 var(--ink);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -188,10 +209,12 @@
     /* DESIGN.md v3 hard rule 8: all numerals tabular. */
     font-variant-numeric: tabular-nums;
   }
+  /* Base headings are Bricolage (subhead face). Archivo Black is applied
+     ONLY via text-display / text-title (DESIGN.md v4 hard rule 4). */
   h1,
   h2,
   h3 {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.05;
@@ -214,7 +237,7 @@
   }
   .press:hover {
     translate: -2px -2px;
-    box-shadow: 7px 7px 0 0 var(--ink);
+    box-shadow: var(--shadow-hover);
   }
   .press:active {
     translate: 2px 2px;
@@ -270,7 +293,11 @@
   box-shadow: var(--shadow-hard-lg);
 }
 
-/* 3px emphasis border — hero/CTA only (DESIGN.md v3.1 hard rule 1). */
+/* Register-scoped border widths (DESIGN.md v4 hard rule 2): border-hard
+   = 2px app / 3px marketing; border-emph = 3px app / 4px marketing hero. */
+@utility border-hard {
+  border-width: var(--border-w);
+}
 @utility border-emph {
   border-width: var(--border-w-emph);
 }
@@ -294,14 +321,28 @@
   color: var(--muted-ink);
 }
 
-/* Display headline. */
+/* v4 display type: Archivo Black, uppercase, offset --title-shadow.
+   text-display = hero H1; text-title = section titles. Archivo has a
+   single 400 weight — never synthesize bold. */
 @utility text-display {
   font-family: var(--font-display);
-  font-size: clamp(2.6rem, 1.4rem + 4vw, 4.2rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.02;
+  font-size: clamp(3.5rem, 1.8rem + 5.5vw, 7rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  text-transform: uppercase;
   text-wrap: balance;
+  text-shadow: 0.05em 0.05em 0 var(--title-shadow);
+}
+@utility text-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 1.6rem + 2.4vw, 4.5rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 0.98;
+  text-transform: uppercase;
+  text-wrap: balance;
+  text-shadow: 0.05em 0.05em 0 var(--title-shadow);
 }
 
 /* The "stand out" hero word: ink text, hard pop-yellow shadow behind it. */

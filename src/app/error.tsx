@@ -2,6 +2,7 @@
 
 import * as React from "react";
 
+import Image from "next/image";
 import Link from "next/link";
 
 // Route-segment error boundary — renders inside the root layout, so the
@@ -20,11 +21,16 @@ export default function ErrorPage({
 
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-5 px-6 text-center">
+      <Image
+        src="/illustrations/mascot-lost.png"
+        alt="Gold coin mascot shrugging beside a question mark"
+        width={140}
+        height={140}
+      />
       <p className="eyebrow">Unexpected entry</p>
-      <h1 className="text-display">Something went wrong.</h1>
+      <h1 className="text-3xl">Something went wrong.</h1>
       <p className="max-w-md text-muted-foreground">
-        The error is logged on our side. Try again — and if it keeps
-        happening, head back home. Your credits and data are safe.
+        The error is logged on our side — your credits and data are safe.
       </p>
       <div className="flex flex-wrap items-center justify-center gap-4">
         <button

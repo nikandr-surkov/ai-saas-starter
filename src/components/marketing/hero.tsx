@@ -9,31 +9,28 @@ import { Sticker } from "@/components/sticker";
 
 import { CopyInstall } from "./copy-install";
 
+// v4 LOUD hero: full-bleed pop-yellow, Archivo H1 (word budget: <=8),
+// canvas-colored title shadow, illustration cluster right.
 export function Hero() {
   return (
-    <header className="mx-auto w-full max-w-[1160px] px-6 pt-24 pb-22">
-      <div className="grid items-center gap-16 lg:grid-cols-[1.05fr_0.95fr]">
+    <header className="bg-pop-yellow [--title-shadow:var(--canvas)]">
+      <div className="mx-auto grid w-full max-w-[1160px] items-center gap-16 px-6 pt-16 pb-14 lg:grid-cols-[1.05fr_0.95fr]">
         <div>
           <div className="flex items-center gap-3">
             <Sticker color="mint" className="rotate-2">
               MIT · Open source
             </Sticker>
-            <Sparkle className="text-pop-orange" />
+            <Sparkle className="text-foreground" />
           </div>
-          <h1 className="text-display mt-5 mb-4">
-            Auth, Stripe subscriptions, and a{" "}
-            <span className="text-pop-shadow">credits ledger</span> that
-            survives webhook retries.
-          </h1>
-          <p className="mb-7 max-w-[52ch] text-lg text-muted-foreground">
-            A complete AI-SaaS foundation — Better Auth, Drizzle, atomic credit
-            accounting, and one AI image endpoint — built to be extended with
-            Claude Code, Cursor, or Codex. AGENTS.md included.
+          <h1 className="text-display mt-6 mb-5">A complete AI SaaS. Free.</h1>
+          <p className="mb-7 max-w-[46ch] text-lg font-medium">
+            Auth, Stripe subscriptions, credits, AI images — working, tested,
+            MIT. Clone it and build YOUR product.
           </p>
           <div className="mb-7 flex flex-wrap items-center gap-6">
             <Link
               href="/signup"
-              className="border-emph press inline-flex items-center rounded-md bg-primary px-5 py-3 text-[15px] font-semibold text-primary-foreground"
+              className="border-emph press inline-flex items-center rounded-md bg-background px-5 py-3 text-[15px] font-semibold text-foreground"
             >
               Start free — 10 credits
             </Link>
@@ -41,7 +38,7 @@ export function Hero() {
               href={siteConfig.github}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 border-b border-rule pb-0.5 font-mono text-xs tracking-wider text-foreground uppercase transition-colors hover:border-foreground"
+              className="inline-flex items-center gap-2 border-b-2 border-foreground pb-0.5 font-mono text-xs tracking-wider text-foreground uppercase"
             >
               <StarIcon className="size-3.5" aria-hidden />
               Star on GitHub →
@@ -51,8 +48,7 @@ export function Hero() {
           <Squiggle className="mt-6 text-pop-pink" />
         </div>
         <div className="relative">
-          {/* Hero illustration cluster + sticker (DESIGN.md v3.1). */}
-          <Sticker className="absolute top-4 right-4 z-10">
+          <Sticker color="pink" className="absolute top-4 right-4 z-10">
             10 free credits
           </Sticker>
           <Image

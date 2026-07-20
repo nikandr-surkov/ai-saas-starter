@@ -32,10 +32,13 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {/* v4 solid color blocking: yellow hero → strip → cream proof →
+          mint features → sky agents → cream pricing/compare → pink FAQ
+          → ink closing band (DESIGN.md "Landing composition"). */}
       <Hero />
       <StackStrip />
-      <Features />
       <CodeExhibit />
+      <Features />
       <AiNative />
       <PricingSection />
       <Compare />

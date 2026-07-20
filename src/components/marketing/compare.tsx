@@ -37,57 +37,59 @@ function cellClass(kind: "yes" | "no" | "val"): string {
 
 export function Compare() {
   return (
-    <section
-      id="pro"
-      className="mx-auto w-full max-w-[1160px] scroll-mt-16 px-6 pt-26"
-    >
-      <div className="fade-up mb-11 max-w-[62ch]">
-        <p className="eyebrow">Free vs Pro</p>
-        <h2 className="mt-3 text-3xl">
-          This repo is <span className="marker">complete</span>. Pro is what comes after product-market fit.
-        </h2>
-      </div>
-      <div className="overflow-x-auto">
-        <table className="w-full border-t-2 border-rule">
-          <thead>
-            <tr className="text-left font-mono text-[10.5px] tracking-widest text-muted-foreground uppercase">
-              <th className="border-b-2 py-3.5 pr-2 font-normal">Capability</th>
-              <th className="w-[190px] border-b-2 px-2 py-3.5 text-center font-normal">
-                Free · this repo
-              </th>
-              <th className="w-[240px] border-b-2 px-2 py-3.5 text-center font-normal">
-                Pro · $299 ·{" "}
-                <a
-                  href={siteConfig.pro}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-primary-text normal-case underline underline-offset-4"
-                >
-                  nikandr.com
-                </a>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((row) => (
-              <tr key={row.capability}>
-                <td className="border-b-2 py-3.5 pr-2 text-[15px]">
-                  {row.capability}
-                </td>
-                <td
-                  className={`border-b-2 px-2 py-3.5 text-center ${cellClass(row.free.kind)}`}
-                >
-                  {row.free.label}
-                </td>
-                <td
-                  className={`border-b-2 px-2 py-3.5 text-center ${cellClass(row.pro.kind)}`}
-                >
-                  {row.pro.label}
-                </td>
+    <section id="pro" className="scroll-mt-16 border-t-[3px]">
+      <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
+        <div className="fade-up mb-11">
+          <p className="eyebrow">This repo is complete</p>
+          <h2 className="text-title mt-4">Free vs Pro.</h2>
+          <p className="mt-4 max-w-[52ch] text-muted-foreground">
+            Pro is what comes after product-market fit.
+          </p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full border-t-2 border-rule">
+            <thead>
+              <tr className="text-left font-mono text-[10.5px] tracking-widest text-muted-foreground uppercase">
+                <th className="border-b-2 py-3.5 pr-2 font-normal">
+                  Capability
+                </th>
+                <th className="w-[190px] border-b-2 px-2 py-3.5 text-center font-normal">
+                  Free · this repo
+                </th>
+                <th className="w-[240px] border-b-2 px-2 py-3.5 text-center font-normal">
+                  Pro · $299 ·{" "}
+                  <a
+                    href={siteConfig.pro}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-primary-text normal-case underline underline-offset-4"
+                  >
+                    nikandr.com
+                  </a>
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {rows.map((row) => (
+                <tr key={row.capability}>
+                  <td className="border-b-2 py-3.5 pr-2 text-[15px]">
+                    {row.capability}
+                  </td>
+                  <td
+                    className={`border-b-2 px-2 py-3.5 text-center ${cellClass(row.free.kind)}`}
+                  >
+                    {row.free.label}
+                  </td>
+                  <td
+                    className={`border-b-2 px-2 py-3.5 text-center ${cellClass(row.pro.kind)}`}
+                  >
+                    {row.pro.label}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );
