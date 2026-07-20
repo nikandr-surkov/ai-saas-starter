@@ -5,48 +5,53 @@ paths:
   - "src/app/(app)/**"
 ---
 
-# Design rules — "The Ledger", Premium Neo-Brutalist (v3.1)
+# Design rules — "The Ledger", LOUD MODE (v4)
 
 Full system in DESIGN.md. The hard rules, restated:
 
-- Borders: 2px solid `var(--ink)` everywhere (`--border-w`); 3px
-  (`--border-w-emph`, `border-emph` utility) ONLY on the hero and
-  closing-band CTAs.
-- Hard offset shadows in exactly THREE tiers, one direction (down-right),
-  never blurred: `shadow-hard-sm` 3px (badges/chips/stickers/DigitBoxes/
-  app cards), `shadow-hard` 5px (marketing cards, buttons), and
-  `shadow-hard-lg` 8px (dialogs/dropdowns/toasts). Press physics on
-  interactive elements (hover −2px/−2px + 7px shadow, active +2px/+2px +
-  no shadow). No blur, no gradients, no glassmorphism, ever.
-- STRUCTURAL SEPARATION: marketing is loud (dot grid, color-blocked
-  panels, stickers, doodads, md shadows); the app is calm (cream cards,
-  sm shadow or none, color only as 6px left-border accents, badges, and
-  DigitBoxes — never full-color card backgrounds, never doodads).
-- Radius 12px; pills for chips, badges, stickers, nav links.
-- Color roles are strict: `--action` yellow = primary buttons with INK
-  text (never yellow text on anything); `--credit` green = positive
-  amounts and success ONLY; `--debit` red = negative/destructive/errors
-  ONLY; panel colors (`--pop-*`) are backgrounds or accent borders,
-  never text.
-- NEVER use raw `--credit` or `--debit` as light-mode text — use
-  `--credit-text` / `--debit-text` (raw values fail WCAG on cream).
-- Muted text is `--muted-ink`: a 25% canvas mix in light, 30% in dark —
-  computed to stay ≥4.5 on every panel. Don't invent other grays.
-- Focus rings: 3px ink, offset 2px, on every interactive element.
-  `::selection` is pop-yellow with ink text.
-- Fun vocabulary with restraint (marketing only): marker highlights
-  (1–2 words per heading), stickers at the DESIGN.md-specified spots,
-  sparkle/asterisk/squiggle doodads max 2–3 per section, DigitBoxes for
-  balance and prices, ONE hero word with the yellow offset text-shadow.
-- Section color blocking per DESIGN.md; ledger rows stay the signature —
-  numbered, 2px separators, never card grids. Tabular numerals always.
-- Motion CSS-only ≤250ms behind the reduced-motion kill switch; the slow
-  sparkle twinkle is the only loop. Sanctioned exceptions: the dashboard
-  balance count-up (one-shot rAF, ≤500ms, skipped under reduced motion)
-  and `@view-transition` for cross-document marketing navigation.
-- No emoji. Icons lucide-react; doodads inline SVG.
-- Copy: friendly, playful, concrete. Exclamations SPARINGLY (success
-  toasts, one hero moment). Banned: emoji, hype adjectives, "Build
-  faster"/"Ship smarter" phrasing.
+- SOLID COLOR BLOCKING on marketing: full-bleed section backgrounds in
+  the DESIGN.md order (yellow hero → cream proof → mint features → sky
+  agents → cream pricing/compare → pink FAQ → ink closing band, light
+  text). Body text always on solid color, ≥4.5:1 both modes. NO
+  dot-grid behind text — texture only as thin strips between sections
+  or inside illustrations. Sections meet at straight edges with a 3px
+  ink rule. No gradients ever.
+- Register scoping via `.loud` (marketing `<main>`): borders 3px base /
+  4px hero (`border-hard` / `border-emph` utilities read `--border-w` /
+  `--border-w-emph`); shadow tiers 6/9/12. The app keeps literal 2px
+  borders and 3/5/8 tiers. One shadow direction (down-right), never
+  blurred. Press physics unchanged.
+- FOUR FACES, FOUR JOBS: Archivo Black = hero H1 + section titles ONLY
+  (uppercase, `text-display` / `text-title`, offset `--title-shadow`);
+  Bricolage = subheads/card titles; Instrument Sans = body; Martian
+  Mono = data. Never Archivo in the app.
+- WORD BUDGETS are hard rules: H1 ≤8 words, section titles ≤4, any
+  paragraph ≤18, chip rows over sentences. Feature rows = number +
+  4-word title + one line.
+- Color roles strict: `--action` yellow buttons with INK text (never
+  yellow text); `--credit` positive/success ONLY (use `--credit-text`
+  in light mode — raw fails WCAG); `--debit` negative/destructive ONLY
+  (`--debit-text` in light); muted text is `--muted-ink` (25% light /
+  30% dark), `--on-ink-muted` on the ink band.
+- App register is MEDIUM-FUN: panel-colored card header strips
+  (yellow/mint/sky) with an ink rule over cream bodies, colored badges,
+  DigitBoxes. No marquees, tilts, or doodads in the app. Dense data
+  stays quiet.
+- Motion: CSS-first, ≤400ms except the marquee; reduced-motion kill
+  switch is absolute. Sanctioned: marquee (pause on hover, static under
+  reduced motion), hero entrance stagger (words → illustration bounce →
+  sticker wobble), view()-timeline scroll pop-ins with fallback to
+  visible, card tilt ±1deg hovers, hero illustration 4s idle float, FAQ
+  chevron 90deg spin, plus v3.1 keepers (press, count-up, marker
+  draw-in, twinkle, toast press-in). Loops: marquee, float, twinkle —
+  nothing else.
+- Ledger identity: code exhibit is the proof; ledger rows/tables keep
+  2px separators, mono metadata, tabular numerals. ✦ in the marquee is
+  a sanctioned glyph; emoji stay banned.
+- Focus rings 3px ink offset 2px; ::selection yellow/ink.
+- Illustrations only at: hero, dashboard first-run, generate empty,
+  404/error pages, pricing accent. next/image, real alt, ≤150KB.
+- Copy: loud, concrete, few words. Exclamations SPARINGLY. Banned:
+  emoji, hype adjectives, "Build faster"/"Ship smarter".
 - Use tokens from `globals.css`; derive shades with `color-mix()` — no
   new oklch/hex literals in components.

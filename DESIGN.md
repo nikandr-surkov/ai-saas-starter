@@ -1,72 +1,82 @@
-# DESIGN.md — "The Ledger", Premium Neo-Brutalist (v3.1)
+# DESIGN.md — "The Ledger", LOUD MODE (v4)
 
-An accountant's ledger drawn with markers. The identity survives — ruled
-ledger rows, mono data, tabular numerals, the append-only story — but the
-surface is playful neo-brutalism in the RetroUI lineage: warm cream canvas
-with a dot grid, flat saturated-pastel panels, marker highlights, stickers,
-sparkle doodads, chunky display type with hard offset shadows. v3.1 adds
-the premium grammar: tokenized border widths and shadow tiers, and a strict
-structural separation between loud marketing and calm product surfaces.
-Every UI decision follows this file. No exceptions without editing it
-first.
+An accountant's ledger repainted as a poster wall. v4 keeps the v3.1
+grammar — ink borders, hard offset shadows, press physics, the pastel-pop
+palette, the coin mascot — and drops the restraint DNA on marketing
+surfaces: the page IS the color, the type is huge, and motion is meant to
+be noticed. The app stays a working tool: medium-fun, dense data on quiet
+surfaces. Every UI decision follows this file. No exceptions without
+editing it first.
 
 ## Hard rules
 
-1. **Borders are tokenized**: `--border-w` (2px) on every container,
-   button, input, and table; `--border-w-emph` (3px) ONLY for hero/CTA
-   emphasis (hero primary button, closing-band button). Always solid
-   `var(--ink)`.
-2. **Hard offset shadows in exactly three tiers, ONE direction
-   (down-right), no exceptions** — consistency is the premium tell:
-   - `--shadow-hard-sm` `3px 3px 0` — badges, chips, stickers,
-     DigitBoxes, app cards.
-   - `--shadow-hard-md` `5px 5px 0` — marketing cards and buttons
-     (the `.press` rest state).
-   - `--shadow-hard-lg` `8px 8px 0` — dialogs, popovers, dropdowns,
-     toasts (the floating layer).
-     No blur, no gradients, no glassmorphism, ever. Press physics: hover
-     `translate(-2px,-2px)` + shadow grows to 7px; active
-     `translate(2px,2px)` + shadow 0.
-3. **Structural separation** — the premium move is restraint:
-   - **Marketing surfaces are loud**: dot grid, section color blocking,
-     panels, stickers, doodads, md shadows.
-   - **App surfaces are calm**: cream/white cards with sm shadows or
-     none; color appears only as small accents — 6px colored
-     left-borders on cards and banners, badges, the DigitBoxes. Dense
-     data on quiet surfaces. No full-color card backgrounds, no dot
-     grid, no doodads in the app shell.
-4. **Radius: 12px** for cards/panels/buttons; **pills (9999px)** for
-   chips, badges, stickers, and nav links.
-5. **Color roles are strict**: `--action` (pop-yellow) drives primary
-   buttons with ink text — **ink on yellow always, never yellow text**.
-   `--credit` green is ONLY positive amounts and success. `--debit` red
-   is ONLY negative/destructive/errors. Panel colors are backgrounds
-   (marketing) or left-border accents (app), never text.
-6. **Fun vocabulary, each with restraint** (marketing): marker
-   highlights on 1–2 words per section heading + the active nav item,
-   stickers (bordered, sm-shadowed, −3…3deg, tiny hover wobble),
-   sparkles/asterisks/squiggle doodads at most 2–3 per section,
-   big-number digit boxes for the dashboard balance and pricing prices,
-   ONE hero word with the offset-shadow text treatment.
-7. **Section color blocking** (marketing only): canvas → mint panel →
-   canvas → sky panel → … → pink CTA band. Cards inside colored panels
-   sit on canvas with ink borders.
-8. **Ledger rows stay** — the identity. 2px ink separators, mono
-   metadata. **All numerals `tabular-nums`.** No emoji. Icons are
-   lucide-react; doodads are inline SVG.
-9. **A11y is non-negotiable**: body text ≥4.5:1 on every surface in
-   both modes (verified below). Focus rings: **3px ink, offset 2px**,
-   everywhere. Styled `::selection`: pop-yellow background, ink text.
-10. **Motion is CSS-only, ≤250ms**, behind the `prefers-reduced-motion`
-    kill switch — press physics, row hover nudge, ledger-row stagger,
-    marker draw-in, toast press-in, and the one sanctioned slow loop:
-    sparkle twinkle. Two sanctioned exceptions: the dashboard balance
-    count-up (one-shot, ≤500ms, JS `requestAnimationFrame`, skipped
-    entirely under reduced motion) and cross-document View Transitions
-    between marketing pages (`@view-transition`, browser-driven where
-    supported; SPA navigations stay instant). No marquees, no
-    scroll-jacking.
-11. **No new UI/animation libraries.**
+1. **Solid color blocking (marketing)** — full-bleed saturated section
+   backgrounds in this order: hero = pop-yellow · proof = canvas ·
+   features = pop-mint · agents = pop-sky · pricing + compare = canvas ·
+   FAQ = pop-pink · closing band = ink with light text. Dark mode keeps
+   the same hues, deep-muted. Body text ALWAYS sits on solid color at
+   ≥4.5:1 (verified below). NO dot-grid behind text — texture may
+   survive only as thin transition strips between sections or inside
+   illustrations. Section transitions are straight hard edges with a
+   3px ink rule. No gradients, ever.
+2. **Borders**: marketing base 3px (`border-hard` = `--border-w`), hero
+   elements 4px (`border-emph` = `--border-w-emph`); the app keeps 2px.
+   Always solid `var(--ink)`.
+3. **Shadow tiers, ONE direction (down-right)**: marketing 6/9/12px,
+   app 3/5/8px — same three utilities (`shadow-hard-sm`, `shadow-hard`,
+   `shadow-hard-lg`) reading scoped variables; the `.loud` marketing
+   scope raises them. No blur, no glassmorphism. Press physics: hover
+   `translate(-2px,-2px)` + shadow +2px; active `translate(2px,2px)` +
+   shadow 0.
+4. **Four faces, four jobs**: **Archivo Black** — hero H1 and section
+   titles ONLY, uppercase, tight leading, offset-shadow treatment.
+   **Bricolage Grotesque 700/800** — subheads and card titles.
+   **Instrument Sans** — body/UI. **Martian Mono** — eyebrows, data,
+   numbers, code.
+5. **Scale**: H1 `clamp(3.5rem → 7rem)`; section titles
+   `clamp(2.5rem → 4.5rem)`. Offset shadow = solid `--title-shadow`
+   color behind ink text: canvas-colored on pop panels, pop-yellow on
+   canvas sections and the ink band.
+6. **WORD BUDGETS (hard)**: H1 ≤ 8 words · section titles ≤ 4 words ·
+   any paragraph ≤ 18 words · prefer chip rows and 3-word labels over
+   sentences. Feature rows are six BIG statements: big number, 4-word
+   title, one short line — no paragraphs. Concrete stays; hype stays
+   banned (no emoji, no "Build faster / Ship smarter").
+7. **Color roles are strict**: `--action` yellow = primary buttons with
+   INK text (ink on yellow always, never yellow text). `--credit` green
+   = positive amounts/success ONLY. `--debit` red = negative/
+   destructive ONLY. Panels are backgrounds; never panel-colored text.
+8. **Structural separation, v4 register**: marketing is LOUD (full-bleed
+   panels, giant type, marquee, tilts, entrance choreography). The app
+   is MEDIUM-FUN: panel-colored card headers (yellow/mint/sky strips
+   with an ink rule) over cream bodies, colored badges, DigitBoxes —
+   dense data areas stay quiet. No marquees, no tilts, no doodads
+   inside the app.
+9. **Ledger identity stays**: the code exhibit is the proof section,
+   ledger rows/tables keep 2px separators and mono metadata, all
+   numerals `tabular-nums`. Icons lucide-react; doodads inline SVG; the
+   marquee separator glyph ✦ is a sanctioned ornament, not an emoji.
+10. **A11y is non-negotiable**: ≥4.5:1 body text on every surface, both
+    modes. Focus rings 3px ink offset 2px. `::selection` pop-yellow
+    with ink text. The `prefers-reduced-motion` kill switch is absolute.
+11. **Motion kit (CSS-first, ≤400ms except the marquee)** — sanctioned:
+    - **Marquee ticker** under the hero: 3px rules top/bottom, Archivo
+      Black, slow linear loop, pauses on hover, static row under
+      reduced motion.
+    - **Hero entrance**: H1 words pop in staggered (translate+scale,
+      overshoot bezier), illustration drops in with one bounce,
+      stickers land last with a wobble.
+    - **Scroll pop-ins** via `animation-timeline: view()` (no support →
+      visible immediately): translate-up + shadow-grow, staggered.
+    - **Hover**: marketing cards tilt ±1deg + lift; the hero
+      illustration idles on a slow 4s float (2–3px); FAQ chevrons spin
+      90deg on open.
+    - **Kept from v3.1**: press physics, balance count-up, marker
+      draw-in (nav active + inline emphasis on canvas only), sparkle
+      twinkle, toast press-in, `@view-transition`.
+    - Loops allowed: marquee, idle float, twinkle. Nothing else loops.
+12. **No new UI/animation libraries.** Fonts via `next/font/google`
+    only.
 
 ## Tokens
 
@@ -74,7 +84,7 @@ Hard-code ONLY these; derive the rest with `color-mix()`.
 
 ```css
 /* light */
---ink: oklch(0.2 0.02 90); /* every border, every body text */
+--ink: oklch(0.2 0.02 90);
 --canvas: oklch(0.993 0.011 95); /* warm cream ≈ #FFFDF5 */
 --pop-yellow: oklch(0.88 0.16 95);
 --pop-mint: oklch(0.88 0.13 150);
@@ -85,7 +95,7 @@ Hard-code ONLY these; derive the rest with `color-mix()`.
 --debit: oklch(0.62 0.23 27); /* negative / destructive ONLY */
 --radius: 12px;
 
-/* dark — charcoal canvas, light ink, panels drop to deep muted hues */
+/* dark — charcoal canvas, light ink, panels deep-muted */
 --canvas: oklch(0.19 0.02 90);
 --ink: oklch(0.95 0.01 90);
 --pop-yellow: oklch(0.32 0.07 95);
@@ -97,98 +107,71 @@ Hard-code ONLY these; derive the rest with `color-mix()`.
 --debit: oklch(0.7 0.2 27);
 ```
 
-Required derivations (the v3.1 grammar):
+Required derivations:
 
 ```css
---border-w: 2px; /* the standard; Tailwind border-2 */
---border-w-emph: 3px; /* hero/CTA emphasis only */
---shadow-hard-sm: 3px 3px 0 0 var(--ink); /* badges, chips, app cards */
---shadow-hard-md: 5px 5px 0 0 var(--ink); /* marketing cards, buttons */
---shadow-hard-lg: 8px 8px 0 0 var(--ink); /* dialogs, popovers, toasts */
---action: var(--pop-yellow); /* primary buttons, ink text */
+/* register scoping — app defaults, .loud (marketing <main>) overrides */
+--border-w: 2px; /* .loud: 3px */
+--border-w-emph: 3px; /* .loud: 4px */
+--shadow-hard-sm: 3px 3px 0 0 var(--ink); /* .loud: 6px */
+--shadow-hard-md: 5px 5px 0 0 var(--ink); /* .loud: 9px */
+--shadow-hard-lg: 8px 8px 0 0 var(--ink); /* .loud: 12px */
+--action: var(--pop-yellow);
 --paper-2: color-mix(in oklch, var(--canvas), var(--ink) 5%);
---muted-ink: color-mix(
-  in oklch,
-  var(--ink),
-  var(--canvas) 25%
-); /* 30% in dark — the warmer canvas forced 35%→25% in light to keep
-      muted text ≥4.5 on every colored panel */
---credit-text: color-mix(
-  in oklch,
-  var(--credit),
-  var(--ink) 45%
-); /* light only; dark uses --credit raw */
---debit-text: color-mix(
-  in oklch,
-  var(--debit),
-  var(--ink) 25%
-); /* light only */
---debit-deep: color-mix(
-  in oklch,
-  var(--debit),
-  var(--ink) 30%
-); /* destructive fills */
+--muted-ink: color-mix(in oklch, var(--ink), var(--canvas) 25%); /* 30% dark */
+--on-ink-muted: color-mix(in oklch, var(--canvas), var(--ink) 22%); /* band */
+--credit-text: color-mix(in oklch, var(--credit), var(--ink) 45%); /* light */
+--debit-text: color-mix(in oklch, var(--debit), var(--ink) 25%); /* light */
+--debit-deep: color-mix(in oklch, var(--debit), var(--ink) 30%);
+--title-shadow:
+  set per section — canvas on pop panels,
+  pop-yellow on canvas sections and the ink band.;
 ```
 
-Contrast (WCAG 2.x, computed 2026-07-20): ink on canvas 17.8 light /
-16.0 dark; ink on panels — yellow 12.6/11.0, mint 13.2/10.7, sky
-12.0/10.9, pink 11.2/11.2, orange 10.0/11.1; muted-ink on canvas 9.1
-light / 7.5 dark, and on panels (worst case) orange 5.1 light / mint 5.0
-dark — every pairing ≥4.5; credit-text 5.6 light, credit 8.9 dark;
-debit-text 5.9 light, debit 6.2 dark; canvas-on-debit-deep 5.9. Raw
-`--credit` as light-mode text is **1.85** — that is why `--credit-text`
-exists.
+Contrast (WCAG 2.x, computed — light / dark): ink on canvas 17.8/16.0;
+ink as body text on full-bleed panels — yellow 12.6/11.0, mint 13.2/10.7,
+sky 12.0/10.9, pink 11.2/11.2; muted-ink on canvas 9.1/7.5 and on panels
+worst-case 5.1/5.0; closing band canvas-on-ink 17.8/16.0 and on-ink-muted
+≥9; credit-text 5.6 light (raw credit 1.85 — banned as light text),
+credit 8.9 dark; debit-text 5.9/6.2. Every body-text pairing ≥4.5.
 
-## Typography
+## Landing composition
 
-- **Bricolage Grotesque** (`--font-display`, 700/800) — display headings,
-  tight leading. ONE hero word gets `text-shadow: 4px 4px 0
-var(--pop-yellow)` (dark: the muted yellow) — the "stand out" moment.
-- **Instrument Sans** — body/UI. **Martian Mono** — eyebrows, data,
-  numbers, code. Unchanged.
+Hero (yellow: H1 "A complete AI SaaS. Free.", sub ≤18 words, CTA, install
+line, illustration cluster + stickers) → marquee ticker → proof (canvas:
+the real `spendCredits` source, intro ≤18 words) → features (mint: "IT
+HANDLES THE MONEY.", six big statements) → agents (sky: "BUILT FOR AI
+AGENTS.", tree + checklist) → pricing (canvas: "PICK A PLAN.", DigitBoxes
+prices, MOST POPULAR sticker on Pro) → compare ("FREE VS PRO.") → FAQ
+(pink: "QUESTIONS.", answers ≤18 words) → closing band (ink: "CLONE THE
+LEDGER.", light text).
 
 ## Components
 
-- **Button**: 2px ink border (3px for the hero/band CTAs), 12px radius,
-  md shadow, press physics. Primary = `--action` yellow + ink text.
-  Outline/secondary = canvas. Destructive = debit-deep + canvas text.
-  Ghost = borderless icon buttons; 3px ink focus ring, offset 2px,
-  everywhere.
-- **Card**: 2px border. App register: canvas bg, sm shadow, optional 6px
-  colored left-border accent. Marketing register: canvas or panel bg, md
-  shadow.
-- **Marker**: skewed pop-yellow swoosh behind heading words / active nav
-  pill; draws in once (scale-x, ≤250ms, motion-safe).
-- **Sticker**: pill, panel-color bg, 2px border, sm shadow, −3…3deg,
-  hover wobble. Hero: "10 FREE CREDITS" (yellow) + "MIT · OPEN SOURCE"
-  (mint); pricing Pro row: "MOST POPULAR" (pink).
-- **Doodads**: inline-SVG sparkles (4-point), asterisk bursts, one
-  squiggle underline; ink or panel colors; sparkles twinkle slowly.
-  Marketing only.
+- **Button**: ink border (register width), 12px radius, md shadow, press
+  physics. Primary = action yellow + ink text. Destructive = debit-deep +
+  canvas text. 3px ink focus ring offset 2px everywhere.
+- **Card**: app register — cream body, sm shadow, panel-colored header
+  strip (yellow/mint/sky) above an ink rule. Marketing register — canvas
+  or panel bg, md shadow, tilt hover.
+- **Marquee**: full-width, 3px rules, Archivo Black uppercase, ✦
+  separators, ~30s linear loop, `animation-play-state: paused` on hover.
+- **Sticker / Doodads / DigitBoxes / Checkbox / Switch / Skeleton /
+  LedgerRow / Inputs / Dialog / Menu / Toast**: as v3.1 (tiers read the
+  scoped variables). Marketing-only: doodads, stickers, tilts.
 - **Illustrations** (`public/illustrations/`, generated by
-  `scripts/generate-illustrations.mjs`): flat sticker-style set — the
-  robot-artist hero cluster, the coin mascot (one character: bare
-  stubby yellow arms/feet, dot eyes, small smile) in hello/paint/lost
-  poses, and the coin stack. They appear ONLY at: landing hero,
-  dashboard first-run, generate empty state, 404, pricing accent —
-  restraint is the premium move. Always `next/image` with real alt
-  text, ≤150KB each.
-- **DigitBoxes**: each digit in its own 2px-bordered square, Martian
-  Mono, sm shadow — dashboard balance (with one-shot count-up), pricing
-  prices.
-- **Checkbox/Switch**: chunky — 2px ink borders, sm shadow on the
-  checkbox, `--action` yellow fill + ink glyph/thumb when on.
-- **Skeleton**: bordered — 2px ink border, paper-2 fill, motion-safe
-  pulse. Route-level `loading.tsx` in the app shell uses it.
-- **Inputs/Table/Dialog/Menu/Toast**: 2px borders, 12px radius, 3px ink
-  focus rings; dialogs/menus/toasts carry the lg shadow. Toasts enter
-  with a press-release (translate from the shadow offset, ≤200ms).
-- **LedgerRow**: unchanged layout; hover = credit-soft wash + 2px nudge.
+  `scripts/generate-illustrations.mjs`): robot-artist hero cluster (idle
+  float), coin mascot — ONE character: bare stubby yellow arms/feet, dot
+  eyes, small smile — in hello/paint/lost poses, coin stack. Spots:
+  hero, dashboard first-run, generate empty, 404 + error pages, pricing
+  accent. `next/image`, real alt text, ≤150KB.
+- **Logo mark**: ink-ringed pop-yellow coin, SVG — nav, footer, favicon
+  (`src/app/icon.svg`).
 
 ## Copy
 
-Friendly, playful, concrete. Exclamation marks allowed SPARINGLY —
-success toasts and one hero moment, nowhere else. Still banned: emoji,
-hype adjectives, "Build faster / Ship smarter" phrasing. Every empty,
-loading, and error state is informative with a clear next step; errors
-are human sentences, never raw codes.
+Loud, concrete, few words — the budgets in hard rule 6 are enforced, not
+aspirational. Exclamations SPARINGLY (success toasts, one hero moment).
+Banned: emoji in copy, hype adjectives, "Build faster / Ship smarter"
+phrasing. Every empty, loading, and error state stays informative with a
+clear next step; errors are human sentences.
