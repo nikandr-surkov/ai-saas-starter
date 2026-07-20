@@ -20,7 +20,7 @@ const buttonVariants = cva(
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground",
         destructive:
           "border-2 press bg-destructive text-destructive-foreground",
-        link: "text-primary-text underline-offset-4 hover:underline",
+        link: "link-pop",
       },
       size: {
         default:

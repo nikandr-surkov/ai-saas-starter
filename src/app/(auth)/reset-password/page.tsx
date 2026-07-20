@@ -22,7 +22,7 @@ export default async function ResetPasswordPage({
           This link is missing its token — request a fresh one from the{" "}
           <Link
             href="/forgot-password"
-            className="text-primary-text underline underline-offset-4"
+            className="link-pop"
           >
             reset page
           </Link>

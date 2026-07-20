@@ -197,8 +197,12 @@ band (ink: "CLONE THE LEDGER.", light text).
   — in hello/paint/lost poses, coin stack, and the six gallery
   mini-posters (gallery-01..06, opaque full-bleed, same world as the
   easel painting, ≤120KB). Spots: hero, gallery, dashboard first-run,
-  generate empty, 404 + error pages, pricing accent. `next/image`,
-  real alt text, ≤150KB.
+  generate empty, 404 + error pages, pricing accent, footer corner
+  (mascot-hello, tiny). `next/image`, real alt text, ≤150KB.
+- **Footer** (v4.1): full-width ink block — giant Archivo wordmark
+  (clamp 3–6rem, yellow offset shadow), link columns as mono chips with
+  the nav hover physics, "Built by" marker-hover link, tiny
+  mascot-hello, mono copyright line.
 - **Logo mark**: ink-ringed pop-yellow coin, SVG — nav, footer, favicon
   (`src/app/icon.svg`).
 

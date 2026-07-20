@@ -24,7 +24,7 @@ export function CtaBand() {
             href={siteConfig.pro}
             target="_blank"
             rel="noreferrer"
-            className="border-b-2 border-background pb-0.5 font-mono text-xs tracking-wider text-background uppercase"
+            className="chip px-3.5 py-1.5 font-mono text-xs tracking-wider text-foreground uppercase"
           >
             Pro version · $299 →
           </a>

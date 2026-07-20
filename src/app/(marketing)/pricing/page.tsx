@@ -76,7 +76,7 @@ export default function PricingPage() {
         Start free —{" "}
         <Link
           href="/signup"
-          className="text-primary-text underline underline-offset-4"
+          className="link-pop"
         >
           create an account
         </Link>{" "}

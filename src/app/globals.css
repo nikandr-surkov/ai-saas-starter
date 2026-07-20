@@ -360,6 +360,22 @@
   background-size: 26px 26px;
 }
 
+/* Inline text link (v4.1 hover grammar): underline at rest, yellow
+   bg-flip on hover — no color-only or underline-only hovers anywhere. */
+@utility link-pop {
+  color: var(--primary-text);
+  border-radius: 4px;
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
+  &:hover {
+    background-color: var(--pop-yellow);
+    color: var(--ink);
+  }
+}
+
 /* Inline mono chip (v4.1 typographic effects): key numbers and code-ish
    tokens inside body copy. Static — not an interactive chip. */
 @utility chip-mono {

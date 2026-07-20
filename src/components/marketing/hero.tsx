@@ -63,7 +63,7 @@ export function Hero() {
               href={siteConfig.github}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 border-b-2 border-foreground pb-0.5 font-mono text-xs tracking-wider text-foreground uppercase"
+              className="chip inline-flex items-center gap-2 px-3.5 py-1.5 font-mono text-xs tracking-wider uppercase"
             >
               <StarIcon className="size-3.5" aria-hidden />
               Star on GitHub →

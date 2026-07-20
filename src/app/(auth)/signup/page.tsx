@@ -24,7 +24,7 @@ export default function SignupPage() {
         Already registered?{" "}
         <Link
           href="/login"
-          className="text-primary-text underline underline-offset-4"
+          className="link-pop"
         >
           Sign in
         </Link>

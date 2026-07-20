@@ -87,7 +87,7 @@ export default async function DashboardPage() {
               Your welcome credits are on the books. Head to{" "}
               <Link
                 href="/generate"
-                className="text-primary-text underline underline-offset-4"
+                className="link-pop"
               >
                 Generate
               </Link>{" "}
@@ -95,7 +95,7 @@ export default async function DashboardPage() {
               generations refund themselves. Plans and top-ups live in{" "}
               <Link
                 href="/billing"
-                className="text-primary-text underline underline-offset-4"
+                className="link-pop"
               >
                 Billing
               </Link>
@@ -118,14 +118,14 @@ export default async function DashboardPage() {
           <CardContent className="text-sm text-muted-foreground">
             <Link
               href="/billing"
-              className="text-primary-text underline underline-offset-4"
+              className="link-pop"
             >
               Buy more
             </Link>{" "}
             or{" "}
             <Link
               href="/generate"
-              className="text-primary-text underline underline-offset-4"
+              className="link-pop"
             >
               generate an image
             </Link>
@@ -150,7 +150,7 @@ export default async function DashboardPage() {
                 No subscription —{" "}
                 <Link
                   href="/billing"
-                  className="text-primary-text underline underline-offset-4"
+                  className="link-pop"
                 >
                   see plans
                 </Link>

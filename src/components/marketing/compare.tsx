@@ -63,7 +63,7 @@ export function Compare() {
                     href={siteConfig.pro}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-primary-text normal-case underline underline-offset-4"
+                    className="link-pop normal-case"
                   >
                     nikandr.com
                   </a>
