@@ -11,7 +11,7 @@ import { MobileMenu } from "./nav-mobile";
 const links = [
   { href: "/#features", label: "Features" },
   { href: "/#pricing", label: "Pricing" },
-  { href: "/#code", label: "Code" },
+  { href: "/#gallery", label: "Gallery" },
   { href: "/#ai-native", label: "AI-native" },
   { href: "/#pro", label: "Pro" },
 ] as const;

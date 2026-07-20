@@ -24,8 +24,11 @@ function Row({ hidden }: { hidden?: boolean }) {
 }
 
 export function Marquee() {
+  // v4.1 sequence lock: the strip is a solid INK band (light text) —
+  // it separates the yellow hero from the cream gallery, so it needs
+  // no border rules of its own.
   return (
-    <div className="overflow-hidden border-y-[3px] py-3 font-display text-2xl tracking-wide uppercase">
+    <div className="overflow-hidden bg-foreground py-3 font-display text-2xl tracking-wide text-background uppercase">
       <div className="marquee flex w-max">
         <Row />
         <Row hidden />

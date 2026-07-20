@@ -79,7 +79,29 @@ const SETS = [
       "a neat stack of gold coins with one coin spinning off the top, " +
       "with simple motion lines",
   },
+  // v4.1 gallery: full-bleed square mini-posters in the SAME world as
+  // the landscape painting on the robot's easel — opaque, framed in the
+  // UI, so no transparency pass.
+  ...[
+    ["gallery-01", "a sunset over mountains"],
+    ["gallery-02", "a retro city skyline"],
+    ["gallery-03", "an ocean wave with the sun"],
+    ["gallery-04", "outer space with planets and stars"],
+    ["gallery-05", "a forest with a river"],
+    ["gallery-06", "a hot-air balloon over fields"],
+  ].map(([name, scene]) => ({
+    name,
+    width: 512,
+    maxKB: 120,
+    opaque: true,
+    subject:
+      `a retro cartoon landscape mini-poster of ${scene}, in the same ` +
+      "world as the small landscape painting on a cartoon robot artist's " +
+      "easel — halftone sun rays and clouds",
+  })),
 ];
+
+const CONCURRENCY = 4;
 
 function token() {
   if (process.env.REPLICATE_API_TOKEN) return process.env.REPLICATE_API_TOKEN;
@@ -134,13 +156,16 @@ async function resolveModel() {
   process.exit(1);
 }
 
-function buildInput(schema, subject, transparent) {
+function buildInput(schema, set, transparent) {
   const props = schema.properties ?? {};
-  const prompt = transparent
-    ? `${subject}, centered square composition with generous empty margins, ${STYLE}`
-    : `${subject}, centered square composition with generous empty margins, ${STYLE}, on a solid flat pure green #00FF00 background — the color green appears nowhere in the subject itself`;
+  const prompt = set.opaque
+    ? `${set.subject}, full-bleed square composition, color to every edge, ${STYLE}`
+    : transparent
+      ? `${set.subject}, centered square composition with generous empty margins, ${STYLE}`
+      : `${set.subject}, centered square composition with generous empty margins, ${STYLE}, on a solid flat pure green #00FF00 background — the color green appears nowhere in the subject itself`;
   const input = { prompt };
-  if (transparent && props.background) input.background = "transparent";
+  if (!set.opaque && transparent && props.background)
+    input.background = "transparent";
   if (props.output_format) input.output_format = "png";
   if (props.quality) input.quality = "high";
   if (props.aspect_ratio) input.aspect_ratio = "1:1";
@@ -201,116 +226,113 @@ img.save(sys.argv[1])
   execFileSync("python", ["-c", code, file], { stdio: "inherit" });
 }
 
-function finalizeImage(source, destination, width) {
+function finalizeImage(source, destination, width, maxKB = 150) {
   const code = `
 import os, sys
 from PIL import Image
-src, dst, width = sys.argv[1], sys.argv[2], int(sys.argv[3])
+src, dst, width, max_kb = sys.argv[1], sys.argv[2], int(sys.argv[3]), int(sys.argv[4])
 img = Image.open(src).convert("RGBA")
 if img.width > width:
     img = img.resize((width, round(img.height * width / img.width)), Image.LANCZOS)
 img.save(dst, optimize=True)
-if os.path.getsize(dst) > 150 * 1024:
+if os.path.getsize(dst) > max_kb * 1024:
     img.quantize(colors=256, method=Image.FASTOCTREE).save(dst, optimize=True)
 print(f"{dst}: {img.size[0]}x{img.size[1]}, {os.path.getsize(dst)} bytes")
 `;
-  execFileSync("python", ["-c", code, source, destination, String(width)], {
-    stdio: "inherit",
+  execFileSync(
+    "python",
+    ["-c", code, source, destination, String(width), String(maxKB)],
+    { stdio: "inherit" },
+  );
+}
+
+// Shared transparency mode for the non-opaque sets. Workers flip it to
+// green-screen on the first rejection; in-flight siblings that also fail
+// retry individually (single-threaded JS — no real race).
+const mode = { transparent: false };
+
+async function createPrediction(slug, schema, set, label) {
+  const input = buildInput(schema, set, mode.transparent);
+  const create = await api(`/models/${slug}/predictions`, {
+    method: "POST",
+    body: JSON.stringify({ input }),
   });
+  if (!create.ok) {
+    const body = await create.text();
+    throw new Error(
+      `${label}: create failed HTTP ${create.status}: ${body.slice(0, 400)}`,
+    );
+  }
+  const created = await create.json();
+  console.log(`${label}: prediction ${created.id}`);
+  return poll(created.id);
+}
+
+async function generateOne(slug, schema, set, candidate) {
+  const label = `${set.name}-${candidate}`;
+  const file = path.join(CAND_DIR, `${label}.png`);
+  if (existsSync(file)) {
+    console.log(`${label}: exists, skipping`);
+    return;
+  }
+  let prediction = await createPrediction(slug, schema, set, label);
+  if (
+    prediction.status === "failed" &&
+    !set.opaque &&
+    mode.transparent &&
+    /transparent|background/i.test(String(prediction.error))
+  ) {
+    // gpt-image-2's schema advertises `background`, but the provider
+    // rejects "transparent" at run time — fall back to green-screen.
+    console.log(`${label}: transparency rejected, switching to green-screen`);
+    mode.transparent = false;
+    prediction = await createPrediction(slug, schema, set, label);
+  }
+  if (prediction.status !== "succeeded") {
+    throw new Error(
+      `${label}: ${prediction.status} — ${String(prediction.error).slice(0, 400)}`,
+    );
+  }
+  const url = firstUrl(prediction.output);
+  if (!url) throw new Error(`${label}: no output URL`);
+  const image = await fetch(url);
+  if (!image.ok) throw new Error(`${label}: download HTTP ${image.status}`);
+  writeFileSync(file, Buffer.from(await image.arrayBuffer()));
+  if (!set.opaque && !mode.transparent) chromaKey(file);
+  console.log(`${label}: saved ${file}`);
 }
 
 async function generate(only) {
-  const sets = only ? SETS.filter((s) => s.name === only) : SETS;
+  const sets = only
+    ? SETS.filter((s) => s.name === only || s.name.startsWith(only))
+    : SETS;
   if (sets.length === 0) {
     console.error(`Unknown set "${only}".`);
     process.exit(1);
   }
   mkdirSync(CAND_DIR, { recursive: true });
   const { slug, schema } = await resolveModel();
-  let transparent = Boolean(schema.properties?.background);
+  mode.transparent = Boolean(schema.properties?.background);
   console.log(
-    transparent
-      ? "transparency: native (background=transparent)"
+    mode.transparent
+      ? "transparency: native (background=transparent) for non-opaque sets"
       : "transparency: green-screen + chroma-key (schema has no background input)",
   );
 
-  for (const set of sets) {
-    for (const candidate of CANDIDATES) {
-      const file = path.join(CAND_DIR, `${set.name}-${candidate}.png`);
-      if (existsSync(file)) {
-        console.log(`${set.name}-${candidate}: exists, skipping`);
-        continue;
-      }
-      let input = buildInput(schema, set.subject, transparent);
-      let create = await api(`/models/${slug}/predictions`, {
-        method: "POST",
-        body: JSON.stringify({ input }),
-      });
-      if (create.status === 422 && transparent) {
-        // The live schema rejected the transparency input — regenerate
-        // everything from here on green screen.
-        console.log(
-          `${set.name}-${candidate}: transparency rejected (422), switching to green-screen`,
-        );
-        transparent = false;
-        input = buildInput(schema, set.subject, transparent);
-        create = await api(`/models/${slug}/predictions`, {
-          method: "POST",
-          body: JSON.stringify({ input }),
-        });
-      }
-      if (!create.ok) {
-        const body = await create.text();
-        throw new Error(
-          `${set.name}-${candidate}: create failed HTTP ${create.status}: ${body.slice(0, 400)}`,
-        );
-      }
-      const created = await create.json();
-      console.log(`${set.name}-${candidate}: prediction ${created.id}`);
-      let prediction = await poll(created.id);
-      if (
-        prediction.status === "failed" &&
-        transparent &&
-        /transparent|background/i.test(String(prediction.error))
-      ) {
-        // gpt-image-2's schema advertises `background`, but the provider
-        // rejects "transparent" at run time — fall back to green-screen.
-        console.log(
-          `${set.name}-${candidate}: transparency rejected at run time, switching to green-screen`,
-        );
-        transparent = false;
-        input = buildInput(schema, set.subject, transparent);
-        create = await api(`/models/${slug}/predictions`, {
-          method: "POST",
-          body: JSON.stringify({ input }),
-        });
-        if (!create.ok) {
-          const body = await create.text();
-          throw new Error(
-            `${set.name}-${candidate}: retry create failed HTTP ${create.status}: ${body.slice(0, 400)}`,
-          );
-        }
-        const retried = await create.json();
-        console.log(`${set.name}-${candidate}: prediction ${retried.id}`);
-        prediction = await poll(retried.id);
-      }
-      if (prediction.status !== "succeeded") {
-        throw new Error(
-          `${set.name}-${candidate}: ${prediction.status} — ${String(prediction.error).slice(0, 400)}`,
-        );
-      }
-      const url = firstUrl(prediction.output);
-      if (!url) throw new Error(`${set.name}-${candidate}: no output URL`);
-      const image = await fetch(url);
-      if (!image.ok)
-        throw new Error(
-          `${set.name}-${candidate}: download HTTP ${image.status}`,
-        );
-      writeFileSync(file, Buffer.from(await image.arrayBuffer()));
-      if (!transparent) chromaKey(file);
-      console.log(`${set.name}-${candidate}: saved ${file}`);
+  // Task pool: every set x candidate, CONCURRENCY workers pull from it.
+  const tasks = sets.flatMap((set) =>
+    CANDIDATES.map((candidate) => ({ set, candidate })),
+  );
+  let next = 0;
+  async function worker() {
+    while (next < tasks.length) {
+      const task = tasks[next++];
+      await generateOne(slug, schema, task.set, task.candidate);
     }
   }
+  await Promise.all(
+    Array.from({ length: Math.min(CONCURRENCY, tasks.length) }, worker),
+  );
   console.log(
     "Done. Review the candidates, then run --finalize name=a|b for each.",
   );
@@ -332,7 +354,12 @@ function finalize(args) {
       console.error(`${source} does not exist.`);
       process.exit(1);
     }
-    finalizeImage(source, path.join(OUT_DIR, `${set.name}.png`), set.width);
+    finalizeImage(
+      source,
+      path.join(OUT_DIR, `${set.name}.png`),
+      set.width,
+      set.maxKB,
+    );
   }
   rmSync(CAND_DIR, { recursive: true });
   console.log("Finalized; candidates deleted.");

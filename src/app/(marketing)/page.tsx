@@ -1,6 +1,6 @@
 import { AiNative } from "@/components/marketing/ai-native";
-import { CodeExhibit } from "@/components/marketing/code-exhibit";
 import { Compare } from "@/components/marketing/compare";
+import { Gallery } from "@/components/marketing/gallery";
 import { CtaBand } from "@/components/marketing/cta-band";
 import { Faq } from "@/components/marketing/faq";
 import { Features } from "@/components/marketing/features";
@@ -32,12 +32,12 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* v4 solid color blocking: yellow hero → strip → cream proof →
-          mint features → sky agents → cream pricing/compare → pink FAQ
-          → ink closing band (DESIGN.md "Landing composition"). */}
+      {/* v4.1 locked sequence: yellow hero → ink marquee strip → cream
+          gallery → mint features → sky agents → cream pricing/compare →
+          pink FAQ → ink closing band (DESIGN.md "Landing composition"). */}
       <Hero />
       <Marquee />
-      <CodeExhibit />
+      <Gallery />
       <Features />
       <AiNative />
       <PricingSection />
