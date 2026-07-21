@@ -45,7 +45,13 @@ editing it first.
    any paragraph ≤ 18 words · prefer chip rows and 3-word labels over
    sentences. Feature rows are six BIG statements: big number, 4-word
    title, one short line — no paragraphs. Concrete stays; hype stays
-   banned (no emoji, no "Build faster / Ship smarter").
+   banned (no emoji, no "Build faster / Ship smarter"). Feature rows
+   are six ILLUSTRATED CARDS (v4.2): cream card on the mint block, 3px
+   border, md shadow, ±1.5° tilt that straightens on hover, staggered
+   pop-in — transparent sticker illustration (~200px) on top, mono
+   number chip, 3–4 word Bricolage-800 title with a colored offset
+   shadow rotating yellow/sky/pink/mint/orange/yellow, ONE bold ink
+   line ≤12 words.
    **Typographic effects (v4.1)**: every section's body copy gets AT
    MOST one of — a marker-highlighted key phrase, a thick ink underline
    doodle, or an inline `chip-mono`. Key numbers ("10 credits",
@@ -156,7 +162,7 @@ credit 8.9 dark; debit-text 5.9/6.2. Every body-text pairing ≥4.5.
 Hero (yellow: H1 "A complete AI SaaS. Free.", sub + author line, CTA,
 copy chip, illustration cluster + stickers) → marquee (INK strip, light
 Archivo) → gallery (canvas: "MADE WITH IT.", six tilted poster frames) →
-features (mint: "IT HANDLES THE MONEY.", six big statements) → agents
+features (mint: "IT HANDLES THE MONEY.", six illustrated cards) → agents
 (sky: "BUILT FOR AI AGENTS.", tree + checklist) → pricing (canvas: "PICK
 A PLAN.", DigitBoxes prices, MOST POPULAR sticker on Pro) → compare
 ("FREE VS PRO.") → FAQ (pink: "QUESTIONS.", answers ≤18 words) → closing

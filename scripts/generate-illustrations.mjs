@@ -99,6 +99,36 @@ const SETS = [
       "world as the small landscape painting on a cartoon robot artist's " +
       "easel — halftone sun rays and clouds",
   })),
+  // v4.2 feature-card set: transparent (green-screen workflow), siblings
+  // of the hero robot and mascots. Any subject green must be PALE MINT —
+  // the chroma key (g>150 && g>1.35r && g>1.35b) deletes mid-greens, and
+  // pastel mint fails its blue test, so it survives.
+  ...[
+    [
+      "feature-auth",
+      "a friendly padlock character with a simple smiling face, holding a golden key, one small sparkle beside it",
+    ],
+    [
+      "feature-webhooks",
+      "a mail envelope with a bold looping return arrow curving around it like a retry, tiny motion lines",
+    ],
+    [
+      "feature-ledger",
+      "an open accounting ledger book with neat ruled rows visible, small gold coins stacked beside it, a pale mint check mark floating above",
+    ],
+    [
+      "feature-ai",
+      "a polaroid-style photo frame with a tiny sunset landscape popping out of it, sparkles around it",
+    ],
+    [
+      "feature-agents",
+      "a friendly retro robot head beside a clipboard with pale mint checkmarks",
+    ],
+    [
+      "feature-tests",
+      "a clipboard with pale mint checkmarks and a small gold trophy beside it",
+    ],
+  ].map(([name, subject]) => ({ name, width: 440, maxKB: 100, subject })),
 ];
 
 const CONCURRENCY = 4;
@@ -162,7 +192,7 @@ function buildInput(schema, set, transparent) {
     ? `${set.subject}, full-bleed square composition, color to every edge, ${STYLE}`
     : transparent
       ? `${set.subject}, centered square composition with generous empty margins, ${STYLE}`
-      : `${set.subject}, centered square composition with generous empty margins, ${STYLE}, on a solid flat pure green #00FF00 background — the color green appears nowhere in the subject itself`;
+      : `${set.subject}, centered square composition with generous empty margins, ${STYLE}, on a solid flat pure green #00FF00 background — the subject itself contains no bright or medium green; any green detail in the subject is pale pastel mint only`;
   const input = { prompt };
   if (!set.opaque && transparent && props.background)
     input.background = "transparent";
@@ -276,10 +306,12 @@ async function generateOne(slug, schema, set, candidate) {
     return;
   }
   let prediction = await createPrediction(slug, schema, set, label);
+  // Retry on ANY transparency rejection — a parallel sibling may have
+  // already flipped mode.transparent, but this candidate's in-flight
+  // prediction was still created with the transparent input.
   if (
     prediction.status === "failed" &&
     !set.opaque &&
-    mode.transparent &&
     /transparent|background/i.test(String(prediction.error))
   ) {
     // gpt-image-2's schema advertises `background`, but the provider
