@@ -20,7 +20,7 @@ export function PricingSection() {
           <div>
             <p className="eyebrow">Pricing</p>
             <h2 className="text-title mt-4">Pick a plan.</h2>
-            <p className="mt-4 max-w-[52ch] text-muted-foreground">
+            <p className="mt-4 max-w-[52ch]">
               <span className="marker text-foreground">One config file</span>{" "}
               drives pricing, checkout, and webhook grants. Start free.
             </p>
@@ -43,7 +43,7 @@ export function PricingSection() {
               <span className="font-mono text-xs text-muted-foreground">
                 {plan.id}
               </span>
-              <h3 className="flex items-center gap-3 text-[17px] font-semibold">
+              <h3 className="flex items-center gap-3 text-xl font-semibold">
                 {plan.name}
                 {plan.id === "pro" ? (
                   <Sticker color="pink" className="text-[9px]">
@@ -51,7 +51,7 @@ export function PricingSection() {
                   </Sticker>
                 ) : null}
               </h3>
-              <p className="col-span-2 col-start-2 text-[15px] text-muted-foreground sm:col-span-1 sm:col-start-3">
+              <p className="col-span-2 col-start-2 text-xl sm:col-span-1 sm:col-start-3">
                 {plan.features.join(" · ")}
               </p>
               <span className="col-start-2 sm:col-start-4 sm:justify-self-end">
@@ -74,12 +74,12 @@ export function PricingSection() {
               </Link>
             </div>
           ))}
-          <div className="grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 border-b-2 px-2 py-6 text-muted-foreground sm:grid-cols-[64px_150px_1fr_110px_auto]">
-            <span className="font-mono text-xs">topup</span>
-            <h3 className="text-[17px] font-semibold text-foreground">
-              {topupPack.name}
-            </h3>
-            <p className="col-span-2 col-start-2 text-[15px] sm:col-span-1 sm:col-start-3">
+          <div className="grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 border-b-2 px-2 py-6 sm:grid-cols-[64px_150px_1fr_110px_auto]">
+            <span className="font-mono text-xs text-muted-foreground">
+              topup
+            </span>
+            <h3 className="text-xl font-semibold">{topupPack.name}</h3>
+            <p className="col-span-2 col-start-2 text-xl sm:col-span-1 sm:col-start-3">
               {topupPack.credits} credits, one-time, no subscription required.
             </p>
             <span className="col-start-2 font-mono text-sm sm:col-start-4 sm:text-right">

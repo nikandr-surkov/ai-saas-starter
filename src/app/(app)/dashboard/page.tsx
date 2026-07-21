@@ -65,7 +65,7 @@ export default async function DashboardPage() {
       {features.email && !session.user.emailVerified ? (
         <div className="max-w-2xl rounded-md border-2 border-l-[6px] border-l-pop-orange px-5 py-4">
           <p className="eyebrow">Verify your email</p>
-          <p className="mt-1 text-sm text-muted-foreground">
+          <p className="mt-1 text-sm">
             We sent a link to {session.user.email}. Everything works meanwhile —
             verifying keeps the account recoverable.
           </p>
@@ -83,20 +83,14 @@ export default async function DashboardPage() {
           />
           <div>
             <p className="eyebrow">First steps</p>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 text-sm">
               Your welcome credits are on the books. Head to{" "}
-              <Link
-                href="/generate"
-                className="link-pop"
-              >
+              <Link href="/generate" className="link-pop">
                 Generate
               </Link>{" "}
               to spend the first one — each image costs 1 credit and failed
               generations refund themselves. Plans and top-ups live in{" "}
-              <Link
-                href="/billing"
-                className="link-pop"
-              >
+              <Link href="/billing" className="link-pop">
                 Billing
               </Link>
               .
@@ -115,18 +109,12 @@ export default async function DashboardPage() {
               <CountUpDigits value={session.user.creditBalance ?? 0} />
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
-            <Link
-              href="/billing"
-              className="link-pop"
-            >
+          <CardContent className="text-sm">
+            <Link href="/billing" className="link-pop">
               Buy more
             </Link>{" "}
             or{" "}
-            <Link
-              href="/generate"
-              className="link-pop"
-            >
+            <Link href="/generate" className="link-pop">
               generate an image
             </Link>
             .
@@ -137,7 +125,7 @@ export default async function DashboardPage() {
             <p className="eyebrow">Plan</p>
             <CardTitle>{currentPlan.name}</CardTitle>
           </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
+          <CardContent className="text-sm">
             {isActive && sub?.currentPeriodEnd ? (
               <>
                 {sub.cancelAtPeriodEnd ? "Ends" : "Renews"}{" "}
@@ -148,10 +136,7 @@ export default async function DashboardPage() {
             ) : (
               <>
                 No subscription —{" "}
-                <Link
-                  href="/billing"
-                  className="link-pop"
-                >
+                <Link href="/billing" className="link-pop">
                   see plans
                 </Link>
               </>
@@ -165,7 +150,7 @@ export default async function DashboardPage() {
         {entries.length > 0 ? (
           <LedgerTable entries={entries} />
         ) : (
-          <p className="border-t-2 border-rule pt-3 text-sm text-muted-foreground">
+          <p className="border-t-2 border-rule pt-3 text-sm">
             No ledger entries yet.
           </p>
         )}

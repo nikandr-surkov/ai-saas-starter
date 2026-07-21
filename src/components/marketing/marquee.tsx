@@ -28,7 +28,7 @@ export function Marquee() {
   // it separates the yellow hero from the cream gallery, so it needs
   // no border rules of its own.
   return (
-    <div className="overflow-hidden bg-foreground py-3 font-display text-2xl tracking-wide text-background uppercase">
+    <div className="overflow-hidden bg-foreground py-3 font-display text-2xl font-normal tracking-wide text-background uppercase">
       <div className="marquee flex w-max">
         <Row />
         <Row hidden />

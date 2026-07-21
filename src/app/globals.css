@@ -189,6 +189,12 @@
   --shadow-hard-md: 9px 9px 0 0 var(--ink);
   --shadow-hard-lg: 12px 12px 0 0 var(--ink);
   --shadow-hover: 11px 11px 0 0 var(--ink);
+  /* v4.2 body type: marketing copy runs 18px/500 and FULL INK by
+     default — muted is reserved for genuinely secondary lines
+     (captions, legal, timestamps, mono metadata). Explicitly sized
+     elements (eyebrows, chips, buttons) keep their own scale. */
+  font-size: 1.125rem;
+  font-weight: 500;
 }
 
 @layer base {

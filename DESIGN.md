@@ -43,9 +43,15 @@ editing it first.
    canvas sections and the ink band.
 6. **WORD BUDGETS (hard)**: H1 ≤ 8 words · section titles ≤ 4 words ·
    any paragraph ≤ 18 words · prefer chip rows and 3-word labels over
-   sentences. Feature rows are six BIG statements: big number, 4-word
-   title, one short line — no paragraphs. Concrete stays; hype stays
-   banned (no emoji, no "Build faster / Ship smarter"). Feature rows
+   sentences. Concrete stays; hype stays banned (no emoji, no "Build
+   faster / Ship smarter").
+   **Body scale (v4.2)** — marketing runs BIG and INK-FIRST: base body
+   18px / weight 500 (set on `.loud`), FULL INK — `--muted-ink` only
+   for genuinely secondary lines (captions, legal, timestamps, mono
+   metadata, table "no" cells). Hero sub-headline 1.5rem/600.
+   Feature-card lines, pricing row copy, FAQ questions + answers:
+   1.25rem (questions bold). App surfaces stay 16px, ink-first — muted
+   only for metadata and eyebrows. Feature rows
    are six ILLUSTRATED CARDS (v4.2): cream card on the mint block, 3px
    border, md shadow, ±1.5° tilt that straightens on hover, staggered
    pop-in — transparent sticker illustration (~200px) on top, mono

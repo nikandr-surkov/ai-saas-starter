@@ -52,7 +52,7 @@ export default async function GeneratePage() {
             />
             <div>
               <p className="eyebrow">First entry pending</p>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="mt-2 text-sm">
                 Nothing generated yet — and your welcome credits are ready.
                 Describe an image in the form above; the result lands here and
                 the ledger records the spend.

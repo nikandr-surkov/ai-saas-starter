@@ -31,10 +31,7 @@ export default async function LoginPage({
       <LoginForm magicLink={features.email} next={safeNext} />
       <p className="text-sm text-muted-foreground">
         No account?{" "}
-        <Link
-          href="/signup"
-          className="link-pop"
-        >
+        <Link href="/signup" className="link-pop">
           Create one
         </Link>
       </p>

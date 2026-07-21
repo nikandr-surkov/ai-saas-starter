@@ -49,16 +49,14 @@ export function Faq() {
         <div className="border-t-[3px]">
           {faqs.map((faq) => (
             <details key={faq.q} name="faq" className="group border-b-[3px]">
-              <summary className="pop-in flex cursor-pointer items-center justify-between gap-4 py-5 text-[17px] font-semibold select-none active:translate-x-0.5 active:translate-y-0.5 [&::-webkit-details-marker]:hidden">
+              <summary className="pop-in flex cursor-pointer items-center justify-between gap-4 py-5 text-xl font-bold select-none active:translate-x-0.5 active:translate-y-0.5 [&::-webkit-details-marker]:hidden">
                 {faq.q}
                 <ChevronRightIcon
                   aria-hidden
                   className="size-4 shrink-0 transition-transform duration-200 group-open:rotate-90"
                 />
               </summary>
-              <p className="max-w-[70ch] pb-6 text-[15px] text-muted-foreground">
-                {faq.a}
-              </p>
+              <p className="max-w-[70ch] pb-6 text-xl">{faq.a}</p>
             </details>
           ))}
         </div>

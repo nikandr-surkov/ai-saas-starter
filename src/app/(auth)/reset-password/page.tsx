@@ -20,10 +20,7 @@ export default async function ResetPasswordPage({
         <p className="eyebrow">Reset password</p>
         <p className="text-sm text-muted-foreground">
           This link is missing its token — request a fresh one from the{" "}
-          <Link
-            href="/forgot-password"
-            className="link-pop"
-          >
+          <Link href="/forgot-password" className="link-pop">
             reset page
           </Link>
           .

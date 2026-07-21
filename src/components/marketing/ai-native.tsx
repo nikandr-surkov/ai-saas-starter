@@ -29,7 +29,7 @@ export function AiNative() {
         <div className="pop-in mb-11">
           <p className="eyebrow">AI-native</p>
           <h2 className="text-title mt-4">Built for AI agents.</h2>
-          <p className="mt-4 max-w-[52ch] text-muted-foreground">
+          <p className="mt-4 max-w-[52ch]">
             One <span className="chip-mono text-foreground">AGENTS.md</span>{" "}
             briefs Claude Code, Cursor, Codex, Copilot — guardrails included.
           </p>
@@ -49,10 +49,7 @@ export function AiNative() {
           </div>
           <ul>
             {checklist.map((item) => (
-              <li
-                key={item}
-                className="border-b-2 py-2.5 text-[15.5px] last:border-0"
-              >
+              <li key={item} className="border-b-2 py-2.5 last:border-0">
                 <span aria-hidden className="font-mono text-primary-text">
                   ✓{" "}
                 </span>

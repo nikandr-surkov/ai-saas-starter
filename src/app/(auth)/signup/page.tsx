@@ -22,10 +22,7 @@ export default function SignupPage() {
       <SignupForm requiresVerification={features.email} />
       <p className="text-sm text-muted-foreground">
         Already registered?{" "}
-        <Link
-          href="/login"
-          className="link-pop"
-        >
+        <Link href="/login" className="link-pop">
           Sign in
         </Link>
       </p>

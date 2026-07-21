@@ -36,7 +36,8 @@ export function Hero() {
               </span>
             ))}
           </h1>
-          <p className="max-w-[46ch] text-lg font-medium">
+          {/* Sub-headline: 1.5rem/600 (DESIGN.md v4.2 body scale). */}
+          <p className="max-w-[42ch] text-2xl font-semibold">
             Auth, Stripe subscriptions, credits, AI images —{" "}
             <span className="marker">working, tested, MIT</span>. Clone it and
             build YOUR product.

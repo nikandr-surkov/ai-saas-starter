@@ -21,7 +21,7 @@ export function Gallery() {
         <div className="pop-in mb-12">
           <p className="eyebrow">Sample generations</p>
           <h2 className="text-title mt-4">Made with it.</h2>
-          <p className="mt-4 max-w-[52ch] text-muted-foreground">
+          <p className="mt-4 max-w-[52ch]">
             Six prompts through the same pipeline you get —{" "}
             <span className="chip-mono text-foreground">1 credit</span> each.
           </p>

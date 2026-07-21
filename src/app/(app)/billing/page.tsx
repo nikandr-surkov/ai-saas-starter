@@ -45,7 +45,7 @@ export default async function BillingPage() {
             <p className="eyebrow">Setup required</p>
             <CardTitle>Stripe is not configured</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-muted-foreground">
+          <CardContent className="space-y-3">
             <p>
               Billing runs once the Stripe variables are set in{" "}
               <span className="font-mono text-xs">.env</span>. Missing:
@@ -101,7 +101,7 @@ export default async function BillingPage() {
         </CardHeader>
         <CardContent className="space-y-1.5">
           {isActive && sub?.currentPeriodEnd ? (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm">
               {sub.cancelAtPeriodEnd ? "Ends" : "Renews"}{" "}
               <span className="font-mono">{isoDate(sub.currentPeriodEnd)}</span>
               {sub.cancelAtPeriodEnd
@@ -109,7 +109,7 @@ export default async function BillingPage() {
                 : ` — grants ${currentPlan.monthlyCredits} credits.`}
             </p>
           ) : (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm">
               No subscription. Credits from signup and top-ups never expire.
             </p>
           )}
@@ -155,7 +155,7 @@ export default async function BillingPage() {
             {session.user.creditBalance}
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-sm text-muted-foreground">
+        <CardContent className="text-sm">
           {GENERATION_COST_CREDITS} credit per image generation. Failed
           generations are refunded.
         </CardContent>

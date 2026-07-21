@@ -24,7 +24,7 @@ export default function PricingPage() {
         <h1 className="text-display mt-4 mb-3">
           Integer credits. No expiry. No surprises.
         </h1>
-        <p className="text-lg text-muted-foreground">
+        <p className="mt-2 text-xl">
           Every plan reads from one config file — checkout and webhook grants
           follow it.
         </p>
@@ -40,7 +40,7 @@ export default function PricingPage() {
               {plan.id}
             </span>
             <h2 className="text-xl">{plan.name}</h2>
-            <ul className="col-start-2 text-[15px] text-muted-foreground sm:col-start-3">
+            <ul className="col-start-2 text-xl sm:col-start-3">
               {plan.features.map((feature) => (
                 <li key={feature}>{feature}</li>
               ))}
@@ -62,7 +62,7 @@ export default function PricingPage() {
         <div className="grid grid-cols-[64px_1fr] items-baseline gap-x-6 gap-y-2 border-b-2 px-2 py-7 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_160px_1fr_auto]">
           <span className="font-mono text-xs text-muted-foreground">topup</span>
           <h2 className="text-xl">{topupPack.name}</h2>
-          <p className="col-start-2 text-[15px] text-muted-foreground sm:col-start-3">
+          <p className="col-start-2 text-xl sm:col-start-3">
             {topupPack.credits} credits, one-time. No subscription required —
             stack them whenever you run low.
           </p>
@@ -72,12 +72,9 @@ export default function PricingPage() {
         </div>
       </div>
 
-      <p className="mt-10 text-[15px] text-muted-foreground">
+      <p className="mt-10 text-xl">
         Start free —{" "}
-        <Link
-          href="/signup"
-          className="link-pop"
-        >
+        <Link href="/signup" className="link-pop">
           create an account
         </Link>{" "}
         and the welcome credits are waiting. Top up from Billing.

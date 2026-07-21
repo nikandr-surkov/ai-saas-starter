@@ -79,10 +79,7 @@ export function GenerateForm({
         {outOfCredits ? (
           <p className="text-sm text-muted-foreground">
             You&apos;re out of credits —{" "}
-            <Link
-              href="/billing"
-              className="link-pop"
-            >
+            <Link href="/billing" className="link-pop">
               top up in Billing
             </Link>{" "}
             and the balance updates the moment payment lands.

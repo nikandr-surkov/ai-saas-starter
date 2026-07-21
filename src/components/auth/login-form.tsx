@@ -103,10 +103,7 @@ export function LoginForm({
         <div className="grid gap-1.5">
           <div className="flex items-center justify-between">
             <Label htmlFor="login-password">Password</Label>
-            <Link
-              href="/forgot-password"
-              className="link-pop text-xs"
-            >
+            <Link href="/forgot-password" className="link-pop text-xs">
               Forgot password
             </Link>
           </div>
