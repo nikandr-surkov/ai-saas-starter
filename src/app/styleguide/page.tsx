@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import Image from "next/image";
+import { CoinsIcon, TerminalIcon } from "lucide-react";
+
+import { IconChip } from "@/components/icon-chip";
 import { LedgerList, LedgerRow } from "@/components/ledger-row";
+import { SparkleSpinner } from "@/components/sparkle-spinner";
 import { LedgerTable } from "@/components/ledger-table";
 import { DigitBoxes } from "@/components/digit-boxes";
 import { Asterisk, Sparkle, Squiggle } from "@/components/doodads";
@@ -135,7 +140,9 @@ export default async function StyleguidePage({
         <div className="mx-auto w-full max-w-[1160px] space-y-12 px-6 py-16">
           <header className="flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="eyebrow">Styleguide · dev only · v4</p>
+              <p className="eyebrow">
+                Styleguide · dev only · v4.6 — the reference
+              </p>
               <h1 className="mt-2 text-3xl">
                 The Ledger, <span className="marker">LOUD</span>
               </h1>
@@ -159,7 +166,7 @@ export default async function StyleguidePage({
               {swatches.map((swatch) => (
                 <div key={swatch.name} className="space-y-1.5">
                   <div
-                    className={`h-14 rounded-sm border ${swatch.className}`}
+                    className={`h-14 rounded-lg border-2 ${swatch.className}`}
                   />
                   <p className="font-mono text-xs text-muted-foreground">
                     {swatch.name}
@@ -287,6 +294,89 @@ export default async function StyleguidePage({
                   <Skeleton className="h-5 w-2/3" />
                 </div>
               </div>
+            </div>
+          </Section>
+
+          <Section title="Interaction chips — chip / chip-mono / footer-chip">
+            <div className="flex flex-wrap items-center gap-4">
+              <a href="#" className="chip px-3.5 py-1 text-sm font-medium">
+                nav chip
+              </a>
+              <span className="chip-mono">chip-mono · $9/mo</span>
+              <span className="bg-foreground p-3">
+                <a href="#" className="footer-chip">
+                  footer chip
+                </a>
+              </span>
+            </div>
+            <p className="max-w-md text-sm text-muted-foreground">
+              Chips hover-flip to pop-yellow with a lift; footer chips are
+              cream-on-ink. All enabled controls are cursor-pointer (v4.6).
+            </p>
+          </Section>
+
+          <Section title="Icon chips — the list marker">
+            <div className="flex flex-wrap items-center gap-4">
+              <IconChip icon={TerminalIcon} />
+              <IconChip icon={CoinsIcon} color="mint" />
+              <IconChip icon={CoinsIcon} color="yellow" />
+            </div>
+            <p className="max-w-md text-sm text-muted-foreground">
+              THE marketing list marker — bare check/dot/dash glyphs are banned
+              in marketing lists.
+            </p>
+          </Section>
+
+          <Section title="Skeleton & spinner — calm register">
+            <div className="flex max-w-md items-center gap-4">
+              <Skeleton className="size-14" />
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-5" />
+                <Skeleton className="h-5 w-2/3" />
+              </div>
+            </div>
+            <p className="flex items-center gap-2 text-sm">
+              <SparkleSpinner />
+              Busy state: label swap + the spinning sparkle — never a default
+              spinner.
+            </p>
+          </Section>
+
+          <Section title="Illustration cast">
+            <div className="grid grid-cols-3 gap-4 sm:grid-cols-6">
+              {[
+                "hero-cluster",
+                "mascot-hello",
+                "mascot-paint",
+                "mascot-lost",
+                "sticker-stack",
+                "feature-auth",
+                "feature-webhooks",
+                "feature-ledger",
+                "feature-ai",
+                "feature-agents",
+                "feature-tests",
+                "step-clone",
+                "step-keys",
+                "step-ship",
+                "gallery-01",
+                "gallery-02",
+                "gallery-03",
+                "gallery-04",
+              ].map((name) => (
+                <div key={name} className="space-y-1">
+                  <Image
+                    src={`/illustrations/${name}.png`}
+                    alt={name}
+                    width={120}
+                    height={120}
+                    className="h-auto w-full"
+                  />
+                  <p className="truncate font-mono text-[10px] text-muted-foreground">
+                    {name}
+                  </p>
+                </div>
+              ))}
             </div>
           </Section>
 

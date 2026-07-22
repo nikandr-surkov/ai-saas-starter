@@ -131,7 +131,11 @@ export default async function BillingPage() {
             <>
               <form action={createCheckoutSession}>
                 <input type="hidden" name="item" value="pro" />
-                <SubmitButton size="sm" busyLabel="Redirecting…">
+                <SubmitButton
+                  size="sm"
+                  variant="outline"
+                  busyLabel="Redirecting…"
+                >
                   Pro — {usd(plans.pro.priceMonthlyCents)}/mo
                 </SubmitButton>
               </form>

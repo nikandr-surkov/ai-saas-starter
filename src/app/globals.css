@@ -207,6 +207,17 @@
     background-color: var(--pop-yellow);
     color: var(--ink);
   }
+  /* v4.6 cursor rule, set at the primitive level: every enabled
+     interactive element is a pointer; disabled controls are not. */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary,
+  label[for] {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: default;
+  }
   html {
     @apply font-sans;
   }
@@ -354,6 +365,12 @@
   .chip:active {
     translate: 1px 1px;
     box-shadow: 0 0 0 0 var(--ink);
+  }
+  /* v4.6 audit: chips get the standard 3px focus ring. */
+  .chip:focus-visible,
+  .footer-chip:focus-visible {
+    outline: 3px solid var(--ring);
+    outline-offset: 2px;
   }
 
   /* v4.4 footer chips: large rounded chips, cream-on-ink outline;
