@@ -51,7 +51,7 @@ const cards = [
     index: "06",
     file: "feature-tests",
     alt: "Clipboard with checkmarks next to a small gold trophy",
-    title: "Proven by 105 tests",
+    title: "Proven by 106 tests",
     line: "Vitest and Playwright against real Postgres, on every push.",
     shadow: "var(--pop-yellow)",
   },

@@ -44,6 +44,15 @@ export default defineConfig({
       BETTER_AUTH_URL: BASE_URL,
       BETTER_AUTH_SECRET:
         process.env.BETTER_AUTH_SECRET ?? "e2e-only-secret-e2e-only-secret-e2e",
+      // Dummy Stripe env (same values as the CI build step): turns
+      // features.billing ON so /billing renders the plan cards. The
+      // billing spec never submits a checkout — dummies also OVERRIDE
+      // any real test keys in .env, so e2e can never reach Stripe.
+      STRIPE_SECRET_KEY: "sk_test_ci_dummy",
+      STRIPE_WEBHOOK_SECRET: "whsec_ci_dummy",
+      STRIPE_PRICE_PRO_MONTHLY: "price_ci_pro",
+      STRIPE_PRICE_ULTRA_MONTHLY: "price_ci_ultra",
+      STRIPE_PRICE_TOPUP_100: "price_ci_topup",
     },
   },
 });

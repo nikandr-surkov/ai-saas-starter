@@ -115,9 +115,10 @@ pnpm test:e2e    # Playwright — boots its own dev server on :3100
 Postgres (double-spend race, exact-boundary spends, idempotent replays,
 refunds, key-collision detection, invariant checks, DB CHECK probes),
 webhook signature verification with real HMAC fixtures, sync derivation,
-plans-config locks, env validation, email rendering. 11 e2e tests: signup
+plans-config locks, env validation, email rendering. 12 e2e tests: signup
 to dashboard, mock generation, the FAIL-refund path, the 0-credit block,
-open-redirect guards, image-route authorization.
+open-redirect guards, image-route authorization, billing plan cards from
+the plans config.
 
 e2e runs against `next dev` deliberately — `AI_MOCK=true` is refused in
 production builds, so a build+start e2e would hit a real provider. The

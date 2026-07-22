@@ -1,7 +1,7 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
-// Mirrors the billing layout: header + plan card (tinted header strip,
-// three content rows).
+// Mirrors the billing layout: header, current-plan card (tinted header
+// strip), the two plan cards, and the top-up row.
 export default function BillingLoading() {
   return (
     <div className="space-y-6" aria-busy>
@@ -14,9 +14,13 @@ export default function BillingLoading() {
         <div className="space-y-3 p-4">
           <Skeleton className="h-4 w-2/3" />
           <Skeleton className="h-4 w-1/2" />
-          <Skeleton className="h-11 w-52 rounded-lg" />
         </div>
       </div>
+      <div className="grid max-w-xl gap-4 sm:grid-cols-2">
+        <Skeleton className="h-72 rounded-lg" />
+        <Skeleton className="h-72 rounded-lg" />
+      </div>
+      <Skeleton className="h-24 max-w-xl rounded-lg" />
     </div>
   );
 }
