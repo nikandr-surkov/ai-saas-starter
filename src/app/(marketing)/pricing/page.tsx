@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CoinsIcon, DoorOpenIcon, InfinityIcon } from "lucide-react";
 
 import { plans, topupPack } from "@/config/plans";
 
 import { DigitBoxes } from "@/components/digit-boxes";
+import { IconChip } from "@/components/icon-chip";
+
+const featureIcons = [CoinsIcon, InfinityIcon, DoorOpenIcon] as const;
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -39,10 +43,21 @@ export default function PricingPage() {
             <span className="font-mono text-xs text-muted-foreground">
               {plan.id}
             </span>
-            <h2 className="text-xl">{plan.name}</h2>
-            <ul className="col-start-2 text-xl sm:col-start-3">
-              {plan.features.map((feature) => (
-                <li key={feature}>{feature}</li>
+            <h2 className="font-heading text-2xl font-extrabold">
+              {plan.name}
+            </h2>
+            <ul className="col-start-2 space-y-2 sm:col-start-3">
+              {plan.features.map((feature, fi) => (
+                <li
+                  key={feature}
+                  className="flex items-center gap-3 text-lg font-medium"
+                >
+                  <IconChip
+                    icon={featureIcons[fi % featureIcons.length]}
+                    className="size-8"
+                  />
+                  {feature}
+                </li>
               ))}
             </ul>
             <div className="col-start-2 sm:col-start-4 sm:justify-self-end">

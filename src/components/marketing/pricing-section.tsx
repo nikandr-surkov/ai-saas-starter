@@ -1,10 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { CoinsIcon, DoorOpenIcon, InfinityIcon } from "lucide-react";
 
 import { plans, topupPack } from "@/config/plans";
 
 import { DigitBoxes } from "@/components/digit-boxes";
+import { IconChip } from "@/components/icon-chip";
 import { Sticker } from "@/components/sticker";
+
+// One icon per feature slot (DESIGN.md IconChip rule — no "·" strings).
+const featureIcons = [CoinsIcon, InfinityIcon, DoorOpenIcon] as const;
 
 function usd(cents: number): string {
   return `$${(cents / 100).toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
@@ -38,12 +43,12 @@ export function PricingSection() {
           {Object.values(plans).map((plan) => (
             <div
               key={plan.id}
-              className="pop-in grid grid-cols-[64px_1fr_auto] items-baseline gap-x-6 gap-y-2 border-b-2 px-2 py-6 transition-colors hover:bg-accent-soft sm:grid-cols-[64px_150px_1fr_110px_auto]"
+              className="pop-in grid grid-cols-[64px_1fr_auto] items-center gap-x-6 gap-y-3 border-b-2 px-2 py-7 transition-[translate,background-color] hover:bg-accent-soft motion-safe:hover:-translate-y-0.5 sm:grid-cols-[64px_170px_1fr_130px_auto]"
             >
               <span className="font-mono text-xs text-muted-foreground">
                 {plan.id}
               </span>
-              <h3 className="flex items-center gap-3 text-xl font-semibold">
+              <h3 className="flex items-center gap-3 font-heading text-2xl font-extrabold">
                 {plan.name}
                 {plan.id === "pro" ? (
                   <Sticker color="pink" className="text-[9px]">
@@ -51,9 +56,20 @@ export function PricingSection() {
                   </Sticker>
                 ) : null}
               </h3>
-              <p className="col-span-2 col-start-2 text-xl sm:col-span-1 sm:col-start-3">
-                {plan.features.join(" · ")}
-              </p>
+              <ul className="col-span-2 col-start-2 space-y-2 sm:col-span-1 sm:col-start-3">
+                {plan.features.map((feature, fi) => (
+                  <li
+                    key={feature}
+                    className="flex items-center gap-3 text-lg font-medium"
+                  >
+                    <IconChip
+                      icon={featureIcons[fi % featureIcons.length]}
+                      className="size-8"
+                    />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
               <span className="col-start-2 sm:col-start-4 sm:justify-self-end">
                 {plan.priceMonthlyCents === 0 ? (
                   <span className="font-mono text-sm">free</span>
@@ -68,7 +84,7 @@ export function PricingSection() {
               </span>
               <Link
                 href="/signup"
-                className="col-start-3 self-center justify-self-end border-hard press rounded-md bg-background px-3 py-1.5 font-mono text-xs tracking-wider uppercase sm:col-start-5"
+                className="col-start-3 self-center justify-self-end border-hard press rounded-md bg-primary px-3.5 py-1.5 font-mono text-xs font-semibold tracking-wider text-primary-foreground uppercase sm:col-start-5"
               >
                 Start →
               </Link>

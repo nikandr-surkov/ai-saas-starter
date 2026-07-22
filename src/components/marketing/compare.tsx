@@ -1,45 +1,69 @@
+import { CircleCheckIcon, MinusIcon } from "lucide-react";
+
+import { IconChip } from "@/components/icon-chip";
 import { siteConfig } from "@/config/site";
 
-// Free-vs-Pro in the ledger register. One outbound link, no upsell copy.
+// v4.3 Free-vs-Pro: two cards. The PRO column is a raised yellow panel
+// (3px border, md shadow, lifted); cells use icon chips — no text glyphs.
 const rows = [
   {
     capability: "Auth, subscriptions, credits ledger",
-    free: { kind: "yes", label: "✓ full" },
-    pro: { kind: "yes", label: "✓ + rollover, meters, packs" },
+    free: { has: true, label: "Full" },
+    pro: { has: true, label: "+ rollover, meters, packs" },
   },
   {
     capability: "AI generation",
-    free: { kind: "val", label: "1 image provider" },
-    pro: { kind: "val", label: "image + video + audio × 7 providers" },
+    free: { has: true, label: "1 image provider" },
+    pro: { has: true, label: "Image + video + audio × 7 providers" },
   },
   {
     capability: "Async job pipeline · webhooks · auto-refund",
-    free: { kind: "no", label: "—" },
-    pro: { kind: "yes", label: "✓ Inngest, durable" },
+    free: { has: false, label: "Not included" },
+    pro: { has: true, label: "Inngest, durable" },
   },
   {
     capability: "Gallery + R2 storage · teams · admin",
-    free: { kind: "no", label: "—" },
-    pro: { kind: "yes", label: "✓" },
+    free: { has: false, label: "Not included" },
+    pro: { has: true, label: "Included" },
   },
   {
     capability: "MCP server + extended agent skills",
-    free: { kind: "val", label: "core set" },
-    pro: { kind: "yes", label: "✓ full suite" },
+    free: { has: true, label: "Core set" },
+    pro: { has: true, label: "Full suite" },
   },
 ] as const;
 
-function cellClass(kind: "yes" | "no" | "val"): string {
-  if (kind === "yes") return "font-mono text-xs text-primary-text";
-  if (kind === "val") return "font-mono text-[11.5px]";
-  return "text-muted-foreground";
+function CompareRow({
+  capability,
+  cell,
+}: {
+  capability: string;
+  cell: { has: boolean; label: string };
+}) {
+  return (
+    <li className="flex items-center gap-4 border-b-2 py-3.5 last:border-0">
+      <IconChip
+        icon={cell.has ? CircleCheckIcon : MinusIcon}
+        color={cell.has ? "mint" : "cream"}
+        className={cell.has ? "" : "text-muted-foreground"}
+      />
+      <div>
+        <p className="text-lg leading-snug font-semibold">{capability}</p>
+        <p
+          className={`text-lg leading-snug ${cell.has ? "" : "text-muted-foreground"}`}
+        >
+          {cell.label}
+        </p>
+      </div>
+    </li>
+  );
 }
 
 export function Compare() {
   return (
     <section id="pro" className="scroll-mt-16 border-t-[3px]">
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
-        <div className="pop-in mb-11">
+        <div className="pop-in mb-12">
           <p className="eyebrow">This repo is complete</p>
           <h2 className="text-title mt-4">Free vs Pro.</h2>
           <p className="mt-4 max-w-[52ch]">
@@ -47,49 +71,46 @@ export function Compare() {
             <span className="marker text-foreground">product-market fit</span>.
           </p>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full border-t-2 border-rule">
-            <thead>
-              <tr className="text-left font-mono text-[10.5px] tracking-widest text-muted-foreground uppercase">
-                <th className="border-b-2 py-3.5 pr-2 font-normal">
-                  Capability
-                </th>
-                <th className="w-[190px] border-b-2 px-2 py-3.5 text-center font-normal">
-                  Free · this repo
-                </th>
-                <th className="w-[240px] border-b-2 px-2 py-3.5 text-center font-normal">
-                  Pro · $299 ·{" "}
-                  <a
-                    href={siteConfig.pro}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="link-pop normal-case"
-                  >
-                    nikandr.com
-                  </a>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+        <div className="grid items-start gap-10 lg:grid-cols-2">
+          <div className="border-hard pop-in rounded-md bg-background p-7 shadow-hard">
+            <span className="chip-mono text-sm">This repo</span>
+            <ul className="mt-5">
               {rows.map((row) => (
-                <tr key={row.capability}>
-                  <td className="border-b-2 py-3.5 pr-2 text-[15px]">
-                    {row.capability}
-                  </td>
-                  <td
-                    className={`border-b-2 px-2 py-3.5 text-center ${cellClass(row.free.kind)}`}
-                  >
-                    {row.free.label}
-                  </td>
-                  <td
-                    className={`border-b-2 px-2 py-3.5 text-center ${cellClass(row.pro.kind)}`}
-                  >
-                    {row.pro.label}
-                  </td>
-                </tr>
+                <CompareRow
+                  key={row.capability}
+                  capability={row.capability}
+                  cell={row.free}
+                />
               ))}
-            </tbody>
-          </table>
+            </ul>
+          </div>
+          <div className="pop-in rounded-md border-[3px] bg-pop-yellow p-7 shadow-hard [--chip-hover:var(--pop-sky)] lg:-translate-y-3">
+            <a
+              href={siteConfig.pro}
+              target="_blank"
+              rel="noreferrer"
+              className="chip inline-block px-4 py-1.5 font-mono text-sm font-semibold text-foreground"
+            >
+              PRO · $299
+            </a>
+            <ul className="mt-5">
+              {rows.map((row) => (
+                <CompareRow
+                  key={row.capability}
+                  capability={row.capability}
+                  cell={row.pro}
+                />
+              ))}
+            </ul>
+            <a
+              href={siteConfig.pro}
+              target="_blank"
+              rel="noreferrer"
+              className="border-hard press mt-7 flex w-full items-center justify-center rounded-md bg-background px-5 py-3 text-[15px] font-semibold"
+            >
+              Get Pro →
+            </a>
+          </div>
         </div>
       </div>
     </section>
