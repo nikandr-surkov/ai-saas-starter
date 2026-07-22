@@ -74,7 +74,7 @@ export function PricingSection() {
                 {plan.priceMonthlyCents === 0 ? (
                   <span className="font-mono text-sm">free</span>
                 ) : (
-                  <span className="flex items-end gap-1">
+                  <span className="flex flex-nowrap items-end gap-1 whitespace-nowrap">
                     <DigitBoxes size="sm" value={usd(plan.priceMonthlyCents)} />
                     <span className="font-mono text-xs text-muted-foreground">
                       /mo

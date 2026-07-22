@@ -17,13 +17,17 @@ export function DigitBoxes({
   const chars = String(value).split("");
   return (
     <div className={className}>
-      <div className="flex flex-wrap gap-1.5">
+      {/* Never wraps (DESIGN.md v4.3) — boxes shrink responsively so
+          "$29/mo" always renders as one row. */}
+      <div className="flex flex-nowrap gap-1.5">
         {chars.map((char, i) => (
           <span
             key={`${char}-${i}`}
             className={cn(
               "border-hard flex items-center justify-center rounded-lg bg-background font-mono shadow-hard-sm",
-              size === "lg" ? "size-12 text-2xl" : "size-8 text-sm",
+              size === "lg"
+                ? "size-10 text-xl sm:size-12 sm:text-2xl"
+                : "size-7 text-[13px] sm:size-8 sm:text-sm",
             )}
           >
             {char}
