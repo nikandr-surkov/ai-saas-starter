@@ -4,7 +4,7 @@ import { StarIcon } from "lucide-react";
 
 import { siteConfig } from "@/config/site";
 
-import { Sparkle, Squiggle } from "@/components/doodads";
+import { Sparkle } from "@/components/doodads";
 import { Sticker } from "@/components/sticker";
 
 import { CopyInstall } from "./copy-install";
@@ -14,7 +14,9 @@ import { CopyInstall } from "./copy-install";
 export function Hero() {
   return (
     <header className="bg-pop-yellow [--chip-hover:var(--pop-sky)] [--marker-color:var(--canvas)] [--title-shadow:var(--canvas)]">
-      <div className="mx-auto grid w-full max-w-[1160px] items-center gap-16 px-6 pt-16 pb-14 lg:grid-cols-[1.05fr_0.95fr]">
+      {/* v4.5: left column widened so the full clone command fits on
+          one line at desktop — no inner scrollbar. */}
+      <div className="mx-auto grid w-full max-w-[1160px] items-center gap-12 px-6 pt-16 pb-14 lg:grid-cols-[1.25fr_0.75fr]">
         {/* min-w-0 breaks the min-content chain so the copy chip can
             shrink and scroll instead of widening the whole column. */}
         <div className="min-w-0">
@@ -75,7 +77,6 @@ export function Hero() {
             </a>
           </div>
           <CopyInstall command={`git clone ${siteConfig.github}.git`} />
-          <Squiggle className="mt-6 text-pop-pink" />
         </div>
         <div className="hero-art relative">
           <Sticker

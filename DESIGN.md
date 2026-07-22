@@ -203,9 +203,11 @@ band (ink: "CLONE THE LEDGER.", light text).
   entrance choreography only. `.marker-hover` (marker draws in on
   hover) is the grammar for inline author/credit links.
 - **Sticker**: pill badge, panel-color bg, static — no hover reaction
-  (v4.1). **Doodads / DigitBoxes / Checkbox / Switch / Skeleton /
-  LedgerRow / Inputs / Dialog / Menu / Toast**: as v3.1 (tiers read the
-  scoped variables). Marketing-only: doodads, stickers, tilts.
+  (v4.1). **Doodads / DigitBoxes / Checkbox / Switch / LedgerRow /
+  Inputs / Dialog / Menu / Toast**: as v3.1 (tiers read the scoped
+  variables). Marketing-only: doodads, stickers, tilts. The squiggle
+  underline is retired from the hero (v4.5) — the hero doodad set is
+  final: one sparkle + the stickers.
 - **IconChip** (v4.3): THE standard marketing list marker — small
   bordered square (2px ink, sm shadow, panel-color bg, lucide icon in
   ink stroke). Plain ✓/·/— glyphs are BANNED in marketing lists.
