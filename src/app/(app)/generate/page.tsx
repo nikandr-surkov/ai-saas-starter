@@ -8,6 +8,9 @@ import { generations } from "@/db/schema";
 import { requireSession } from "@/lib/auth/session";
 import { env } from "@/lib/env";
 import { GenerateForm } from "@/components/generate/generate-form";
+import { TryAgainButton } from "@/components/generate/try-again-button";
+import { PageHeader } from "@/components/app/page-header";
+import { SparkleSpinner } from "@/components/sparkle-spinner";
 
 export const metadata: Metadata = { title: "Generate" };
 
@@ -27,10 +30,15 @@ export default async function GeneratePage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <p className="eyebrow">AI</p>
-        <h2 className="mt-1 text-xl">Generate</h2>
-      </div>
+      <PageHeader
+        eyebrow="AI"
+        title="Generate"
+        action={
+          <span className="chip-mono">
+            {session.user.creditBalance ?? 0} credits
+          </span>
+        }
+      />
 
       <GenerateForm
         balance={session.user.creditBalance ?? 0}
@@ -64,7 +72,12 @@ export default async function GeneratePage() {
             {history.map((generation) => (
               <li
                 key={generation.id}
-                className="overflow-hidden rounded-sm border"
+                className={
+                  "overflow-hidden rounded-md border-2 transition-[translate,box-shadow] motion-safe:hover:-translate-y-0.5 motion-safe:hover:shadow-hard-sm" +
+                  (generation.status === "failed"
+                    ? " border-l-[6px] border-l-debit"
+                    : "")
+                }
               >
                 <div className="relative aspect-square bg-secondary">
                   {generation.status === "completed" && generation.imageUrl ? (
@@ -75,17 +88,16 @@ export default async function GeneratePage() {
                       unoptimized
                       className="object-cover"
                     />
+                  ) : generation.status === "failed" ? (
+                    <div className="flex h-full flex-col items-center justify-center gap-2 px-3 text-center">
+                      <p className="font-mono text-[11px] tracking-wider text-debit-text uppercase">
+                        Failed — credit refunded
+                      </p>
+                      <TryAgainButton prompt={generation.prompt} />
+                    </div>
                   ) : (
                     <div className="flex h-full items-center justify-center">
-                      <span
-                        className={
-                          generation.status === "failed"
-                            ? "eyebrow text-debit-text"
-                            : "eyebrow motion-safe:animate-pulse"
-                        }
-                      >
-                        {generation.status}
-                      </span>
+                      <SparkleSpinner className="size-6" />
                     </div>
                   )}
                 </div>

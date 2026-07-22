@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 import { authClient } from "@/lib/auth/client";
+import { BusyButton } from "@/components/busy-button";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -95,9 +96,14 @@ export function DeleteAccount({
               </div>
             ) : null}
             <DialogFooter showCloseButton>
-              <Button type="submit" variant="destructive" disabled={pending}>
+              <BusyButton
+                type="submit"
+                variant="destructive"
+                busy={pending}
+                busyLabel="Deleting…"
+              >
                 Delete permanently
-              </Button>
+              </BusyButton>
             </DialogFooter>
           </form>
         </DialogContent>

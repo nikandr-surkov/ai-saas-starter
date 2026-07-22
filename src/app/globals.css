@@ -287,6 +287,49 @@
     animation: toast-press-in 200ms ease-out;
   }
 
+  /* v4.5 calm-tier button physics — every (app) button: rest sm shadow,
+     hover 1px lift + md shadow, active flat, disabled no shadow. */
+  .press-calm {
+    box-shadow: var(--shadow-hard-sm);
+    transition:
+      translate 120ms ease,
+      box-shadow 120ms ease;
+  }
+  .press-calm:hover {
+    translate: -1px -1px;
+    box-shadow: var(--shadow-hard-md);
+  }
+  .press-calm:active {
+    translate: 1px 1px;
+    box-shadow: 0 0 0 0 var(--ink);
+  }
+  .press-calm:disabled {
+    translate: 0 0;
+    box-shadow: none;
+  }
+
+  /* v4.5 skeleton shimmer — THE one sanctioned gradient (a moving
+     highlight, not a surface style). Reduced motion: static block. */
+  .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .skeleton-shimmer::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      transform: translateX(-100%);
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color-mix(in oklch, var(--ink), transparent 92%),
+        transparent
+      );
+      animation: skeleton-shimmer 1.2s linear infinite;
+    }
+  }
+
   /* v4.1 chip grammar: bordered pill, cream bg; hover flips to
      pop-yellow with a small lift + sm shadow; active presses flat.
      Nav links, footer links, the git-clone chip, inline CTAs. */
@@ -493,6 +536,25 @@
   }
   to {
     scale: 1 1;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+/* v4.5 busy indicator: the 4-point sparkle spins instead of any default
+   spinner. Static under reduced motion. */
+@keyframes sparkle-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sparkle-spin {
+    animation: sparkle-spin 0.9s linear infinite;
   }
 }
 

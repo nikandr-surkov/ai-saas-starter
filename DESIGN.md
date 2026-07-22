@@ -21,7 +21,8 @@ editing it first.
    behind text — texture only as thin transition strips or inside
    illustrations. Section transitions are straight hard edges with a
    3px ink rule (the two ink blocks separate by being ink). No
-   gradients, ever.
+   gradients, ever — ONE exception: the skeleton shimmer highlight
+   (v4.5), a moving light sweep, not a surface style.
 2. **Borders**: marketing base 3px (`border-hard` = `--border-w`), hero
    elements 4px (`border-emph` = `--border-w-emph`); the app keeps 2px.
    Always solid `var(--ink)`.
@@ -78,7 +79,25 @@ editing it first.
    is MEDIUM-FUN: panel-colored card headers (yellow/mint/sky strips
    with an ink rule) over cream bodies, colored badges, DigitBoxes —
    dense data areas stay quiet. No marquees, no tilts, no doodads
-   inside the app.
+   inside the app. **Calm-register systems (v4.5)**:
+   - **Skeletons**: ONE primitive — cream block, 2px ink border at 25%,
+     radius matching the element it stands for, one shared 1.2s shimmer
+     (static under reduced motion). Every page's `loading.tsx` mirrors
+     that page's REAL layout and paddings — nothing jumps on load. No
+     per-page skeleton variants.
+   - **Buttons**: one physics — rest 2px border + sm shadow; hover 1px
+     lift + md shadow; active flat; disabled 50%/no shadow. Busy = the
+     label swaps ("Generating…", "Saving…") with the spinning 4-point
+     sparkle (0.9s linear, ink) — never a default spinner. Sizes: sm
+     36px / md 44px.
+   - **Generation tiles**: hover lift + sm shadow; failed = 6px debit
+     left border + mono debit "FAILED — credit refunded" + a Try-again
+     ghost button that only prefills the prompt; pending = centered
+     sparkle spinner.
+   - **Page headers**: mono eyebrow + Bricolage 800 title + optional
+     right action slot (e.g. the balance chip on Generate). Labels are
+     600 ink; the destructive settings zone is framed with a debit
+     border.
 9. **Ledger identity stays**: ledger rows/tables keep 2px separators
    and mono metadata, all numerals `tabular-nums`. The gallery
    ("Made with it.") is the proof section — six generated posters in

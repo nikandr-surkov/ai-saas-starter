@@ -11,6 +11,7 @@ import { planByPriceId } from "@/lib/billing/plans";
 import { getHistory } from "@/lib/credits";
 import { features } from "@/lib/env";
 import { CountUpDigits } from "@/components/count-up-digits";
+import { PageHeader } from "@/components/app/page-header";
 import { LedgerTable, type LedgerEntry } from "@/components/ledger-table";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -57,10 +58,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <p className="eyebrow">Overview</p>
-        <h2 className="mt-1 text-xl">Dashboard</h2>
-      </div>
+      <PageHeader eyebrow="Overview" title="Dashboard" />
 
       {features.email && !session.user.emailVerified ? (
         <div className="max-w-2xl rounded-md border-2 border-l-[6px] border-l-pop-orange px-5 py-4">

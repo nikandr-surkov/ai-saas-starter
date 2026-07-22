@@ -6,6 +6,7 @@ import { DeleteAccount } from "@/components/settings/delete-account";
 import { EmailForm } from "@/components/settings/email-form";
 import { PasswordForm } from "@/components/settings/password-form";
 import { ProfileForm } from "@/components/settings/profile-form";
+import { PageHeader } from "@/components/app/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
 import { requireSession } from "@/lib/auth/session";
@@ -32,14 +33,10 @@ export default async function SettingsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <p className="eyebrow">Account</p>
-        <h2 className="mt-1 text-xl">Settings</h2>
-      </div>
+      <PageHeader eyebrow="Account" title="Settings" />
 
       <Card className="max-w-2xl pt-0">
-        {/* v4 medium-fun app register: panel-colored header strips —
-            except the danger zone, which stays neutral. */}
+        {/* v4 medium-fun app register: panel-colored header strips. */}
         <CardHeader className="border-b-2 bg-pop-yellow py-3.5">
           <p className="eyebrow">Profile</p>
           <CardTitle>Name and email</CardTitle>
@@ -76,7 +73,8 @@ export default async function SettingsPage() {
         </CardContent>
       </Card>
 
-      <Card className="max-w-2xl">
+      {/* v4.5: destructive zone framed with a debit border. */}
+      <Card className="max-w-2xl border-destructive">
         <CardHeader>
           <p className="eyebrow">Danger zone</p>
           <CardTitle>Delete account</CardTitle>

@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { authClient } from "@/lib/auth/client";
-import { Button } from "@/components/ui/button";
+import { BusyButton } from "@/components/busy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -43,9 +43,14 @@ export function ProfileForm({ name }: { name: string }) {
         <Label htmlFor="profile-name">Name</Label>
         <Input id="profile-name" name="name" defaultValue={name} required />
       </div>
-      <Button type="submit" variant="outline" disabled={pending}>
+      <BusyButton
+        type="submit"
+        variant="outline"
+        busy={pending}
+        busyLabel="Saving…"
+      >
         Save
-      </Button>
+      </BusyButton>
     </form>
   );
 }

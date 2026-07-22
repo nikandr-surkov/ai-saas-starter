@@ -11,6 +11,8 @@ import {
 } from "@/lib/billing/actions";
 import { planByPriceId } from "@/lib/billing/plans";
 import { features, missingBillingEnv } from "@/lib/env";
+import { PageHeader } from "@/components/app/page-header";
+import { SubmitButton } from "@/components/busy-button";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -36,10 +38,7 @@ export default async function BillingPage() {
   if (!features.billing) {
     return (
       <div className="space-y-6">
-        <div>
-          <p className="eyebrow">Account</p>
-          <h2 className="mt-1 text-xl">Billing</h2>
-        </div>
+        <PageHeader eyebrow="Account" title="Billing" />
         <Card className="max-w-xl">
           <CardHeader>
             <p className="eyebrow">Setup required</p>
@@ -80,10 +79,7 @@ export default async function BillingPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <p className="eyebrow">Account</p>
-        <h2 className="mt-1 text-xl">Billing</h2>
-      </div>
+      <PageHeader eyebrow="Account" title="Billing" />
 
       <Card className="max-w-xl pt-0">
         {/* v4 medium-fun app register: panel-colored header strips. */}
@@ -127,21 +123,27 @@ export default async function BillingPage() {
         <CardFooter className="gap-2">
           {isActive ? (
             <form action={createPortalSession}>
-              <Button size="sm">Manage subscription</Button>
+              <SubmitButton size="sm" busyLabel="Opening portal…">
+                Manage subscription
+              </SubmitButton>
             </form>
           ) : (
             <>
               <form action={createCheckoutSession}>
                 <input type="hidden" name="item" value="pro" />
-                <Button size="sm">
+                <SubmitButton size="sm" busyLabel="Redirecting…">
                   Pro — {usd(plans.pro.priceMonthlyCents)}/mo
-                </Button>
+                </SubmitButton>
               </form>
               <form action={createCheckoutSession}>
                 <input type="hidden" name="item" value="ultra" />
-                <Button size="sm" variant="outline">
+                <SubmitButton
+                  size="sm"
+                  variant="outline"
+                  busyLabel="Redirecting…"
+                >
                   Ultra — {usd(plans.ultra.priceMonthlyCents)}/mo
-                </Button>
+                </SubmitButton>
               </form>
             </>
           )}
@@ -162,9 +164,9 @@ export default async function BillingPage() {
         <CardFooter>
           <form action={createCheckoutSession}>
             <input type="hidden" name="item" value="topup" />
-            <Button size="sm" variant="outline">
+            <SubmitButton size="sm" variant="outline" busyLabel="Redirecting…">
               Buy {topupPack.credits} credits — {usd(topupPack.priceCents)}
-            </Button>
+            </SubmitButton>
           </form>
         </CardFooter>
       </Card>

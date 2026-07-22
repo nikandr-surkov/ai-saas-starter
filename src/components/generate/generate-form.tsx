@@ -9,7 +9,7 @@ import {
   generateImageAction,
   type GenerateResult,
 } from "@/app/(app)/generate/actions";
-import { Button } from "@/components/ui/button";
+import { BusyButton } from "@/components/busy-button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -73,9 +73,14 @@ export function GenerateForm({
         />
       </div>
       <div className="flex items-center gap-3">
-        <Button type="submit" disabled={pending || outOfCredits}>
-          {pending ? "Generating…" : `Generate — ${cost} credit`}
-        </Button>
+        <BusyButton
+          type="submit"
+          busy={pending}
+          busyLabel="Generating…"
+          disabled={outOfCredits}
+        >
+          {`Generate — ${cost} credit`}
+        </BusyButton>
         {outOfCredits ? (
           <p className="text-sm text-muted-foreground">
             You&apos;re out of credits —{" "}

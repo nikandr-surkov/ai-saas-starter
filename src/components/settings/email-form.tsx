@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 import { authClient } from "@/lib/auth/client";
-import { Button } from "@/components/ui/button";
+import { BusyButton } from "@/components/busy-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -61,9 +61,14 @@ export function EmailForm({
           required
         />
       </div>
-      <Button type="submit" variant="outline" disabled={pending}>
+      <BusyButton
+        type="submit"
+        variant="outline"
+        busy={pending}
+        busyLabel="Saving…"
+      >
         Change
-      </Button>
+      </BusyButton>
     </form>
   );
 }
