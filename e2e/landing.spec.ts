@@ -21,6 +21,11 @@ test("landing renders the ledger sections with signed-out auth CTAs", async ({
   // Pricing section reads from config/plans.ts.
   await expect(page.locator("#pricing")).toBeVisible();
   await expect(page.locator("#pricing")).toContainText("$9/mo");
+  // The clarity block states the product in plain words.
+  await expect(page.locator("#what")).toContainText(
+    "This website is the demo.",
+  );
+  await expect(page.locator("#how")).toContainText("Clone it");
   // The gallery renders all six generated posters with caption chips.
   await expect(page.locator("#gallery img")).toHaveCount(6);
   await expect(page.locator("#gallery")).toContainText("sunset over mountains");

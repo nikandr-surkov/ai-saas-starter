@@ -16,7 +16,7 @@ const tiles = [
 
 export function Gallery() {
   return (
-    <section id="gallery" className="scroll-mt-16">
+    <section id="gallery" className="scroll-mt-16 border-t-[3px]">
       <div className="mx-auto w-full max-w-[1160px] px-6 py-20">
         <div className="pop-in mb-12">
           <p className="eyebrow">Sample generations</p>

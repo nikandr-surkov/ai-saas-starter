@@ -129,6 +129,21 @@ const SETS = [
       "a clipboard with pale mint checkmarks and a small gold trophy beside it",
     ],
   ].map(([name, subject]) => ({ name, width: 440, maxKB: 100, subject })),
+  // v4.3 how-it-works steps: transparent, same sticker world.
+  ...[
+    [
+      "step-clone",
+      "a happy cartoon laptop character with a simple smiling face, a git branch symbol drawn on its screen",
+    ],
+    [
+      "step-keys",
+      "a golden key with a small sparkle and a little paper tag attached by a string",
+    ],
+    [
+      "step-ship",
+      "a small cartoon rocket lifting off with halftone smoke puffs below it",
+    ],
+  ].map(([name, subject]) => ({ name, width: 440, maxKB: 100, subject })),
 ];
 
 const CONCURRENCY = 4;

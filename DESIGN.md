@@ -11,9 +11,10 @@ editing it first.
 ## Hard rules
 
 1. **Solid color blocking (marketing)** — the section sequence is
-   LOCKED (v4.1): yellow hero → ink marquee strip → cream gallery →
-   mint features → sky agents → cream pricing + compare → pink FAQ →
-   ink closing band (light text). Dark mode keeps the same hues,
+   LOCKED (v4.3): yellow hero → ink marquee strip → cream "What is
+   this?" → cream "How it works" → cream gallery (3px rules between
+   the cream blocks) → mint features → sky agents → cream pricing +
+   compare → pink FAQ → ink closing band (light text). Dark mode keeps the same hues,
    deep-muted. Body text ALWAYS sits on solid color at ≥4.5:1 (verified
    below). Panel accents inside a section may NOT repeat the section's
    own bg hue; stickers/badges must contrast their section. NO dot-grid
@@ -167,7 +168,10 @@ credit 8.9 dark; debit-text 5.9/6.2. Every body-text pairing ≥4.5.
 
 Hero (yellow: H1 "A complete AI SaaS. Free.", sub + author line, CTA,
 copy chip, illustration cluster + stickers) → marquee (INK strip, light
-Archivo) → gallery (canvas: "MADE WITH IT.", six tilted poster frames) →
+Archivo) → "WHAT IS THIS?" (canvas: three huge plain-words statements,
+each with a proof chip) → "HOW IT WORKS." (canvas: 01 CLONE IT → 02 ADD
+YOUR KEYS → 03 SHIP YOUR SAAS, step cards + hand-drawn ink arrows) →
+gallery (canvas: "MADE WITH IT.", six tilted poster frames) →
 features (mint: "IT HANDLES THE MONEY.", six illustrated cards) → agents
 (sky: "BUILT FOR AI AGENTS.", tree + checklist) → pricing (canvas: "PICK
 A PLAN.", DigitBoxes prices, MOST POPULAR sticker on Pro) → compare
