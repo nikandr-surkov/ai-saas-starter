@@ -27,11 +27,12 @@ export function CopyInstall({ command }: { command: string }) {
       type="button"
       onClick={copy}
       className={cn(
-        "chip flex cursor-pointer items-center gap-4 rounded-md px-4 py-2.5 text-left font-mono text-xs",
+        "chip flex min-w-0 max-w-full cursor-pointer items-center gap-4 rounded-md px-4 py-2.5 text-left font-mono text-xs",
         copied && "bg-pop-mint hover:bg-pop-mint",
       )}
     >
-      <span className="whitespace-nowrap">
+      {/* Long command scrolls inside the chip — never widens the page. */}
+      <span className="min-w-0 overflow-x-auto whitespace-nowrap">
         <span aria-hidden className="select-none">
           ${" "}
         </span>

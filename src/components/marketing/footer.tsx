@@ -59,7 +59,7 @@ export function MarketingFooter() {
             {columns.map((column) => (
               <nav key={column.title} aria-label={column.title}>
                 <p className="eyebrow mb-3.5">{column.title}</p>
-                <ul className="flex flex-col items-start gap-2.5">
+                <ul className="flex flex-col items-start gap-3">
                   {column.links.map((link) =>
                     "external" in link && link.external ? (
                       <li key={link.label}>
@@ -67,17 +67,14 @@ export function MarketingFooter() {
                           href={link.href}
                           target="_blank"
                           rel="noreferrer"
-                          className="chip inline-block px-3.5 py-1 font-mono text-xs text-foreground"
+                          className="footer-chip"
                         >
                           {link.label}
                         </a>
                       </li>
                     ) : (
                       <li key={link.label}>
-                        <Link
-                          href={link.href}
-                          className="chip inline-block px-3.5 py-1 font-mono text-xs text-foreground"
-                        >
+                        <Link href={link.href} className="footer-chip">
                           {link.label}
                         </Link>
                       </li>

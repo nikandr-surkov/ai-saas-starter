@@ -63,7 +63,9 @@ export function HowItWorks() {
           {steps.map((step, i) => (
             <div key={step.index} className="contents">
               {i > 0 ? <InkArrow /> : null}
-              <article className="border-hard pop-in flex-1 rounded-md bg-background p-6 text-center shadow-hard">
+              {/* v4.4 standard card hover: lift + shadow-grow; the
+                  arrows are siblings, so they never move. */}
+              <article className="border-hard pop-in flex-1 rounded-md bg-background p-6 text-center shadow-hard transition-[translate,box-shadow] duration-150 motion-safe:hover:-translate-y-1 motion-safe:hover:[box-shadow:var(--shadow-hover)]">
                 <Image
                   src={`/illustrations/${step.file}.png`}
                   alt={step.alt}

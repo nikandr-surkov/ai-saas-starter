@@ -34,7 +34,8 @@ export async function MarketingNav() {
           <LogoMark className="size-5" />
           {siteConfig.name}
         </Link>
-        <nav className="ml-auto hidden items-center gap-2.5 md:flex">
+        {/* Chip nav needs lg width; tablets keep the drawer. */}
+        <nav className="ml-auto hidden items-center gap-2.5 lg:flex">
           {links.map((link) => (
             <Link
               key={link.href}
@@ -45,7 +46,7 @@ export async function MarketingNav() {
             </Link>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-3 md:ml-0">
+        <div className="ml-auto flex items-center gap-3 lg:ml-0">
           {/* Star count is a constant until the repo has one worth showing. */}
           <a
             href={siteConfig.github}

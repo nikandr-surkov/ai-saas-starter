@@ -15,23 +15,27 @@ export function Hero() {
   return (
     <header className="bg-pop-yellow [--chip-hover:var(--pop-sky)] [--marker-color:var(--canvas)] [--title-shadow:var(--canvas)]">
       <div className="mx-auto grid w-full max-w-[1160px] items-center gap-16 px-6 pt-16 pb-14 lg:grid-cols-[1.05fr_0.95fr]">
-        <div>
+        {/* min-w-0 breaks the min-content chain so the copy chip can
+            shrink and scroll instead of widening the whole column. */}
+        <div className="min-w-0">
           <div className="flex items-center gap-3">
             <Sticker color="mint" className="rotate-2">
               MIT · Open source
             </Sticker>
             <Sparkle className="text-foreground" />
           </div>
-          {/* Entrance: words pop in staggered (motion kit). Spaces live
-              between the spans so textContent stays a normal sentence. */}
-          <h1 className="text-display mt-6 mb-5">
-            {["A", "complete", "AI", "SaaS.", "Free."].map((word, i) => (
-              <span key={word} className="contents">
+          {/* v4.4: EXPLICIT line breaks (no text-wrap:balance) — three
+              intentional lines; the nbsp keeps "A" from ever sitting
+              alone. Entrance staggers per line, same timing. Trailing
+              spaces keep textContent a normal sentence for tests/AT. */}
+          <h1 className="text-display text-wrap mt-6 mb-5">
+            {["A complete", "AI SaaS.", "Free."].map((line, i) => (
+              <span key={line} className="contents">
                 <span
-                  className="hero-word inline-block"
+                  className="hero-word block"
                   style={{ animationDelay: `${i * 70}ms` }}
                 >
-                  {word}
+                  {line}
                 </span>{" "}
               </span>
             ))}

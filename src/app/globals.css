@@ -313,6 +313,38 @@
     box-shadow: 0 0 0 0 var(--ink);
   }
 
+  /* v4.4 footer chips: large rounded chips, cream-on-ink outline;
+     hover flips pop-yellow + ink text with a lift and a LIGHT shadow
+     (canvas — an ink shadow is invisible on the ink block); active
+     presses flat. Both themes work because border/text read
+     --background against the bg-foreground footer. */
+  .footer-chip {
+    display: inline-block;
+    border: 2px solid var(--background);
+    border-radius: 10px;
+    padding: 0.65rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 17px;
+    line-height: 1;
+    color: var(--background);
+    transition:
+      translate 120ms ease,
+      box-shadow 120ms ease,
+      background-color 120ms ease,
+      color 120ms ease;
+  }
+  .footer-chip:hover {
+    background: var(--pop-yellow);
+    border-color: var(--ink);
+    color: var(--ink);
+    translate: -1px -1px;
+    box-shadow: 3px 3px 0 0 var(--background);
+  }
+  .footer-chip:active {
+    translate: 1px 1px;
+    box-shadow: 0 0 0 0 var(--background);
+  }
+
   /* Marker that draws in on hover — author links, footer credit. Set
      --marker-color per surface (cream on yellow, yellow elsewhere). */
   .marker-hover {
@@ -411,7 +443,9 @@
    single 400 weight — never synthesize bold. */
 @utility text-display {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 1.8rem + 5.5vw, 7rem);
+  /* Floor low enough that the nbsp-joined "A COMPLETE" hero line fits
+     even a 320px viewport without wrapping or clipping (v4.4). */
+  font-size: clamp(2.5rem, 1rem + 7vw, 7rem);
   font-weight: 400;
   letter-spacing: -0.01em;
   line-height: 0.95;

@@ -1,6 +1,9 @@
-// v4 motion kit: the sanctioned marquee — a full-width Archivo strip
-// under the hero. Two identical copies scroll -50% for a seamless loop;
-// hover pauses; reduced-motion gets a static row (no animation applied).
+// v4.4 mechanically seam-proof marquee: the track is exactly TWO
+// identical halves side by side (no gap — spacing lives INSIDE each
+// item), each half repeating the phrase sequence 6x so it exceeds 100vw
+// at any supported viewport. Animating the track translateX(0 → -50%)
+// lands on a pixel-identical frame — a gap is impossible. Hover pauses
+// via animation-play-state; reduced motion gets a static row.
 // ✦ is a sanctioned ornament glyph (DESIGN.md hard rule 9).
 const ITEMS = [
   "Auth",
@@ -10,7 +13,9 @@ const ITEMS = [
   "Open source",
 ] as const;
 
-function Row({ hidden }: { hidden?: boolean }) {
+const REPEATS = 6;
+
+function Sequence({ hidden }: { hidden?: boolean }) {
   return (
     <span aria-hidden={hidden} className="flex shrink-0 items-center">
       {ITEMS.map((item) => (
@@ -23,15 +28,22 @@ function Row({ hidden }: { hidden?: boolean }) {
   );
 }
 
+function Half({ first }: { first?: boolean }) {
+  return (
+    <div className="flex shrink-0">
+      {Array.from({ length: REPEATS }, (_, i) => (
+        <Sequence key={i} hidden={!first || i > 0} />
+      ))}
+    </div>
+  );
+}
+
 export function Marquee() {
-  // v4.1 sequence lock: the strip is a solid INK band (light text) —
-  // it separates the yellow hero from the cream gallery, so it needs
-  // no border rules of its own.
   return (
     <div className="overflow-hidden bg-foreground py-3 font-display text-2xl font-normal tracking-wide text-background uppercase">
       <div className="marquee flex w-max">
-        <Row />
-        <Row hidden />
+        <Half first />
+        <Half />
       </div>
     </div>
   );

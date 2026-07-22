@@ -46,7 +46,7 @@ export default function PricingPage() {
             <h2 className="font-heading text-2xl font-extrabold">
               {plan.name}
             </h2>
-            <ul className="col-start-2 space-y-2 sm:col-start-3">
+            <ul className="col-start-2 min-w-0 space-y-2 sm:col-start-3">
               {plan.features.map((feature, fi) => (
                 <li
                   key={feature}
