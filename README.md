@@ -10,7 +10,34 @@ Codex can extend without breaking the money paths.
 [![License: MIT](https://img.shields.io/badge/license-MIT-1f7a4d.svg)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/nikandr-surkov/ai-saas-starter)](https://github.com/nikandr-surkov/ai-saas-starter/stargazers)
 
-![ai-saas-starter — Next.js AI SaaS boilerplate, landing page in the Ledger design (light theme)](docs/landing.png)
+[Live demo](https://ai-saas-starter-six.vercel.app) ·
+[Deploy guide](#deploy-to-production-vercel--neon) ·
+[Pro version](https://nikandr.com)
+
+![Landing page of ai-saas-starter — free open-source Next.js SaaS boilerplate with auth, Stripe, and a credits ledger](docs/screenshots/landing.jpg)
+
+## What is this?
+
+- **This website is the demo** — [sign up](https://ai-saas-starter-six.vercel.app),
+  everything works.
+- **The code is a free GitHub repo** — MIT, clone it.
+- **You build YOUR product on top** — auth and payments are done.
+
+A free, open-source SaaS boilerplate / starter kit for **Next.js 16 ·
+React 19 · TypeScript strict · Better Auth · Drizzle + PostgreSQL ·
+Stripe · AI SDK 6 · Tailwind v4 + shadcn/ui · Resend · Vitest +
+Playwright**.
+
+## See it
+
+|                                                                                                                                   |                                                                                                            |
+| --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| ![Credits ledger dashboard of the Next.js SaaS starter — every transaction is an append-only row](docs/screenshots/dashboard.jpg) | ![AI image generation page with credit balance — 1 credit per image](docs/screenshots/generate.jpg)        |
+| [Credits ledger on the dashboard — balance is SUM(amount), enforced](#whats-inside)                                               | [AI image generation — 1 credit per image](#whats-inside)                                                  |
+| ![Generation in progress — busy state with the spinning sparkle indicator](docs/screenshots/generating.jpg)                       | ![Billing page with plan cards rendered from one config file](docs/screenshots/billing.jpg)                |
+| [Busy state](#whats-inside)                                                                                                       | [Plans from one config file](#whats-inside)                                                                |
+| ![Stripe Checkout in test mode for the Pro subscription](docs/screenshots/checkout.jpg)                                           | ![Account settings — profile, password, connected accounts, delete account](docs/screenshots/settings.jpg) |
+| [Real Stripe checkout (test mode)](#stripe-locally)                                                                               | [Auth + account settings](#whats-inside)                                                                   |
 
 ## Why another SaaS boilerplate?
 
@@ -22,13 +49,6 @@ append-only credit ledger whose balance is enforced equal to
 replays, a double-spend race test against real Postgres — plus the context
 files (AGENTS.md, rules, skills, hooks) that keep an agent from quietly
 unpicking any of it while you vibe-code the product on top.
-
-## Stack
-
-Next.js 16 (App Router, Server Actions, Turbopack) · React 19 · TypeScript
-strict · Better Auth · Drizzle ORM + PostgreSQL · Stripe · Vercel AI SDK 6
-via AI Gateway · Tailwind CSS v4 + shadcn/ui · Resend + React Email ·
-Vitest + Playwright.
 
 ## Quickstart (60 seconds)
 
@@ -47,16 +67,37 @@ setup card; no Resend key → emails no-op with a console warning; no OAuth
 keys → those buttons hide; `AI_MOCK=true` → image generation is free and
 offline. Every variable is documented in [.env.example](.env.example).
 
+## Quickstart for AI agents
+
+Paste this into your coding agent:
+
+```text
+Clone https://github.com/nikandr-surkov/ai-saas-starter.git and get it
+running: install deps, start Postgres via docker compose, create .env
+from the example (generate the secret), migrate, run dev. Then read
+AGENTS.md and brief me on the rules you're operating under.
+```
+
+Works with Claude Code, Cursor, Codex, Copilot, and Gemini CLI. The repo
+briefs the agent itself — AGENTS.md, path-scoped rules, skills, hooks.
+
 ## What's inside
 
 - **Auth** — email/password with verification, Google, GitHub, magic links.
   Sessions live in your Postgres. Settings page with password change,
   account linking, and cascade-safe account deletion (cancels the Stripe
   subscription first).
+
+  ![Account settings page — auth, password change, connected accounts, danger zone](docs/screenshots/settings.jpg)
+
 - **Billing** — Stripe Checkout + Customer Portal as server actions, a
   signature-verified webhook, and one sync function as the only writer of
   subscription state. Plans, prices, and credit amounts live in
   [src/config/plans.ts](src/config/plans.ts) and nowhere else.
+
+  ![Billing plan cards and pricing — both rendered from src/config/plans.ts](docs/screenshots/billing.jpg)
+  ![Pricing page of the SaaS starter — plans read from one config file](docs/screenshots/pricing.jpg)
+
 - **Credits ledger** — append-only `credit_transactions` with UNIQUE
   idempotency keys. Grants on `invoice.paid` (`grant_{invoiceId}`), top-ups
   on checkout (`topup_{sessionId}`), spends as one conditional UPDATE (the
@@ -67,22 +108,10 @@ offline. Every variable is documented in [.env.example](.env.example).
   → history grid. Provider failure refunds automatically. Swap models via
   `AI_IMAGE_MODEL=provider/model`; add providers by implementing one
   interface ([src/lib/ai/provider.ts](src/lib/ai/provider.ts)).
-- **Design system** — "The Ledger": tokens and hard rules in
-  [DESIGN.md](DESIGN.md), light and dark, no gradients, no shadows, 2px
-  radius, ruled rows instead of card grids. `/styleguide` (dev only) shows
+- **Design system** — "The Ledger, LOUD MODE": tokens and hard rules in
+  [DESIGN.md](DESIGN.md), light and dark, generated illustrations, an
+  interaction grammar with press physics. `/styleguide` (dev only) shows
   every primitive in both themes.
-
-## Architecture in one paragraph
-
-Server Components by default; Server Actions for mutations; API routes only
-for the Stripe webhook and the Better Auth handler. Zod validates every
-boundary — forms, webhook payloads, and env
-([src/lib/env.ts](src/lib/env.ts), the only place `process.env` is read).
-Money is integer cents, credits are integers, and two modules own the
-dangerous writes: [src/lib/credits/](src/lib/credits/) is the only code
-that touches credit tables, and `syncStripeDataToDb` in
-[src/lib/billing/sync.ts](src/lib/billing/sync.ts) is the only writer of
-subscription state — webhooks are triggers, never sources of truth.
 
 ## The AI-native part
 
@@ -102,7 +131,21 @@ This repo assumes an agent will extend it, and briefs the agent accordingly:
 With Claude Code: open the repo and the context loads itself; type
 `/add-feature` to scaffold the repo way. With Cursor: `.cursor/rules/`
 mirrors the same invariants. Everything defers to AGENTS.md, so there is
-one source of truth to edit.
+one source of truth to edit. Agent-assisted contributions are welcome —
+run the repo's own gates and the code-reviewer agent before opening a PR
+(see [CONTRIBUTING.md](CONTRIBUTING.md)).
+
+## Architecture in one paragraph
+
+Server Components by default; Server Actions for mutations; API routes only
+for the Stripe webhook and the Better Auth handler. Zod validates every
+boundary — forms, webhook payloads, and env
+([src/lib/env.ts](src/lib/env.ts), the only place `process.env` is read).
+Money is integer cents, credits are integers, and two modules own the
+dangerous writes: [src/lib/credits/](src/lib/credits/) is the only code
+that touches credit tables, and `syncStripeDataToDb` in
+[src/lib/billing/sync.ts](src/lib/billing/sync.ts) is the only writer of
+subscription state — webhooks are triggers, never sources of truth.
 
 ## Testing
 
@@ -119,6 +162,11 @@ plans-config locks, env validation, email rendering. 12 e2e tests: signup
 to dashboard, mock generation, the FAIL-refund path, the 0-credit block,
 open-redirect guards, image-route authorization, billing plan cards from
 the plans config.
+
+The spend→refund loop is user-visible, not just tested: a failed
+generation refunds its credit automatically and says so on the tile.
+
+![AI generation history with a failed tile — failure refunds automatically, pinned by tests](docs/screenshots/generate.jpg)
 
 e2e runs against `next dev` deliberately — `AI_MOCK=true` is refused in
 production builds, so a build+start e2e would hit a real provider. The
@@ -138,6 +186,8 @@ comment in [playwright.config.ts](playwright.config.ts) explains.
    [test clocks](https://docs.stripe.com/billing/testing/test-clocks) to
    advance time. Portal cancellations set `cancel_at` (not the legacy
    boolean) — the sync handles both; don't "simplify" it.
+
+![Stripe Checkout test-mode payment page for the Pro plan subscription](docs/screenshots/checkout.jpg)
 
 ## Deploy to production (Vercel + Neon)
 
@@ -196,6 +246,25 @@ standard most products never reach (races, replays, invariants, adversarial
 webhooks). The legal pages are placeholders and the product on top is
 yours to build.
 
+**Does it work with Claude Code / Cursor?** Yes — that's the point. The
+repo carries its own agent context (AGENTS.md, CLAUDE.md, path-scoped
+rules, skills, hooks); Cursor reads the mirrored `.cursor/rules/`. Open
+the repo and the agent is briefed.
+
+**How does the credits system work?** Every credit movement is an
+append-only row in `credit_transactions` with a unique idempotency key,
+so webhook replays can't double-grant. Spends are one conditional UPDATE
+that refuses to go below zero, and the cached balance is enforced equal
+to `SUM(amount)` by tests and a DB CHECK.
+
+**Can I swap gpt-image for another model?** One env string:
+`AI_IMAGE_MODEL=provider/model` — no code changes.
+
+**Why Better Auth instead of NextAuth/Clerk?** Sessions and users live in
+YOUR Postgres next to the ledger, so account deletion, credit grants, and
+webhooks are one transaction-safe world. No per-user vendor pricing on a
+free starter.
+
 **Is this a free alternative to ShipFast or Makerkit?** It overlaps where
 every SaaS starter overlaps — auth, Stripe, landing page — but the focus
 is different: a tested credits ledger, an AI generation loop, and agent
@@ -224,6 +293,13 @@ and hand it to your agent with `/add-feature`.
 
 The free repo is complete — nothing above is crippled. Pro is what comes
 after product-market fit.
+
+## Author
+
+Built by **Nikandr Surkov** — [nikandr.com](https://nikandr.com). If this
+repo saved you time,
+[star it](https://github.com/nikandr-surkov/ai-saas-starter/stargazers) —
+stars are how other builders find it.
 
 ## License
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1 — 2026-07-23 — docs: illustrated README
+
+The README becomes the storefront: eight optimized screenshots
+(`docs/screenshots/`), a plain-words "What is this?", a captioned
+gallery, a one-prompt "Quickstart for AI agents", screenshots embedded
+at the features they show, and an expanded FAQ (Claude Code/Cursor,
+credits system, model swap, Better Auth rationale). Billing gained plan
+cards rendered from the plans config (0.2.0 follow-up, `14de3a4`).
+
 ## 0.2.0 — 2026-07-22 — the loud redesign
 
 "The Ledger, LOUD MODE": the marketing site moves from restrained
