@@ -20,9 +20,9 @@ export default async function SettingsPage() {
     headers: await headers(),
   });
 
-  const linkedProviders = accounts
-    .map((account) => account.providerId)
-    .filter((id) => id !== "credential");
+  const linkedAccounts = accounts
+    .filter((account) => account.providerId !== "credential")
+    .map((account) => ({ id: account.id, providerId: account.providerId }));
   const hasPassword = accounts.some(
     (account) => account.providerId === "credential",
   );
@@ -67,7 +67,7 @@ export default async function SettingsPage() {
         <CardContent>
           <ConnectedAccounts
             available={availableProviders}
-            linked={linkedProviders}
+            linkedAccounts={linkedAccounts}
             hasPassword={hasPassword}
           />
         </CardContent>
