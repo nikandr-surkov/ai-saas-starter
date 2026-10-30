@@ -17,13 +17,13 @@ const labels: Record<Provider, string> = {
 
 export function ConnectedAccounts({
   available,
-  linked,
+  linkedAccounts,
   hasPassword,
 }: {
   /** Providers configured via env on the server. */
   available: Provider[];
-  /** providerIds of the user's linked accounts. */
-  linked: string[];
+  /** The user's linked OAuth accounts: provider id and Better Auth account id. */
+  linkedAccounts: { id: string; providerId: string }[];
   /** Whether a credential (password) account exists — last sign-in method must stay. */
   hasPassword: boolean;
 }) {
@@ -43,13 +43,15 @@ export function ConnectedAccounts({
   }
 
   async function unlink(provider: Provider) {
-    const remaining = linked.length + (hasPassword ? 1 : 0);
+    const account = linkedAccounts.find((item) => item.providerId === provider);
+    if (account === undefined) return;
+    const remaining = linkedAccounts.length + (hasPassword ? 1 : 0);
     if (remaining <= 1) {
       toast.error("Keep at least one sign-in method");
       return;
     }
     setPending(provider);
-    const { error } = await authClient.unlinkAccount({ providerId: provider });
+    const { error } = await authClient.unlinkAccount({ accountId: account.id });
     setPending(null);
     if (error) {
       toast.error(error.message ?? `Could not unlink ${labels[provider]}`);
@@ -71,7 +73,9 @@ export function ConnectedAccounts({
   return (
     <ul className="max-w-sm">
       {available.map((provider) => {
-        const isLinked = linked.includes(provider);
+        const isLinked = linkedAccounts.some(
+          (item) => item.providerId === provider,
+        );
         return (
           <li
             key={provider}
